@@ -1,8 +1,8 @@
-import { resolveImg } from '@/lib/data';
-import type { CSSProperties, ReactNode, SVGProps } from 'react';
+import { resolveImg } from "@/lib/data";
+import type { CSSProperties, ReactNode, SVGProps } from "react";
 
 export function Placeholder({
-  caption = 'photo',
+  caption = "photo",
   ratio,
   width,
   height,
@@ -27,11 +27,11 @@ export function Placeholder({
         style={{
           ...s,
           backgroundImage: `url(${url})`,
-          backgroundSize: 'cover',
-          backgroundPosition: 'center',
-          backgroundColor: 'var(--paper-2)',
-          position: 'relative',
-          overflow: 'hidden',
+          backgroundSize: "cover",
+          backgroundPosition: "center",
+          backgroundColor: "var(--paper-2)",
+          position: "relative",
+          overflow: "hidden",
         }}
       />
     );
@@ -49,10 +49,10 @@ export function Tag({
   style,
 }: {
   children: ReactNode;
-  kind?: 'filled' | 'signal' | 'plot' | 'leaf' | 'ghost';
+  kind?: "filled" | "signal" | "plot" | "leaf" | "ghost";
   style?: CSSProperties;
 }) {
-  const cls = 'tag' + (kind ? ` tag--${kind}` : '');
+  const cls = "tag" + (kind ? ` tag--${kind}` : "");
   return (
     <span className={cls} style={style}>
       {children}
