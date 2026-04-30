@@ -492,53 +492,6 @@
     visibility: visible;
   }
 
-  .mc-drawer-head {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 14px 16px;
-    border-bottom: 1px solid var(--color-ink);
-    background: var(--color-paper);
-    flex-shrink: 0;
-  }
-
-  .mc-drawer-body {
-    padding: 16px 16px 24px;
-    overflow-y: auto;
-    -webkit-overflow-scrolling: touch;
-    flex: 1;
-    display: flex;
-    flex-direction: column;
-    gap: 2px;
-  }
-
-  .mc-drawer-link {
-    display: flex;
-    align-items: center;
-    justify-content: space-between;
-    padding: 12px 10px;
-    font-size: 12px;
-    letter-spacing: 0.04em;
-    text-transform: uppercase;
-    color: var(--color-ink);
-    background: transparent;
-    border-bottom: 1px solid var(--color-paper-line);
-    text-decoration: none;
-    transition: background 80ms;
-  }
-  .mc-drawer-link:hover {
-    background: var(--color-paper-2);
-  }
-  .mc-drawer-link[data-active="true"] {
-    background: var(--color-ink);
-    color: var(--color-paper);
-  }
-  .mc-drawer-link svg {
-    opacity: 0.4;
-  }
-  .mc-drawer-link[data-active="true"] svg {
-    opacity: 1;
-  }
 }
 
 @media (min-width: 769px) {

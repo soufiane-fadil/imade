@@ -97,7 +97,7 @@ export function Header({ active }: { active?: string }) {
         aria-hidden={!open}
         aria-label="Menu mobile"
       >
-        <div className="mc-drawer-head">
+        <div className="flex items-center justify-between px-4 py-3.5 border-b border-ink bg-paper shrink-0">
           <span className="font-sans font-extrabold text-xl tracking-[-0.04em]">
             Maison<span className="text-signal">·</span>Calorie
           </span>
@@ -111,7 +111,7 @@ export function Header({ active }: { active?: string }) {
           </button>
         </div>
 
-        <div className="mc-drawer-body">
+        <div className="flex flex-col gap-0.5 px-4 pt-4 pb-6 overflow-y-auto flex-1">
           <div className="mono text-[10px] text-ink-mute tracking-[0.1em] uppercase mt-1 mb-[6px]">
             Rubriques
           </div>
@@ -120,7 +120,7 @@ export function Header({ active }: { active?: string }) {
               key={c.slug}
               href={`/rubriques/${c.slug}`}
               onClick={() => setOpen(false)}
-              className="mono mc-drawer-link"
+              className="mono flex items-center justify-between px-2.5 py-3 text-xs tracking-[0.04em] uppercase text-ink bg-transparent border-b border-paper-line no-underline transition-colors hover:bg-paper-2 data-[active=true]:bg-ink data-[active=true]:text-paper [&_svg]:opacity-40 data-[active=true]:[&_svg]:opacity-100"
               data-active={active === c.slug ? "true" : "false"}
             >
               {c.label}
