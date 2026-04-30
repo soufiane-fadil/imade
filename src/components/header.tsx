@@ -1,9 +1,12 @@
 "use client";
 import Link from "next/link";
+import { useState } from "react";
 import { CATEGORIES } from "@/lib/data";
 import { Icon } from "./atoms";
 
 export function Header({ active }: { active?: string }) {
+  const [open, setOpen] = useState(false);
+
   return (
     <header
       style={{
@@ -15,7 +18,7 @@ export function Header({ active }: { active?: string }) {
       }}
     >
       <div
-        className="mono"
+        className="mono mc-header-meta"
         style={{
           display: "flex",
           justifyContent: "space-between",
@@ -45,6 +48,7 @@ export function Header({ active }: { active?: string }) {
       </div>
 
       <div
+        className="mc-header-brand"
         style={{
           display: "grid",
           gridTemplateColumns: "160px 1fr 240px",
@@ -54,7 +58,7 @@ export function Header({ active }: { active?: string }) {
         }}
       >
         <div
-          className="mono"
+          className="mono mc-header-dossier"
           style={{
             fontSize: 10,
             color: "var(--ink-mute)",
@@ -76,7 +80,7 @@ export function Header({ active }: { active?: string }) {
             style={{
               fontFamily: "var(--sans)",
               fontWeight: 800,
-              fontSize: 28,
+              fontSize: "clamp(20px, 6vw, 28px)",
               letterSpacing: "-0.04em",
             }}
           >
@@ -95,7 +99,10 @@ export function Header({ active }: { active?: string }) {
             Le journal de la rénovation énergétique
           </div>
         </Link>
-        <div style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}>
+        <div
+          className="mc-header-actions"
+          style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}
+        >
           <Link href="/connexion" className="btn btn--sm btn--ghost">
             <Icon.user /> Espace pro
           </Link>
@@ -103,9 +110,25 @@ export function Header({ active }: { active?: string }) {
             S&apos;INSCRIRE →
           </Link>
         </div>
+        <button
+          type="button"
+          aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
+          aria-expanded={open}
+          onClick={() => setOpen((v) => !v)}
+          className="mc-header-burger btn btn--sm btn--ghost"
+          style={{
+            justifySelf: "end",
+            padding: "8px 10px",
+            fontSize: 16,
+            lineHeight: 1,
+          }}
+        >
+          {open ? "✕" : "☰"}
+        </button>
       </div>
 
       <nav
+        className="mc-header-nav"
         style={{
           display: "flex",
           alignItems: "center",
@@ -115,7 +138,7 @@ export function Header({ active }: { active?: string }) {
         }}
       >
         <div
-          className="mono"
+          className="mono mc-header-nav-label"
           style={{
             fontSize: 10,
             color: "var(--ink-mute)",
@@ -149,6 +172,8 @@ export function Header({ active }: { active?: string }) {
                 background: isActive ? "var(--ink)" : "transparent",
                 borderRight: "1px solid var(--paper-line)",
                 textDecoration: "none",
+                whiteSpace: "nowrap",
+                flexShrink: 0,
               }}
             >
               {c.label}
@@ -156,6 +181,7 @@ export function Header({ active }: { active?: string }) {
           );
         })}
         <div
+          className="mc-header-search"
           style={{
             marginLeft: "auto",
             display: "flex",
@@ -180,6 +206,130 @@ export function Header({ active }: { active?: string }) {
           />
         </div>
       </nav>
+
+      <div
+        className="mc-drawer-backdrop"
+        data-open={open ? "true" : "false"}
+        onClick={() => setOpen(false)}
+        aria-hidden={!open}
+      />
+      <aside
+        className="mc-drawer"
+        data-open={open ? "true" : "false"}
+        aria-hidden={!open}
+        aria-label="Menu mobile"
+      >
+        <div className="mc-drawer-head">
+          <span
+            style={{
+              fontFamily: "var(--sans)",
+              fontWeight: 800,
+              fontSize: 20,
+              letterSpacing: "-0.04em",
+            }}
+          >
+            Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+          </span>
+          <button
+            type="button"
+            aria-label="Fermer le menu"
+            onClick={() => setOpen(false)}
+            className="btn btn--sm btn--ghost"
+            style={{ padding: "6px 10px", fontSize: 14, lineHeight: 1 }}
+          >
+            ✕
+          </button>
+        </div>
+
+        <div className="mc-drawer-body">
+          <div
+            className="mono mc-drawer-section"
+            style={{
+              fontSize: 10,
+              color: "var(--ink-mute)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              margin: "4px 0 6px",
+            }}
+          >
+            Rubriques
+          </div>
+          {CATEGORIES.map((c) => (
+            <Link
+              key={c.slug}
+              href={`/rubriques/${c.slug}`}
+              onClick={() => setOpen(false)}
+              className="mono mc-drawer-link"
+              data-active={active === c.slug ? "true" : "false"}
+            >
+              {c.label}
+              <Icon.arrowR />
+            </Link>
+          ))}
+
+          <div
+            className="mono mc-drawer-section"
+            style={{
+              fontSize: 10,
+              color: "var(--ink-mute)",
+              letterSpacing: "0.1em",
+              textTransform: "uppercase",
+              margin: "18px 0 6px",
+            }}
+          >
+            Espace pro
+          </div>
+          <Link
+            href="/connexion"
+            onClick={() => setOpen(false)}
+            className="btn btn--ghost"
+            style={{
+              justifyContent: "flex-start",
+              width: "100%",
+              marginBottom: 8,
+            }}
+          >
+            <Icon.user /> Connexion
+          </Link>
+          <Link
+            href="/qcm"
+            onClick={() => setOpen(false)}
+            className="btn btn--signal"
+            style={{ justifyContent: "flex-start", width: "100%" }}
+          >
+            S&apos;INSCRIRE →
+          </Link>
+
+          <div
+            className="mono"
+            style={{
+              fontSize: 10,
+              color: "var(--ink-mute)",
+              letterSpacing: "0.08em",
+              textTransform: "uppercase",
+              marginTop: 24,
+              paddingTop: 14,
+              borderTop: "1px solid var(--paper-line)",
+            }}
+          >
+            FR · Édition Métropole
+            <br />
+            N° 0427 — 27 avril 2026
+          </div>
+          <Link
+            href="/contact"
+            onClick={() => setOpen(false)}
+            className="lnk mono"
+            style={{
+              fontSize: 11,
+              marginTop: 10,
+              display: "inline-block",
+            }}
+          >
+            Contact →
+          </Link>
+        </div>
+      </aside>
     </header>
   );
 }

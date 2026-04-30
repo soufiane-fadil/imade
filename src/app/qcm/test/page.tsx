@@ -47,6 +47,7 @@ export default function QCMTestPage() {
   });
   const [current, setCurrent] = useState(2);
   const [seconds, setSeconds] = useState(847);
+  const [navOpen, setNavOpen] = useState(false);
   useEffect(() => {
     const t = setInterval(() => setSeconds((s) => s + 1), 1000);
     return () => clearInterval(t);
@@ -77,6 +78,15 @@ export default function QCMTestPage() {
         }}
       >
         <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+          <button
+            type="button"
+            aria-label="Ouvrir la liste des questions"
+            onClick={() => setNavOpen(true)}
+            className="mc-qcm-nav-toggle btn btn--sm btn--ghost"
+            style={{ padding: "8px 10px", fontSize: 16, lineHeight: 1 }}
+          >
+            ☰
+          </button>
           <span
             style={{
               fontFamily: "var(--sans)",
@@ -149,15 +159,42 @@ export default function QCMTestPage() {
           minHeight: "calc(100vh - 50px)",
         }}
       >
+        <div
+          className="mc-qcm-aside-backdrop"
+          data-open={navOpen ? "true" : "false"}
+          onClick={() => setNavOpen(false)}
+          aria-hidden={!navOpen}
+        />
         <aside
+          className="mc-qcm-aside"
+          data-open={navOpen ? "true" : "false"}
           style={{
             background: "var(--paper)",
             borderRight: "1px solid var(--ink)",
             padding: "20px 0",
           }}
         >
-          <div className="h-section" style={{ padding: "0 16px 12px" }}>
-            —— Liste des questions
+          <div
+            className="mc-qcm-aside-head"
+            style={{
+              display: "flex",
+              alignItems: "center",
+              justifyContent: "space-between",
+              padding: "0 16px 12px",
+            }}
+          >
+            <div className="h-section" style={{ padding: 0 }}>
+              —— Liste des questions
+            </div>
+            <button
+              type="button"
+              aria-label="Fermer"
+              onClick={() => setNavOpen(false)}
+              className="mc-qcm-aside-close btn btn--sm btn--ghost"
+              style={{ padding: "6px 10px", fontSize: 14, lineHeight: 1 }}
+            >
+              ✕
+            </button>
           </div>
           <ol
             style={{
@@ -174,7 +211,10 @@ export default function QCMTestPage() {
               return (
                 <li key={i}>
                   <button
-                    onClick={() => setCurrent(i)}
+                    onClick={() => {
+                      setCurrent(i);
+                      setNavOpen(false);
+                    }}
                     className="mono"
                     style={{
                       display: "grid",

@@ -16,8 +16,12 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
       }}
     >
       <Header />
-      <section style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}>
+      <section
+        className="mc-auth-section"
+        style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
+      >
         <div
+          className="mc-auth-form"
           style={{
             padding: "60px 80px",
             display: "flex",
@@ -186,7 +190,7 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
           </form>
         </div>
         <div
-          className="gridpaper"
+          className="gridpaper mc-auth-aside"
           style={{
             padding: "60px 60px",
             display: "flex",

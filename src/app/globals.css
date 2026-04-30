@@ -342,7 +342,7 @@ button {
 
 .cap-rule {
   display: grid;
-  grid-template-columns: 1fr auto 1fr;
+  grid-template-columns:1fr auto 1fr;
   align-items: center;
   gap: 12px;
 }
@@ -425,4 +425,402 @@ button {
   fill: none;
   stroke-width: 1.25;
   stroke-linecap: square;
+}
+
+/* ───────────────────────── responsive layer ───────────────────────── */
+
+img,
+svg,
+video {
+  max-width: 100%;
+  height: auto;
+}
+
+/* Page-level grid templates that should collapse on small screens.
+   Listed individually to avoid clobbering small in-card grids
+   (e.g., "36px 1fr 24px" radio rows, "20px 1fr" icon lists). */
+.mc-grid-collapse-md,
+.mc-root [style*="grid-template-columns:repeat(4"],
+.mc-root [style*="grid-template-columns:repeat(3"] {
+  /* placeholder so the selectors exist; rules applied in media queries */
+}
+
+/* Anything narrower than the 1280px design — collapse all page-level grids.
+   In-card grids (small px-first templates like 14px / 20px / 24px / 32px /
+   36px / 40px / 64px prefixes, the 1fr 70px 80px stat row) are intentionally
+   NOT in this list. */
+@media (max-width: 1100px) {
+  .mc-root [style*="grid-template-columns:1fr 1fr 1fr 320px"],
+  .mc-root [style*="grid-template-columns:1fr 1fr 1fr"],
+  .mc-root [style*="grid-template-columns:1fr 1fr"],
+  .mc-root [style*="grid-template-columns:1fr 1.1fr"],
+  .mc-root [style*="grid-template-columns:1.1fr 1fr"],
+  .mc-root [style*="grid-template-columns:1.2fr 1fr"],
+  .mc-root [style*="grid-template-columns:1.4fr 1fr"],
+  .mc-root [style*="grid-template-columns:1.5fr 1fr"],
+  .mc-root [style*="grid-template-columns:1fr 1.4fr"],
+  .mc-root [style*="grid-template-columns:1fr auto 1fr"],
+  .mc-root [style*="grid-template-columns:1fr auto"],
+  .mc-root [style*="grid-template-columns:1fr 320px"],
+  .mc-root [style*="grid-template-columns:160px 1fr 240px"],
+  .mc-root [style*="grid-template-columns:200px 1fr 280px"],
+  .mc-root [style*="grid-template-columns:200px 1fr"],
+  .mc-root [style*="grid-template-columns:220px 1fr 80px"],
+  .mc-root [style*="grid-template-columns:240px 1fr"],
+  .mc-root [style*="grid-template-columns:280px 1fr"],
+  .mc-root [style*="grid-template-columns:300px 1fr"],
+  .mc-root [style*="grid-template-columns:320px 1fr 280px"],
+  .mc-root [style*="grid-template-columns:320px 1fr"],
+  .mc-root [style*="grid-template-columns:360px 1fr"],
+  .mc-root [style*="grid-template-columns:1.4fr 1fr 1fr 1fr 1.4fr"],
+  .mc-root [style*="grid-template-columns:1.4fr 1fr 1.2fr"],
+  .mc-root [style*="grid-template-columns:140px 1fr auto"],
+  .mc-root [style*="grid-template-columns:repeat(2"],
+  .mc-root [style*="grid-template-columns:repeat(3"],
+  .mc-root [style*="grid-template-columns:repeat(4"],
+  .mc-root [style*="grid-template-columns:repeat(5"] {
+    grid-template-columns: 1fr !important;
+  }
+
+  .mc-root [style*="grid-column:span"],
+  .mc-root [style*="grid-column:1 / -1"] {
+    grid-column: 1 / -1 !important;
+  }
+
+  .mc-root [style*="position:sticky"] {
+    position: static !important;
+  }
+
+  /* Footer 5-col → 2-col reads better than 1-col on tablets/phones. */
+  .mc-root footer [style*="grid-template-columns"] {
+    grid-template-columns: 1fr 1fr !important;
+  }
+
+  /* Wide stats / compare table: let it scroll instead of crushing. */
+  .mc-root [style*="grid-template-columns:1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px"] {
+    grid-template-columns: 1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px !important;
+    min-width: 720px;
+  }
+  .mc-root section:has([style*="grid-template-columns:1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px"]) {
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+}
+
+/* Mobile: collapse remaining page-level grids, shrink type, tighten padding. */
+@media (max-width: 768px) {
+  body {
+    font-size: 14px;
+  }
+
+  .mc-root {
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow-x: hidden;
+  }
+
+  /* (grid collapses + sticky/span resets handled at <=1100px above) */
+
+  /* Tighten padding on real layout containers only. */
+  .mc-root > section,
+  .mc-root > header,
+  .mc-root > footer,
+  .mc-root > nav,
+  .mc-root > main,
+  .mc-root > aside,
+  .mc-root section > section,
+  .mc-root header > div,
+  .mc-root footer > div,
+  .mc-root main,
+  .mc-root .mc-auth-form,
+  .mc-root .mc-auth-aside {
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Auth split: drop the divider that turns vertical when stacked. */
+  .mc-root .mc-auth-form {
+    border-right: 0 !important;
+    border-bottom: 1px solid var(--ink) !important;
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+  .mc-root .mc-auth-aside {
+    padding-top: 32px !important;
+    padding-bottom: 32px !important;
+  }
+
+  /* Disable sticky positioning project-wide on phones. */
+  .mc-root [style*="position:sticky"],
+  .mc-root [style*="position:sticky"] {
+    position: static !important;
+  }
+
+  /* Stacked asides drop their left border / indent / sticky offset. */
+  .mc-root aside {
+    border-left: 0 !important;
+    border-right: 0 !important;
+    padding-left: 16px !important;
+    padding-right: 16px !important;
+  }
+
+  /* Headings shrink so they don't blow out the viewport. */
+  .h-display {
+    font-size: clamp(28px, 9vw, 44px) !important;
+    letter-spacing: -0.03em;
+  }
+  .h-title {
+    font-size: clamp(20px, 6vw, 30px) !important;
+  }
+  .mc-root h1 {
+    font-size: clamp(28px, 9vw, 44px) !important;
+    max-width: 100% !important;
+  }
+  .mc-root h2 {
+    font-size: clamp(22px, 7vw, 34px) !important;
+    max-width: 100% !important;
+  }
+  .mc-root h3 {
+    font-size: clamp(18px, 5vw, 24px) !important;
+    max-width: 100% !important;
+  }
+  .mc-root p {
+    max-width: 100% !important;
+  }
+
+  /* Buttons compact. */
+  .btn {
+    padding: 10px 14px;
+    font-size: 11px;
+  }
+
+  /* Tables / pre overflow gracefully. */
+  .mc-root table,
+  .mc-root pre {
+    display: block;
+    overflow-x: auto;
+    max-width: 100%;
+  }
+
+  /* Newsletter / form inputs go full-width. */
+  .field {
+    width: 100% !important;
+  }
+
+  /* Marketing header (Header.tsx). */
+  .mc-header-meta,
+  .mc-header-dossier {
+    display: none !important;
+  }
+  .mc-header-brand {
+    grid-template-columns:1fr auto !important;
+    gap: 8px !important;
+    padding: 12px 16px !important;
+  }
+  .mc-header-actions {
+    display: none !important;
+  }
+  .mc-header-burger {
+    display: inline-flex !important;
+  }
+  .mc-header-nav {
+    overflow-x: auto;
+    flex-wrap: nowrap !important;
+    -webkit-overflow-scrolling: touch;
+    padding: 0 8px !important;
+  }
+  .mc-header-nav-label,
+  .mc-header-search {
+    display: none !important;
+  }
+  .mc-mobile-drawer {
+    display: flex !important;
+  }
+
+  /* Hero / image min-heights shouldn't dominate the viewport. */
+  .mc-root [style*="min-height:360"],
+  .mc-root [style*="minHeight: 360"],
+  .mc-root [style*="min-height:720"],
+  .mc-root [style*="min-height:900"],
+  .mc-root [style*="min-height:1000"],
+  .mc-root [style*="min-height:calc(100vh"] {
+    min-height: 0 !important;
+  }
+
+  /* QCM in-test layout: main loses big horizontal padding on phones. */
+  .mc-root main[style*="60px"] {
+    padding: 24px 16px !important;
+  }
+}
+
+/* Burger hidden on desktop. */
+.mc-header-burger {
+  display: none;
+}
+
+/* ── Side drawer (mobile) ───────────────────────────────────────── */
+.mc-drawer-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(21, 19, 14, 0.45);
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 200ms ease;
+  z-index: 50;
+}
+.mc-drawer-backdrop[data-open="true"] {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.mc-drawer {
+  position: fixed;
+  top: 0;
+  right: 0;
+  bottom: 0;
+  width: min(86vw, 340px);
+  background: var(--paper);
+  border-left: 1px solid var(--ink);
+  box-shadow: -8px 0 32px rgba(21, 19, 14, 0.18);
+  transform: translateX(100%);
+  transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+  z-index: 60;
+  display: flex;
+  flex-direction: column;
+  visibility: hidden;
+}
+.mc-drawer[data-open="true"] {
+  transform: translateX(0);
+  visibility: visible;
+}
+
+.mc-drawer-head {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 14px 16px;
+  border-bottom: 1px solid var(--ink);
+  background: var(--paper);
+  flex-shrink: 0;
+}
+
+.mc-drawer-body {
+  padding: 14px 16px 24px;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  flex: 1;
+}
+
+.mc-drawer-link {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 10px;
+  font-size: 12px;
+  letter-spacing: 0.04em;
+  text-transform: uppercase;
+  color: var(--ink);
+  background: transparent;
+  border-bottom: 1px solid var(--paper-line);
+  text-decoration: none;
+  transition: background 80ms;
+}
+.mc-drawer-link:hover {
+  background: var(--paper-2);
+}
+.mc-drawer-link[data-active="true"] {
+  background: var(--ink);
+  color: var(--paper);
+}
+.mc-drawer-link svg {
+  opacity: 0.4;
+}
+.mc-drawer-link[data-active="true"] svg {
+  opacity: 1;
+}
+
+/* Lock body scroll when drawer is open on phones. */
+@media (max-width: 768px) {
+  body:has(.mc-drawer[data-open="true"]) {
+    overflow: hidden;
+  }
+}
+
+/* On desktop, drawer + backdrop never appear. */
+@media (min-width: 769px) {
+  .mc-drawer,
+  .mc-drawer-backdrop {
+    display: none !important;
+  }
+}
+
+/* ── QCM question-list side drawer (mobile only) ───────────────── */
+/* Toggle + close are desktop-hidden; on mobile the aside slides in. */
+.mc-qcm-nav-toggle,
+.mc-qcm-aside-close,
+.mc-qcm-aside-backdrop {
+  display: none;
+}
+
+@media (max-width: 768px) {
+  .mc-qcm-nav-toggle {
+    display: inline-flex !important;
+  }
+  .mc-qcm-aside-close {
+    display: inline-flex !important;
+  }
+
+  .mc-qcm-aside-backdrop {
+    display: block;
+    position: fixed;
+    inset: 0;
+    background: rgba(21, 19, 14, 0.45);
+    opacity: 0;
+    pointer-events: none;
+    transition: opacity 200ms ease;
+    z-index: 50;
+  }
+  .mc-qcm-aside-backdrop[data-open="true"] {
+    opacity: 1;
+    pointer-events: auto;
+  }
+
+  .mc-root .mc-qcm-aside {
+    position: fixed !important;
+    top: 0;
+    left: 0;
+    bottom: 0;
+    width: min(86vw, 340px) !important;
+    border-right:1px solid var(--ink) !important;
+    border-bottom: 0 !important;
+    box-shadow: 8px 0 32px rgba(21, 19, 14, 0.18);
+    transform: translateX(-100%);
+    transition: transform 240ms cubic-bezier(0.2, 0.7, 0.2, 1);
+    z-index: 60;
+    display: flex;
+    flex-direction: column;
+    visibility: hidden;
+    padding: 0 0 12px !important;
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+  }
+  .mc-root .mc-qcm-aside[data-open="true"] {
+    transform: translateX(0);
+    visibility: visible;
+  }
+
+  .mc-qcm-aside-head {
+    padding: 14px 16px !important;
+    border-bottom: 1px solid var(--ink);
+    flex-shrink: 0;
+  }
+
+  /* Question list expands to fill the drawer rather than capping at 240px. */
+  .mc-root .mc-qcm-aside ol {
+    max-height: none !important;
+  }
+
+  body:has(.mc-qcm-aside[data-open="true"]) {
+    overflow: hidden;
+  }
 }
