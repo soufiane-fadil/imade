@@ -51,74 +51,36 @@ export default function QCMResultsPage() {
     },
   ];
   return (
-    <div
-      className="mc-root"
-      style={{ width: 1280, background: "var(--paper-2)" }}
-    >
+    <div className="mc-root w-full max-w-[1280px] mx-auto bg-paper-2">
       <AccountHeader active="profile#tests" />
-      <section style={{ padding: "20px 28px 0" }}>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            display: "flex",
-            gap: 8,
-            alignItems: "center",
-          }}
-        >
+      <section className="px-4 pt-5 md:px-7">
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-wrap gap-2 items-center">
           <Link
             href="/profil"
-            className="lnk"
-            style={{ color: "var(--ink-mute)", borderColor: "transparent" }}
+            className="lnk text-ink-mute border-transparent"
           >
             Mon espace
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>/</span>
+          <span className="text-paper-line">/</span>
           <Link
             href="/profil"
-            className="lnk"
-            style={{ color: "var(--ink-mute)", borderColor: "transparent" }}
+            className="lnk text-ink-mute border-transparent"
           >
             Mes QCM
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>/</span>
-          <span
-            style={{
-              color: "var(--ink)",
-              borderBottom: "1px solid var(--ink)",
-            }}
-          >
+          <span className="text-paper-line">/</span>
+          <span className="text-ink border-b border-ink">
             Résultats — session du 27 avril
           </span>
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "40px 28px",
-          borderBottom: "1px solid var(--ink)",
-          background: "var(--paper-2)",
-        }}
-      >
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "320px 1fr 280px",
-            gap: 40,
-            alignItems: "center",
-          }}
-        >
-          <div style={{ position: "relative", width: 280, height: 280 }}>
+      <section className="px-4 py-8 md:px-7 md:py-10 border-b border-ink bg-paper-2">
+        <div className="grid grid-cols-1 lg:grid-cols-[320px_1fr_280px] gap-8 lg:gap-10 items-center">
+          <div className="relative w-[240px] h-[240px] md:w-[280px] md:h-[280px] mx-auto lg:mx-0">
             <svg
               viewBox="0 0 100 100"
-              style={{
-                width: "100%",
-                height: "100%",
-                transform: "rotate(-90deg)",
-              }}
+              className="w-full h-full -rotate-90"
             >
               <circle
                 cx="50"
@@ -148,100 +110,42 @@ export default function QCMResultsPage() {
                 strokeDasharray="0.5 1.5"
               />
             </svg>
-            <div
-              style={{
-                position: "absolute",
-                inset: 0,
-                display: "flex",
-                flexDirection: "column",
-                alignItems: "center",
-                justifyContent: "center",
-              }}
-            >
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.16em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-mute)",
-                }}
-              >
+            <div className="absolute inset-0 flex flex-col items-center justify-center">
+              <div className="mono text-[10px] tracking-[0.16em] uppercase text-ink-mute">
                 SCORE FINAL
               </div>
-              <div
-                className="h-display"
-                style={{
-                  fontSize: 80,
-                  color: "var(--leaf)",
-                  lineHeight: 1,
-                  marginTop: 4,
-                }}
-              >
+              <div className="h-display text-[64px] md:text-[80px] text-leaf leading-none mt-1">
                 {pct}
-                <span style={{ fontSize: 32 }}>%</span>
+                <span className="text-[28px] md:text-[32px]">%</span>
               </div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  marginTop: 4,
-                  letterSpacing: "0.04em",
-                }}
-              >
+              <div className="mono text-[14px] font-semibold mt-1 tracking-[0.04em]">
                 {score} / {total}
               </div>
             </div>
           </div>
           <div>
             <Tag kind="leaf">CERTIFICATION VALIDÉE</Tag>
-            <h1
-              className="h-display"
-              style={{ fontSize: 64, margin: "14px 0 0" }}
-            >
+            <h1 className="h-display text-4xl md:text-5xl lg:text-[64px] mt-3.5">
               Bravo Mathieu — vous êtes{" "}
-              <span style={{ color: "var(--leaf)" }}>
-                certifié RGE Niv. 2 PAC.
-              </span>
+              <span className="text-leaf">certifié RGE Niv. 2 PAC.</span>
             </h1>
-            <p
-              style={{
-                fontSize: 16,
-                color: "var(--ink-3)",
-                marginTop: 12,
-                maxWidth: 580,
-                lineHeight: 1.5,
-              }}
-            >
+            <p className="text-[16px] text-ink-3 mt-3 max-w-[580px] leading-[1.5]">
               Votre attestation est disponible immédiatement et a été ajoutée à
               l’annuaire public des certifiés. Les outils de diagnostic Maison
               Calorie sont désormais débloqués sur votre compte.
             </p>
-            <div style={{ marginTop: 18, display: "flex", gap: 10 }}>
+            <div className="mt-4 flex flex-wrap gap-2.5">
               <button className="btn btn--primary">
                 <Icon.doc /> Télécharger l’attestation (PDF)
               </button>
               <button className="btn btn--ghost">Partager sur LinkedIn</button>
             </div>
           </div>
-          <div
-            className="tick-frame"
-            style={{ padding: 16, background: "var(--paper)" }}
-          >
+          <div className="tick-frame p-4 bg-paper">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
             <div className="lbl">RÉCAPITULATIF</div>
-            <ul
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: "12px 0 0",
-                display: "grid",
-                gap: 8,
-                fontSize: 12,
-              }}
-            >
+            <ul className="list-none p-0 mt-3 grid gap-2 text-[12px]">
               {(
                 [
                   ["Code", "QCM-7H4K-9P2X-A1B6"],
@@ -259,31 +163,12 @@ export default function QCMResultsPage() {
               ).map(([k, v]) => (
                 <li
                   key={k}
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "center",
-                    borderBottom: "1px dashed var(--paper-line)",
-                    padding: "4px 0",
-                  }}
+                  className="flex justify-between items-center border-b border-dashed border-paper-line py-1"
                 >
-                  <span
-                    className="mono"
-                    style={{
-                      fontSize: 10,
-                      letterSpacing: "0.06em",
-                      textTransform: "uppercase",
-                      color: "var(--ink-mute)",
-                    }}
-                  >
+                  <span className="mono text-[10px] tracking-[0.06em] uppercase text-ink-mute">
                     {k}
                   </span>
-                  <span
-                    className="mono"
-                    style={{ fontSize: 11, fontWeight: 500 }}
-                  >
-                    {v}
-                  </span>
+                  <span className="mono text-[11px] font-medium">{v}</span>
                 </li>
               ))}
             </ul>
@@ -291,69 +176,42 @@ export default function QCMResultsPage() {
         </div>
       </section>
 
-      <section
-        style={{ padding: "32px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
-        <div className="h-section" style={{ marginBottom: 16 }}>
-          —— Répartition par thème
-        </div>
-        <div
-          style={{
-            display: "grid",
-            gridTemplateColumns: "repeat(3, 1fr)",
-            gap: 16,
-          }}
-        >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink">
+        <div className="h-section mb-4">—— Répartition par thème</div>
+        <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-4">
           {breakdown.map((b) => {
             const p = Math.round((b.ok / b.n) * 100);
             const pass = p >= 70;
             return (
-              <div key={b.cat} className="tick-frame" style={{ padding: 14 }}>
+              <div key={b.cat} className="tick-frame p-3.5">
                 <span className="tick-bl"></span>
                 <span className="tick-br"></span>
                 <div className="lbl">{b.cat}</div>
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                    marginTop: 6,
-                  }}
-                >
+                <div className="flex justify-between items-baseline mt-1.5">
                   <div
-                    className="mono"
-                    style={{
-                      fontSize: 28,
-                      fontWeight: 600,
-                      color: pass ? "var(--leaf)" : "var(--signal)",
-                    }}
+                    className={
+                      "mono text-[28px] font-semibold " +
+                      (pass ? "text-leaf" : "text-signal")
+                    }
                   >
                     {b.ok}
-                    <span style={{ color: "var(--ink-mute)" }}>/{b.n}</span>
+                    <span className="text-ink-mute">/{b.n}</span>
                   </div>
                   <div
-                    className="mono"
-                    style={{
-                      fontSize: 11,
-                      color: pass ? "var(--leaf)" : "var(--signal)",
-                    }}
+                    className={
+                      "mono text-[11px] " +
+                      (pass ? "text-leaf" : "text-signal")
+                    }
                   >
                     {p} %
                   </div>
                 </div>
-                <div
-                  style={{
-                    height: 4,
-                    background: "var(--paper-3)",
-                    marginTop: 10,
-                  }}
-                >
+                <div className="h-1 bg-paper-3 mt-2.5">
                   <div
-                    style={{
-                      width: p + "%",
-                      height: "100%",
-                      background: pass ? "var(--leaf)" : "var(--signal)",
-                    }}
+                    className={
+                      "h-full " + (pass ? "bg-leaf" : "bg-signal")
+                    }
+                    style={{ width: p + "%" }}
                   />
                 </div>
               </div>
@@ -362,121 +220,74 @@ export default function QCMResultsPage() {
         </div>
       </section>
 
-      <section
-        style={{ padding: "32px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            marginBottom: 16,
-          }}
-        >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink">
+        <div className="flex flex-wrap justify-between items-baseline gap-3 mb-4">
           <div>
             <div className="h-section">—— Détail des réponses</div>
-            <div className="h-title" style={{ fontSize: 28, marginTop: 4 }}>
+            <div className="h-title text-2xl md:text-[28px] mt-1">
               Revoir chaque question
             </div>
           </div>
-          <div style={{ display: "flex", gap: 6 }}>
+          <div className="flex flex-wrap gap-1.5">
             <button className="btn btn--sm">Toutes</button>
             <button className="btn btn--ghost btn--sm">Bonnes (27)</button>
-            <button
-              className="btn btn--ghost btn--sm"
-              style={{ color: "var(--signal)", borderColor: "var(--signal)" }}
-            >
+            <button className="btn btn--ghost btn--sm text-signal border-signal">
               À revoir (3)
             </button>
           </div>
         </div>
-        <div style={{ display: "grid", gap: 12 }}>
+        <div className="grid gap-3">
           {review.map((r) => {
             const ok = r.picked === r.correct;
             return (
               <details
                 key={r.i}
-                className="tick-frame"
-                style={{ padding: 0, background: "var(--paper)" }}
+                className="tick-frame p-0 bg-paper"
                 open={!ok}
               >
                 <span className="tick-bl"></span>
                 <span className="tick-br"></span>
-                <summary
-                  style={{
-                    cursor: "pointer",
-                    padding: 16,
-                    display: "grid",
-                    gridTemplateColumns: "40px 1fr auto",
-                    gap: 14,
-                    alignItems: "center",
-                  }}
-                >
+                <summary className="cursor-pointer p-4 grid grid-cols-[40px_1fr_auto] gap-3.5 items-center">
                   <span
-                    className="mono"
-                    style={{
-                      fontSize: 12,
-                      fontWeight: 600,
-                      color: ok ? "var(--leaf)" : "var(--signal)",
-                    }}
+                    className={
+                      "mono text-[12px] font-semibold " +
+                      (ok ? "text-leaf" : "text-signal")
+                    }
                   >
                     Q{String(r.i).padStart(2, "0")}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 500,
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
+                  <span className="text-[14px] font-medium tracking-[-0.01em]">
                     {r.q}
                   </span>
                   <Tag kind={ok ? "leaf" : "signal"}>
                     {ok ? "✓ CORRECT" : "✗ INCORRECT"}
                   </Tag>
                 </summary>
-                <div
-                  style={{
-                    borderTop: "1px solid var(--paper-line)",
-                    padding: 16,
-                    background: "var(--paper-2)",
-                  }}
-                >
-                  <div style={{ display: "grid", gap: 6 }}>
+                <div className="border-t border-paper-line p-4 bg-paper-2">
+                  <div className="grid gap-1.5">
                     {r.opts.map((opt, i) => {
                       const isCorrect = i === r.correct;
                       const isPicked = i === r.picked;
-                      let bg = "var(--paper)",
-                        col = "var(--ink-3)",
-                        bd = "var(--paper-line)";
-                      if (isCorrect) {
-                        bg = "rgba(47,107,58,0.12)";
-                        col = "var(--leaf-deep)";
-                        bd = "var(--leaf)";
-                      }
-                      if (isPicked && !isCorrect) {
-                        bg = "rgba(229,72,27,0.10)";
-                        col = "var(--signal-deep)";
-                        bd = "var(--signal)";
-                      }
+                      let cls =
+                        "border-paper-line bg-paper text-ink-3";
+                      if (isCorrect)
+                        cls =
+                          "border-leaf bg-leaf/[0.12] text-leaf-deep";
+                      if (isPicked && !isCorrect)
+                        cls =
+                          "border-signal bg-signal/[0.10] text-signal-deep";
                       return (
                         <div
                           key={i}
-                          className="mono"
-                          style={{
-                            padding: "8px 12px",
-                            border: "1px solid " + bd,
-                            background: bg,
-                            color: col,
-                            fontSize: 12,
-                            display: "flex",
-                            justifyContent: "space-between",
-                          }}
+                          className={
+                            "mono px-3 py-2 border text-[12px] flex justify-between " +
+                            cls
+                          }
                         >
                           <span>
                             {String.fromCharCode(65 + i)} · {opt}
                           </span>
-                          <span style={{ fontWeight: 600 }}>
+                          <span className="font-semibold">
                             {isCorrect && "◉ Bonne réponse"}
                             {isPicked && !isCorrect && "✗ Votre réponse"}
                           </span>
@@ -484,25 +295,9 @@ export default function QCMResultsPage() {
                       );
                     })}
                   </div>
-                  <div
-                    style={{
-                      marginTop: 12,
-                      padding: 12,
-                      background: "var(--paper)",
-                      border: "1px dashed var(--paper-line)",
-                    }}
-                  >
-                    <div className="lbl" style={{ color: "var(--plot)" }}>
-                      EXPLICATION
-                    </div>
-                    <p
-                      style={{
-                        fontSize: 13,
-                        color: "var(--ink-2)",
-                        marginTop: 4,
-                        lineHeight: 1.5,
-                      }}
-                    >
+                  <div className="mt-3 p-3 bg-paper border border-dashed border-paper-line">
+                    <div className="lbl text-plot">EXPLICATION</div>
+                    <p className="text-[13px] text-ink-2 mt-1 leading-[1.5]">
                       Le décret n° 2026-412 du 14 avril impose un COP minimum de
                       3,5 pour les PAC subventionnées. Voir{" "}
                       <a href="#" className="lnk">
@@ -518,79 +313,32 @@ export default function QCMResultsPage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 20,
-        }}
-      >
-        <div
-          style={{
-            padding: 20,
-            border: "1px solid var(--ink)",
-            background: "var(--ink)",
-            color: "var(--paper)",
-          }}
-        >
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink grid grid-cols-1 md:grid-cols-2 gap-5">
+        <div className="p-5 border border-ink bg-ink text-paper">
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ ÉTAPE SUIVANTE
           </div>
-          <h3 className="h-title" style={{ fontSize: 26, marginTop: 6 }}>
+          <h3 className="h-title text-[26px] mt-1.5">
             Activez vos outils de diagnostic.
           </h3>
-          <p
-            style={{
-              fontSize: 13,
-              color: "var(--paper-3)",
-              marginTop: 6,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="text-[13px] text-paper-3 mt-1.5 leading-[1.5]">
             Votre certification ouvre l’accès aux modules d’audit en ligne et à
             la commande matériel à tarif pro.
           </p>
-          <button className="btn btn--signal" style={{ marginTop: 14 }}>
+          <button className="btn btn--signal mt-3.5">
             Ouvrir mon espace pro <Icon.arrowR />
           </button>
         </div>
-        <div
-          style={{
-            padding: 20,
-            border: "1px solid var(--paper-line)",
-            background: "var(--paper-2)",
-          }}
-        >
+        <div className="p-5 border border-paper-line bg-paper-2">
           <div className="lbl">VISER UNE AUTRE CERTIFICATION ?</div>
-          <h3 className="h-title" style={{ fontSize: 26, marginTop: 6 }}>
+          <h3 className="h-title text-[26px] mt-1.5">
             Achetez un nouveau pass.
           </h3>
-          <p
-            style={{
-              fontSize: 13,
-              color: "var(--ink-3)",
-              marginTop: 6,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="text-[13px] text-ink-3 mt-1.5 leading-[1.5]">
             Isolation Niv. 2, Solaire, Ventilation… vous gardez votre profil et
             votre historique.
           </p>
-          <Link
-            href="/qcm"
-            className="btn btn--primary"
-            style={{ marginTop: 14 }}
-          >
+          <Link href="/qcm" className="btn btn--primary mt-3.5">
             Voir les passes <Icon.arrowR />
           </Link>
         </div>

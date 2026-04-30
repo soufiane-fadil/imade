@@ -6,6 +6,7 @@ export function Placeholder({
   ratio,
   width,
   height,
+  className,
   children,
   style,
 }: {
@@ -13,6 +14,7 @@ export function Placeholder({
   ratio?: string;
   width?: number | string;
   height?: number | string;
+  className?: string;
   children?: ReactNode;
   style?: CSSProperties;
 }) {
@@ -24,20 +26,19 @@ export function Placeholder({
   if (url && !children) {
     return (
       <div
-        style={{
-          ...s,
-          backgroundImage: `url(${url})`,
-          backgroundSize: "cover",
-          backgroundPosition: "center",
-          backgroundColor: "var(--paper-2)",
-          position: "relative",
-          overflow: "hidden",
-        }}
+        className={
+          "relative overflow-hidden bg-paper-2 bg-center bg-cover" +
+          (className ? " " + className : "")
+        }
+        style={{ ...s, backgroundImage: `url(${url})` }}
       />
     );
   }
   return (
-    <div className="placeholder" style={s}>
+    <div
+      className={"placeholder" + (className ? " " + className : "")}
+      style={s}
+    >
       {children || <span>▢ {caption}</span>}
     </div>
   );

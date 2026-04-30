@@ -45,95 +45,35 @@ export default function ProfilePage() {
     },
   ];
   return (
-    <div
-      className="mc-root"
-      style={{ width: 1280, background: "var(--paper-2)" }}
-    >
+    <div className="mc-root w-full max-w-[1280px] mx-auto bg-paper-2">
       <AccountHeader active="profile" />
 
-      <section
-        style={{
-          padding: "24px 28px 0",
-          display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gap: 16,
-          alignItems: "end",
-        }}
-      >
+      <section className="px-4 pt-6 md:px-7 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-end">
         <div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ TABLEAU DE BORD · 27 AVRIL 2026
           </div>
-          <h1
-            className="h-display"
-            style={{ fontSize: 56, margin: "6px 0 0", lineHeight: 1 }}
-          >
+          <h1 className="h-display text-4xl md:text-5xl lg:text-[56px] mt-1.5 leading-none">
             Votre espace
             <br />
             de membre.
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--serif)",
-              fontStyle: "italic",
-              fontSize: 16,
-              color: "var(--ink-3)",
-              maxWidth: 540,
-              marginTop: 10,
-              lineHeight: 1.45,
-            }}
-          >
+          <p className="font-serif italic text-[16px] text-ink-3 max-w-[540px] mt-2.5 leading-[1.45]">
             Vous êtes connecté en tant qu’<strong>artisan certifié RGE</strong>.
             Votre dernier passage de QCM date du 22 avril — un nouveau pass vous
             attend.
           </p>
         </div>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            textAlign: "right",
-          }}
-        >
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute md:text-right">
           DERNIÈRE CONNEXION
           <br />
-          <span
-            style={{
-              color: "var(--ink)",
-              fontSize: 14,
-              letterSpacing: 0,
-              textTransform: "none",
-              fontFamily: "var(--mono)",
-            }}
-          >
+          <span className="text-ink text-[14px] tracking-normal normal-case font-mono">
             26 avr. 2026 · 09h12 · Rennes
           </span>
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "20px 28px",
-          marginTop: 24,
-          borderTop: "1px solid var(--ink)",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          gap: 0,
-          background: "var(--paper)",
-        }}
-      >
+      <section className="px-4 py-5 md:px-7 mt-6 border-t border-b border-ink grid grid-cols-2 md:grid-cols-3 lg:grid-cols-5 bg-paper">
         {[
           ["4", "Tests passés"],
           ["3", "Réussis"],
@@ -143,173 +83,99 @@ export default function ProfilePage() {
         ].map(([n, l], i) => (
           <div
             key={i}
-            style={{
-              padding: 12,
-              borderRight: i < 4 ? "1px solid var(--paper-line)" : 0,
-            }}
+            className={
+              "p-3 border-b border-paper-line lg:border-b-0 " +
+              (i < 4 ? "lg:border-r border-paper-line" : "")
+            }
           >
-            <div className="h-display" style={{ fontSize: 32 }}>
-              {n}
-            </div>
-            <div className="lbl" style={{ marginTop: 4 }}>
-              {l}
-            </div>
+            <div className="h-display text-[32px]">{n}</div>
+            <div className="lbl mt-1">{l}</div>
           </div>
         ))}
       </section>
 
-      <section
-        style={{
-          padding: "28px 28px",
-          borderBottom: "1px solid var(--ink)",
-          background: "var(--paper)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-            marginBottom: 16,
-          }}
-        >
+      <section className="px-4 py-7 md:px-7 border-b border-ink bg-paper">
+        <div className="flex flex-wrap justify-between items-baseline gap-3 mb-4">
           <div>
             <div className="h-section">—— Historique des tests</div>
-            <div className="h-title" style={{ fontSize: 28, marginTop: 4 }}>
+            <div className="h-title text-2xl md:text-[28px] mt-1">
               Vos QCM passés
             </div>
           </div>
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="flex flex-wrap gap-2">
             <button className="btn btn--ghost btn--sm">Exporter CSV</button>
             <Link href="/qcm/code" className="btn btn--primary btn--sm">
               Saisir un code <Icon.arrowR />
             </Link>
           </div>
         </div>
-        <div style={{ border: "1px solid var(--ink)" }}>
-          <div
-            className="mono"
-            style={{
-              display: "grid",
-              gridTemplateColumns: "1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px",
-              gap: 12,
-              padding: "10px 14px",
-              background: "var(--ink)",
-              color: "var(--paper)",
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-            }}
-          >
-            <span>Code</span>
-            <span>Date</span>
-            <span>Certification</span>
-            <span>Score</span>
-            <span>Statut</span>
-            <span>Durée</span>
-            <span></span>
-          </div>
-          {tests.map((t) => (
+        <div className="border border-ink overflow-x-auto -mx-4 px-4 md:mx-0 md:px-0">
+          <div className="min-w-[720px] md:min-w-0">
             <div
-              key={t.id}
+              className="mono px-3.5 py-2.5 bg-ink text-paper text-[10px] tracking-[0.08em] uppercase"
               style={{
                 display: "grid",
                 gridTemplateColumns: "1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px",
                 gap: 12,
-                padding: "14px",
-                borderBottom: "1px solid var(--paper-line)",
-                alignItems: "center",
               }}
             >
-              <span
-                className="mono"
-                style={{ fontSize: 11, letterSpacing: "0.04em" }}
-              >
-                {t.id}
-              </span>
-              <span
-                className="mono"
-                style={{ fontSize: 11, color: "var(--ink-mute)" }}
-              >
-                {t.date}
-              </span>
-              <span style={{ fontSize: 13, fontWeight: 500 }}>{t.cert}</span>
-              <span className="mono" style={{ fontSize: 14, fontWeight: 600 }}>
-                {t.score}
-                <span style={{ color: "var(--ink-mute)" }}>/{t.total}</span>
-              </span>
-              <span>
-                <Tag kind={t.status === "Réussi" ? "leaf" : "signal"}>
-                  {t.status}
-                </Tag>
-              </span>
-              <span
-                className="mono"
-                style={{ fontSize: 11, color: "var(--ink-mute)" }}
-              >
-                {t.dur}
-              </span>
-              <Link
-                href="/qcm/resultats"
-                className="mono"
+              <span>Code</span>
+              <span>Date</span>
+              <span>Certification</span>
+              <span>Score</span>
+              <span>Statut</span>
+              <span>Durée</span>
+              <span></span>
+            </div>
+            {tests.map((t) => (
+              <div
+                key={t.id}
+                className="p-3.5 border-b border-paper-line items-center"
                 style={{
-                  fontSize: 10,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--ink)",
-                  textDecoration: "none",
-                  borderBottom: "1px solid var(--ink)",
-                  justifySelf: "end",
+                  display: "grid",
+                  gridTemplateColumns: "1.4fr 1fr 1.2fr 0.7fr 1fr 0.8fr 100px",
+                  gap: 12,
                 }}
               >
-                Détail →
-              </Link>
-            </div>
-          ))}
+                <span className="mono text-[11px] tracking-[0.04em]">
+                  {t.id}
+                </span>
+                <span className="mono text-[11px] text-ink-mute">{t.date}</span>
+                <span className="text-[13px] font-medium">{t.cert}</span>
+                <span className="mono text-[14px] font-semibold">
+                  {t.score}
+                  <span className="text-ink-mute">/{t.total}</span>
+                </span>
+                <span>
+                  <Tag kind={t.status === "Réussi" ? "leaf" : "signal"}>
+                    {t.status}
+                  </Tag>
+                </span>
+                <span className="mono text-[11px] text-ink-mute">{t.dur}</span>
+                <Link
+                  href="/qcm/resultats"
+                  className="mono text-[10px] tracking-[0.08em] uppercase text-ink no-underline border-b border-ink justify-self-end"
+                >
+                  Détail →
+                </Link>
+              </div>
+            ))}
+          </div>
         </div>
 
-        <div
-          style={{
-            marginTop: 18,
-            border: "1px dashed var(--signal)",
-            background: "rgba(229,72,27,0.06)",
-            padding: 16,
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            gap: 16,
-            alignItems: "center",
-          }}
-        >
+        <div className="mt-4 border border-dashed border-signal bg-signal/[0.06] p-4 grid grid-cols-1 md:grid-cols-[1fr_auto] gap-4 items-center">
           <div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--signal)",
-              }}
-            >
+            <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
               ◉ PASS NON UTILISÉ
             </div>
-            <div className="h-title" style={{ fontSize: 22, marginTop: 4 }}>
+            <div className="h-title text-[22px] mt-1">
               Code{" "}
-              <span
-                className="mono"
-                style={{
-                  background: "var(--ink)",
-                  color: "var(--paper)",
-                  padding: "2px 8px",
-                }}
-              >
+              <span className="mono bg-ink text-paper px-2 py-0.5">
                 QCM-7H4K-9P2X-A1B6
               </span>{" "}
               — acheté le 25 avril.
             </div>
-            <div
-              className="mono"
-              style={{ fontSize: 11, color: "var(--ink-mute)", marginTop: 4 }}
-            >
+            <div className="mono text-[11px] text-ink-mute mt-1">
               Valable jusqu’au 25 octobre 2026 · Certification PAC Niv. 2
             </div>
           </div>
@@ -319,28 +185,15 @@ export default function ProfilePage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "28px 28px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 32,
-          background: "var(--paper)",
-        }}
-      >
+      <section className="px-4 py-7 md:px-7 border-b border-ink grid grid-cols-1 md:grid-cols-2 gap-8 bg-paper">
         <div>
-          <div className="h-section" style={{ marginBottom: 12 }}>
-            —— Lectures sauvegardées
-          </div>
+          <div className="h-section mb-3">—— Lectures sauvegardées</div>
           {SAMPLE_ARTICLES.slice(0, 4).map((it) => (
             <ArticleCard key={it.id} item={it} kind="mini" />
           ))}
         </div>
         <div>
-          <div className="h-section" style={{ marginBottom: 12 }}>
-            —— Mes commentaires récents
-          </div>
+          <div className="h-section mb-3">—— Mes commentaires récents</div>
           {[
             {
               on: "Pompes à chaleur air-eau : ce qui change…",
@@ -353,32 +206,11 @@ export default function ProfilePage() {
               t: "Attention au cumul avec les CEE — j’ai eu un dossier rejeté pour cette raison.",
             },
           ].map((c, i) => (
-            <div
-              key={i}
-              style={{
-                padding: "12px 0",
-                borderBottom: "1px solid var(--paper-line)",
-              }}
-            >
-              <div
-                className="mono"
-                style={{
-                  fontSize: 9,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-mute)",
-                }}
-              >
+            <div key={i} className="py-3 border-b border-paper-line">
+              <div className="mono text-[9px] tracking-[0.08em] uppercase text-ink-mute">
                 SUR — {c.on} · {c.when}
               </div>
-              <p
-                style={{
-                  fontSize: 13,
-                  color: "var(--ink-2)",
-                  margin: "6px 0 0",
-                  lineHeight: 1.45,
-                }}
-              >
+              <p className="text-[13px] text-ink-2 mt-1.5 leading-[1.45]">
                 {c.t}
               </p>
             </div>

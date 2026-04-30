@@ -31,9 +31,9 @@ export default function ArticlePage({
   ];
 
   return (
-    <div className="mc-root" style={{ width: 1280 }}>
+    <div className="mc-root w-full max-w-[1280px] mx-auto">
       <Header active="pompes" />
-      <section style={{ padding: "16px 28px 0" }}>
+      <section className="px-4 md:px-7 pt-4">
         <Breadcrumbs
           trail={[
             "Accueil",
@@ -44,44 +44,17 @@ export default function ArticlePage({
         />
       </section>
 
-      <section
-        style={{
-          padding: "24px 28px 28px",
-          borderBottom: "1px solid var(--ink)",
-        }}
-      >
-        <div style={{ maxWidth: 880 }}>
+      <section className="px-4 md:px-7 pt-6 pb-7 border-b border-ink">
+        <div className="max-w-[880px]">
           <Tag kind="signal">{a.cat} · Décryptage</Tag>
-          <h1
-            className="h-display"
-            style={{ fontSize: 56, margin: "14px 0 0", maxWidth: 920 }}
-          >
+          <h1 className="h-display text-3xl md:text-5xl lg:text-[56px] mt-3.5 max-w-[920px]">
             {a.title}
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--serif)",
-              fontStyle: "italic",
-              fontSize: 22,
-              color: "var(--ink-2)",
-              marginTop: 14,
-              maxWidth: 720,
-              lineHeight: 1.35,
-              letterSpacing: "-0.01em",
-            }}
-          >
+          <p className="font-serif italic text-lg md:text-xl lg:text-[22px] text-ink-2 mt-3.5 max-w-[720px] leading-snug tracking-tight">
             {a.dek}
           </p>
         </div>
-        <div
-          style={{
-            marginTop: 22,
-            display: "grid",
-            gridTemplateColumns: "1fr auto",
-            gap: 20,
-            alignItems: "center",
-          }}
-        >
+        <div className="mt-5 flex flex-col gap-4 md:grid md:grid-cols-[1fr_auto] md:gap-5 md:items-center">
           <ArticleMeta
             author={a.author}
             role="Journaliste senior · Pôle énergie"
@@ -90,7 +63,7 @@ export default function ArticlePage({
             readMin={a.read}
             category={`N° ${a.id}`}
           />
-          <div style={{ display: "flex", gap: 8 }}>
+          <div className="flex flex-wrap gap-2">
             <button className="btn btn--ghost btn--sm">
               <Icon.bookmark /> Sauver
             </button>
@@ -102,146 +75,68 @@ export default function ArticlePage({
         </div>
       </section>
 
-      <section
-        style={{ padding: "24px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
+      <section className="px-4 md:px-7 py-6 border-b border-ink">
         <Placeholder
           caption="hero · pompe à chaleur, intervention chez les Lefranc, Indre-et-Loire"
-          style={{ aspectRatio: "21/9" }}
+          className="aspect-[21/9]"
         />
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            marginTop: 8,
-            display: "flex",
-            justifyContent: "space-between",
-          }}
-        >
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute mt-2 flex flex-col md:flex-row md:justify-between gap-1">
           <span>Photo · Sophie Berthier pour Maison Calorie</span>
           <span>Fig. 01 — Unité Daikin Altherma 3 / coffret hydraulique</span>
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          display: "grid",
-          gridTemplateColumns: "200px 1fr 280px",
-          gap: 32,
-          borderBottom: "1px solid var(--ink)",
-        }}
-      >
-        <aside style={{ position: "sticky", top: 100, alignSelf: "start" }}>
-          <div className="h-section" style={{ marginBottom: 10 }}>
-            —— Sommaire
-          </div>
-          <ol style={{ listStyle: "none", padding: 0, margin: 0 }}>
+      <section className="px-4 md:px-7 py-8 grid grid-cols-1 lg:grid-cols-[200px_1fr_280px] gap-8 border-b border-ink">
+        <aside className="lg:sticky lg:top-[100px] lg:self-start">
+          <div className="h-section mb-2.5">—— Sommaire</div>
+          <ol className="list-none p-0 m-0">
             {sections.map((t, i) => (
               <li
                 key={t}
                 onClick={() => setActiveSection(i)}
-                style={{
-                  cursor: "pointer",
-                  padding: "6px 0 6px 12px",
-                  borderLeft:
-                    "2px solid " +
-                    (i === activeSection
-                      ? "var(--signal)"
-                      : "var(--paper-line)"),
-                  color: i === activeSection ? "var(--ink)" : "var(--ink-3)",
-                  fontSize: 12,
-                  fontWeight: i === activeSection ? 600 : 400,
-                }}
+                className={
+                  "cursor-pointer py-1.5 pl-3 border-l-2 text-xs " +
+                  (i === activeSection
+                    ? "border-signal text-ink font-semibold"
+                    : "border-paper-line text-ink-3 font-normal")
+                }
               >
-                <span
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    color: "var(--ink-mute)",
-                    marginRight: 6,
-                  }}
-                >
+                <span className="mono text-[10px] text-ink-mute mr-1.5">
                   0{i + 1}
                 </span>
                 {t}
               </li>
             ))}
           </ol>
-          <div
-            style={{
-              marginTop: 24,
-              padding: 12,
-              border: "1px solid var(--paper-line)",
-              background: "var(--paper-2)",
-            }}
-          >
+          <div className="mt-6 p-3 border border-paper-line bg-paper-2">
             <div className="lbl">Progression</div>
-            <div
-              style={{
-                height: 3,
-                background: "var(--paper-3)",
-                marginTop: 8,
-                position: "relative",
-              }}
-            >
-              <div
-                style={{
-                  width: "38%",
-                  height: "100%",
-                  background: "var(--signal)",
-                }}
-              />
+            <div className="h-[3px] bg-paper-3 mt-2 relative">
+              <div className="w-[38%] h-full bg-signal" />
             </div>
-            <div
-              className="mono"
-              style={{ fontSize: 10, color: "var(--ink-mute)", marginTop: 6 }}
-            >
+            <div className="mono text-[10px] text-ink-mute mt-1.5">
               3 min restantes
             </div>
           </div>
         </aside>
 
         <article>
-          <div
-            className="tick-frame"
-            style={{
-              padding: 16,
-              marginBottom: 22,
-              background: "var(--paper-2)",
-            }}
-          >
+          <div className="tick-frame p-4 mb-5 bg-paper-2">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
-            <div className="lbl" style={{ marginBottom: 8 }}>
-              L’ESSENTIEL · 30 SECONDES
-            </div>
-            <ul
-              style={{
-                margin: 0,
-                paddingLeft: 18,
-                fontSize: 13,
-                lineHeight: 1.6,
-                color: "var(--ink-2)",
-              }}
-            >
+            <div className="lbl mb-2">L’ESSENTIEL · 30 SECONDES</div>
+            <ul className="m-0 pl-[18px] text-[13px] leading-[1.6] text-ink-2">
               <li>
-                COP minimum imposé :{" "}
-                <strong style={{ color: "var(--ink)" }}>3,5</strong> (vs 3,2
-                auparavant).
+                COP minimum imposé : <strong className="text-ink">3,5</strong>{" "}
+                (vs 3,2 auparavant).
               </li>
               <li>
                 Plafond MaPrimeRénov’ ramené à{" "}
-                <strong style={{ color: "var(--ink)" }}>8 200 €</strong> (–10
-                %).
+                <strong className="text-ink">8 200 €</strong> (–10 %).
               </li>
               <li>Étude acoustique obligatoire si LDEN &gt; 65 dB(A).</li>
               <li>
                 Date d’effet :{" "}
-                <strong style={{ color: "var(--ink)" }}>
+                <strong className="text-ink">
                   1<sup>er</sup> octobre 2026
                 </strong>
                 .
@@ -292,21 +187,12 @@ export default function ArticlePage({
               <a href="#">simulateur MaPrimeRénov’ 2026</a>.
             </p>
 
-            <figure style={{ margin: "20px 0" }}>
+            <figure className="my-5">
               <Placeholder
                 caption="schéma · circuit hydraulique pac air-eau, basse température"
-                style={{ aspectRatio: "16/9" }}
+                className="aspect-[16/9]"
               />
-              <figcaption
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-mute)",
-                  marginTop: 6,
-                }}
-              >
+              <figcaption className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute mt-1.5">
                 Fig. 02 — Schéma hydraulique typique. Source : ADEME,
                 retraitement MC.
               </figcaption>
@@ -319,11 +205,11 @@ export default function ArticlePage({
               les régions.
             </p>
 
-            <div className="tick-frame" style={{ padding: 14, marginTop: 18 }}>
+            <div className="tick-frame p-3.5 mt-[18px]">
               <span className="tick-bl"></span>
               <span className="tick-br"></span>
               <div className="lbl">Documents joints</div>
-              <div style={{ marginTop: 10, display: "grid", gap: 8 }}>
+              <div className="mt-2.5 grid gap-2">
                 {[
                   ["Décret n° 2026-412 (texte intégral)", "PDF · 184 Ko"],
                   ["Comparatif COP 18 modèles 2026", "XLSX · 92 Ko"],
@@ -331,30 +217,12 @@ export default function ArticlePage({
                   <a
                     key={n}
                     href="#"
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "20px 1fr auto auto",
-                      gap: 10,
-                      alignItems: "center",
-                      padding: "8px 10px",
-                      border: "1px solid var(--paper-line)",
-                      textDecoration: "none",
-                      color: "var(--ink)",
-                      background: "var(--paper)",
-                    }}
+                    className="grid grid-cols-[20px_1fr_auto] md:grid-cols-[20px_1fr_auto_auto] gap-2.5 items-center px-2.5 py-2 border border-paper-line no-underline text-ink bg-paper"
                   >
                     <Icon.doc />
-                    <span style={{ fontSize: 13, fontWeight: 500 }}>{n}</span>
-                    <span
-                      className="mono"
-                      style={{ fontSize: 10, color: "var(--ink-mute)" }}
-                    >
-                      {s}
-                    </span>
-                    <span
-                      className="mono"
-                      style={{ fontSize: 10, color: "var(--signal)" }}
-                    >
+                    <span className="text-[13px] font-medium">{n}</span>
+                    <span className="mono text-[10px] text-ink-mute">{s}</span>
+                    <span className="mono text-[10px] text-signal hidden md:inline">
                       ↓ TÉLÉCHARGER
                     </span>
                   </a>
@@ -370,46 +238,21 @@ export default function ArticlePage({
             </p>
           </div>
 
-          <div
-            className="tick-frame"
-            style={{
-              marginTop: 28,
-              padding: 18,
-              display: "grid",
-              gridTemplateColumns: "64px 1fr",
-              gap: 16,
-            }}
-          >
+          <div className="tick-frame mt-7 p-[18px] grid grid-cols-[64px_1fr] gap-4">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
-            <Placeholder caption="LM" style={{ width: 64, height: 64 }} />
+            <Placeholder caption="LM" className="w-16 h-16" />
             <div>
-              <div style={{ fontSize: 16, fontWeight: 700 }}>Léa Marchand</div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.08em",
-                  textTransform: "uppercase",
-                  color: "var(--ink-mute)",
-                  marginTop: 2,
-                }}
-              >
+              <div className="text-base font-bold">Léa Marchand</div>
+              <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute mt-0.5">
                 JOURNALISTE SENIOR · 84 ARTICLES
               </div>
-              <p
-                style={{
-                  fontSize: 12,
-                  color: "var(--ink-3)",
-                  marginTop: 8,
-                  lineHeight: 1.5,
-                }}
-              >
+              <p className="text-xs text-ink-3 mt-2 leading-[1.5]">
                 Couvre la filière chauffage et la réglementation thermique
                 depuis 2018. Ancienne ingénieure thermicienne, lauréate du prix
                 Albert-Londres environnement 2024.
               </p>
-              <Link href="#" className="lnk" style={{ fontSize: 12 }}>
+              <Link href="#" className="lnk text-xs">
                 Tous ses articles →
               </Link>
             </div>
@@ -417,21 +260,21 @@ export default function ArticlePage({
         </article>
 
         <aside>
-          <div className="tick-frame" style={{ padding: 14 }}>
+          <div className="tick-frame p-3.5">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
             <div className="h-section">—— Articles liés</div>
-            <div style={{ marginTop: 10 }}>
+            <div className="mt-2.5">
               {SAMPLE_ARTICLES.slice(2, 6).map((it) => (
                 <ArticleCard key={it.id} item={it} kind="mini" />
               ))}
             </div>
           </div>
-          <div className="tick-frame" style={{ padding: 14, marginTop: 16 }}>
+          <div className="tick-frame p-3.5 mt-4">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
             <div className="h-section">—— Même rubrique</div>
-            <div style={{ marginTop: 10 }}>
+            <div className="mt-2.5">
               {SAMPLE_ARTICLES.filter((x) => x.cat === "Pompes à chaleur")
                 .slice(0, 4)
                 .map((it) => (
@@ -439,75 +282,29 @@ export default function ArticlePage({
                 ))}
             </div>
           </div>
-          <div
-            style={{
-              marginTop: 16,
-              padding: 14,
-              background: "var(--ink)",
-              color: "var(--paper)",
-              border: "1px solid var(--ink)",
-            }}
-          >
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--signal)",
-              }}
-            >
+          <div className="mt-4 p-3.5 bg-ink text-paper border border-ink">
+            <div className="mono text-[9px] tracking-[0.16em] uppercase text-signal">
               ◉ DEVENIR PRO
             </div>
-            <div
-              style={{
-                fontSize: 16,
-                fontWeight: 700,
-                marginTop: 6,
-                lineHeight: 1.2,
-              }}
-            >
+            <div className="text-base font-bold mt-1.5 leading-tight">
               Auditer ce type d’installation chez les particuliers ?
             </div>
-            <p
-              style={{
-                fontSize: 12,
-                color: "var(--paper-3)",
-                marginTop: 6,
-                lineHeight: 1.5,
-              }}
-            >
+            <p className="text-xs text-paper-3 mt-1.5 leading-[1.5]">
               Passez le QCM RGE pour accéder aux outils de diagnostic Maison
               Calorie.
             </p>
-            <Link
-              href="/qcm"
-              className="btn btn--signal btn--sm"
-              style={{ marginTop: 10 }}
-            >
+            <Link href="/qcm" className="btn btn--signal btn--sm mt-2.5">
               Voir le QCM →
             </Link>
           </div>
         </aside>
       </section>
 
-      <section
-        style={{ padding: "32px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
-        <div
-          style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 32 }}
-        >
+      <section className="px-4 md:px-7 py-8 border-b border-ink">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-8">
           <div className="h-section">—— En résumé</div>
           <div>
-            <ol
-              style={{
-                listStyle: "none",
-                padding: 0,
-                margin: 0,
-                display: "grid",
-                gap: 12,
-              }}
-            >
+            <ol className="list-none p-0 m-0 grid gap-3">
               {[
                 "Le décret du 14 avril 2026 relève le COP minimum des PAC subventionnées à 3,5.",
                 "Le plafond MaPrimeRénov’ est ramené à 8 200 € (–10 %).",
@@ -517,26 +314,12 @@ export default function ArticlePage({
               ].map((t, i) => (
                 <li
                   key={i}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "32px 1fr",
-                    gap: 12,
-                    paddingBottom: 12,
-                    borderBottom: "1px solid var(--paper-line)",
-                  }}
+                  className="grid grid-cols-[32px_1fr] gap-3 pb-3 border-b border-paper-line"
                 >
-                  <span
-                    className="mono"
-                    style={{
-                      fontSize: 22,
-                      fontWeight: 600,
-                      color: "var(--signal)",
-                      lineHeight: 1,
-                    }}
-                  >
+                  <span className="mono text-[22px] font-semibold text-signal leading-none">
                     0{i + 1}
                   </span>
-                  <span style={{ fontSize: 14, lineHeight: 1.45 }}>{t}</span>
+                  <span className="text-sm leading-[1.45]">{t}</span>
                 </li>
               ))}
             </ol>
@@ -544,72 +327,26 @@ export default function ArticlePage({
         </div>
       </section>
 
-      <section
-        style={{ padding: "32px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
-        <div
-          style={{ display: "grid", gridTemplateColumns: "200px 1fr", gap: 32 }}
-        >
+      <section className="px-4 md:px-7 py-8 border-b border-ink">
+        <div className="grid grid-cols-1 md:grid-cols-[200px_1fr] gap-6 md:gap-8">
           <div>
             <div className="h-section">—— Commentaires</div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 32,
-                fontWeight: 600,
-                marginTop: 6,
-                color: "var(--ink)",
-              }}
-            >
+            <div className="mono text-2xl md:text-[32px] font-semibold mt-1.5 text-ink">
               27
             </div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "var(--ink-mute)",
-              }}
-            >
+            <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute">
               réponses · 14 abonnés
             </div>
           </div>
           <div>
-            <div
-              style={{
-                border: "1px solid var(--ink)",
-                padding: 14,
-                background: "var(--paper-2)",
-              }}
-            >
+            <div className="border border-ink p-3.5 bg-paper-2">
               <textarea
-                className="field mono"
+                className="field mono font-mono text-xs resize-y"
                 rows={3}
                 placeholder="Votre commentaire — soyez factuel, citez vos sources."
-                style={{
-                  fontFamily: "var(--mono)",
-                  fontSize: 12,
-                  resize: "vertical",
-                }}
               />
-              <div
-                style={{
-                  marginTop: 10,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  alignItems: "center",
-                }}
-              >
-                <span
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    color: "var(--ink-mute)",
-                    letterSpacing: "0.06em",
-                    textTransform: "uppercase",
-                  }}
-                >
+              <div className="mt-2.5 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
+                <span className="mono text-[10px] text-ink-mute tracking-[0.06em] uppercase">
                   Markdown supporté · 1 200 caractères max
                 </span>
                 <button className="btn btn--primary btn--sm">Publier →</button>
@@ -643,100 +380,49 @@ export default function ArticlePage({
             ].map((c, i) => (
               <div
                 key={i}
-                style={{
-                  padding: "16px 0",
-                  borderBottom: "1px solid var(--paper-line)",
-                  marginLeft: c.isAuthor ? 24 : 0,
-                }}
+                className={
+                  "py-4 border-b border-paper-line " +
+                  (c.isAuthor ? "ml-3 md:ml-6" : "")
+                }
               >
-                <div
-                  style={{
-                    display: "flex",
-                    justifyContent: "space-between",
-                    alignItems: "baseline",
-                  }}
-                >
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 11,
-                      letterSpacing: "0.04em",
-                      textTransform: "uppercase",
-                    }}
-                  >
-                    <span style={{ color: "var(--ink)", fontWeight: 600 }}>
-                      {c.who}
-                    </span>
+                <div className="flex flex-col md:flex-row md:justify-between md:items-baseline gap-1">
+                  <div className="mono text-[11px] tracking-[0.04em] uppercase">
+                    <span className="text-ink font-semibold">{c.who}</span>
                     {c.isAuthor && (
-                      <Tag kind="signal" style={{ marginLeft: 8 }}>
-                        AUTEUR
-                      </Tag>
+                      <span className="ml-2">
+                        <Tag kind="signal">AUTEUR</Tag>
+                      </span>
                     )}
-                    <span style={{ color: "var(--ink-mute)", marginLeft: 8 }}>
-                      {c.role}
-                    </span>
+                    <span className="text-ink-mute ml-2">{c.role}</span>
                   </div>
-                  <span
-                    className="mono"
-                    style={{ fontSize: 10, color: "var(--ink-mute)" }}
-                  >
+                  <span className="mono text-[10px] text-ink-mute">
                     {c.when}
                   </span>
                 </div>
-                <p
-                  style={{
-                    fontSize: 14,
-                    color: "var(--ink-2)",
-                    marginTop: 6,
-                    lineHeight: 1.5,
-                  }}
-                >
+                <p className="text-sm text-ink-2 mt-1.5 leading-[1.5]">
                   {c.text}
                 </p>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                    color: "var(--ink-mute)",
-                    marginTop: 6,
-                    display: "flex",
-                    gap: 14,
-                  }}
-                >
-                  <a
-                    href="#"
-                    style={{ color: "var(--ink)", textDecoration: "none" }}
-                  >
+                <div className="mono text-[10px] tracking-[0.04em] uppercase text-ink-mute mt-1.5 flex gap-3.5">
+                  <a href="#" className="text-ink no-underline">
                     ↑ Utile · {c.up}
                   </a>
-                  <a
-                    href="#"
-                    style={{ color: "var(--ink-mute)", textDecoration: "none" }}
-                  >
+                  <a href="#" className="text-ink-mute no-underline">
                     Répondre
                   </a>
-                  <a
-                    href="#"
-                    style={{ color: "var(--ink-mute)", textDecoration: "none" }}
-                  >
+                  <a href="#" className="text-ink-mute no-underline">
                     Signaler
                   </a>
                 </div>
               </div>
             ))}
-            <button
-              className="btn btn--ghost btn--sm"
-              style={{ marginTop: 12 }}
-            >
+            <button className="btn btn--ghost btn--sm mt-3">
               Voir 24 réponses de plus ↓
             </button>
           </div>
         </div>
       </section>
 
-      <section style={{ padding: "36px 28px" }}>
+      <section className="px-4 md:px-7 py-9">
         <NewsletterBlock />
       </section>
       <Footer />

@@ -55,108 +55,56 @@ export default function QCMStatsPage() {
     .join(" ");
 
   return (
-    <div
-      className="mc-root"
-      style={{ width: 1280, background: "var(--paper-2)" }}
-    >
+    <div className="mc-root w-full max-w-[1280px] mx-auto bg-paper-2">
       <AccountHeader active="profile#tests" />
 
-      <section style={{ padding: "20px 28px 0" }}>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            display: "flex",
-            gap: 8,
-            alignItems: "center",
-          }}
-        >
+      <section className="px-4 pt-5 md:px-7">
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-wrap gap-2 items-center">
           <Link
             href="/profil"
-            className="lnk"
-            style={{ color: "var(--ink-mute)", borderColor: "transparent" }}
+            className="lnk text-ink-mute border-transparent"
           >
             Mon espace
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>/</span>
+          <span className="text-paper-line">/</span>
           <Link
             href="/profil"
-            className="lnk"
-            style={{ color: "var(--ink-mute)", borderColor: "transparent" }}
+            className="lnk text-ink-mute border-transparent"
           >
             Mes QCM
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>/</span>
+          <span className="text-paper-line">/</span>
           <Link
             href="/qcm/resultats"
-            className="lnk"
-            style={{ color: "var(--ink-mute)", borderColor: "transparent" }}
+            className="lnk text-ink-mute border-transparent"
           >
             Session du 27 avril
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>/</span>
-          <span
-            style={{
-              color: "var(--ink)",
-              borderBottom: "1px solid var(--ink)",
-            }}
-          >
+          <span className="text-paper-line">/</span>
+          <span className="text-ink border-b border-ink">
             Statistiques détaillées
           </span>
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "24px 28px 32px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gap: 24,
-          alignItems: "flex-end",
-        }}
-      >
+      <section className="px-4 py-6 md:px-7 md:py-8 border-b border-ink grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-end">
         <div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ STATISTIQUES — TOUTES SESSIONS CONFONDUES
           </div>
-          <h1
-            className="h-display"
-            style={{ fontSize: 64, margin: "8px 0 0", lineHeight: 1 }}
-          >
+          <h1 className="h-display text-4xl md:text-5xl lg:text-[64px] mt-2 leading-none">
             Vous progressez,
             <br />
-            <span style={{ color: "var(--signal)" }}>+6 points</span> en 4 mois.
+            <span className="text-signal">+6 points</span> en 4 mois.
           </h1>
-          <p
-            style={{
-              fontFamily: "var(--serif)",
-              fontStyle: "italic",
-              fontSize: 16,
-              color: "var(--ink-3)",
-              maxWidth: 640,
-              marginTop: 12,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="font-serif italic text-[16px] text-ink-3 max-w-[640px] mt-3 leading-[1.5]">
             5 sessions passées entre janvier et avril 2026. Score moyen{" "}
             <strong>25,4 / 30</strong> — au-dessus de la moyenne du cohorte (
             <strong>21,8 / 30</strong>). Vous êtes dans le{" "}
             <strong>top 12 %</strong> des candidats RGE.
           </p>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex flex-wrap gap-2">
           <button className="btn btn--ghost btn--sm">Exporter PDF</button>
           <Link href="/qcm" className="btn btn--primary btn--sm">
             Acheter un nouveau pass <Icon.arrowR />
@@ -164,15 +112,7 @@ export default function QCMStatsPage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "0",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "repeat(5, 1fr)",
-          background: "var(--paper)",
-        }}
-      >
+      <section className="border-b border-ink grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-5 bg-paper">
         {[
           ["25,4 / 30", "Score moyen", "↑ +1,2 vs cohorte"],
           ["90 %", "Meilleure session", "27 avril 2026"],
@@ -182,66 +122,31 @@ export default function QCMStatsPage() {
         ].map(([n, l, d], i) => (
           <div
             key={i}
-            style={{
-              padding: "20px 22px",
-              borderRight: i < 4 ? "1px solid var(--paper-line)" : 0,
-            }}
+            className={
+              "px-5 py-5 border-b border-paper-line lg:border-b-0 " +
+              (i < 4 ? "lg:border-r border-paper-line" : "")
+            }
           >
-            <div
-              className="h-display"
-              style={{ fontSize: 36, lineHeight: 1, letterSpacing: "-0.03em" }}
-            >
+            <div className="h-display text-[36px] leading-none tracking-[-0.03em]">
               {n}
             </div>
-            <div className="lbl" style={{ marginTop: 6 }}>
-              {l}
-            </div>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                color: "var(--signal)",
-                marginTop: 4,
-                letterSpacing: "0.04em",
-              }}
-            >
+            <div className="lbl mt-1.5">{l}</div>
+            <div className="mono text-[10px] text-signal mt-1 tracking-[0.04em]">
               {d}
             </div>
           </div>
         ))}
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1.4fr 1fr",
-          gap: 32,
-          background: "var(--paper)",
-        }}
-      >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 bg-paper">
         <div>
           <div className="h-section">—— Progression dans le temps</div>
-          <div className="h-title" style={{ fontSize: 24, marginTop: 4 }}>
+          <div className="h-title text-2xl md:text-[24px] mt-1">
             Score sur 30, 5 dernières sessions.
           </div>
 
-          <div
-            className="gridpaper"
-            style={{
-              marginTop: 20,
-              border: "1px solid var(--ink)",
-              padding: "16px 18px",
-              position: "relative",
-              background: "var(--paper)",
-            }}
-          >
-            <svg
-              viewBox={`0 0 ${W} ${H}`}
-              width="100%"
-              style={{ display: "block" }}
-            >
+          <div className="gridpaper mt-5 border border-ink p-4 md:px-[18px] md:py-4 relative bg-paper">
+            <svg viewBox={`0 0 ${W} ${H}`} width="100%" className="block">
               {[0, 10, 21, 30].map((v) => {
                 const y = H - P - (v / 30) * (H - 2 * P);
                 return (
@@ -322,144 +227,46 @@ export default function QCMStatsPage() {
                 strokeWidth="1.5"
               />
             </svg>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.06em",
-                color: "var(--ink-mute)",
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: 8,
-              }}
-            >
+            <div className="mono text-[10px] tracking-[0.06em] text-ink-mute flex justify-between mt-2">
               <span>Janvier 2026</span>
               <span>Avril 2026</span>
             </div>
           </div>
 
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              color: "var(--ink-3)",
-              marginTop: 10,
-              display: "flex",
-              gap: 14,
-            }}
-          >
+          <div className="mono text-[11px] text-ink-3 mt-2.5 flex flex-wrap gap-3.5">
             <span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 10,
-                  height: 2,
-                  background: "var(--ink)",
-                  verticalAlign: "middle",
-                }}
-              ></span>{" "}
+              <span className="inline-block w-2.5 h-0.5 bg-ink align-middle"></span>{" "}
               Votre score
             </span>
             <span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 10,
-                  height: 0,
-                  borderTop: "1.5px dashed var(--signal)",
-                  verticalAlign: "middle",
-                }}
-              ></span>{" "}
+              <span className="inline-block w-2.5 h-0 border-t-[1.5px] border-dashed border-signal align-middle"></span>{" "}
               Seuil de réussite (21 / 30)
             </span>
-            <span
-              style={{
-                marginLeft: "auto",
-                color: "var(--ink-mute)",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                fontSize: 10,
-              }}
-            >
+            <span className="md:ml-auto text-ink-mute tracking-[0.04em] uppercase text-[10px]">
               Source : 5 passages QCM RGE
             </span>
           </div>
         </div>
 
-        <div
-          style={{
-            border: "1px solid var(--ink)",
-            padding: 22,
-            background: "var(--ink)",
-            color: "var(--paper)",
-          }}
-        >
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+        <div className="border border-ink p-5 md:p-[22px] bg-ink text-paper">
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ POSITIONNEMENT
           </div>
-          <div
-            style={{
-              fontFamily: "var(--serif)",
-              fontSize: 22,
-              marginTop: 8,
-              lineHeight: 1.25,
-            }}
-          >
+          <div className="font-serif text-[22px] mt-2 leading-[1.25]">
             Vous êtes dans le{" "}
-            <span
-              className="h-display"
-              style={{
-                fontSize: 80,
-                color: "var(--signal)",
-                lineHeight: 1,
-                display: "block",
-                marginTop: 6,
-              }}
-            >
+            <span className="h-display text-5xl md:text-[80px] text-signal leading-none block mt-1.5">
               TOP 12 %
             </span>
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              color: "var(--paper-3)",
-              marginTop: 6,
-              letterSpacing: "0.04em",
-            }}
-          >
+          <div className="mono text-[11px] text-paper-3 mt-1.5 tracking-[0.04em]">
             sur 1 200 candidats certifiés RGE en 2026.
           </div>
 
-          <div style={{ marginTop: 22 }}>
-            <div
-              className="mono"
-              style={{
-                fontSize: 9,
-                letterSpacing: "0.12em",
-                textTransform: "uppercase",
-                color: "var(--paper-3)",
-                marginBottom: 8,
-              }}
-            >
+          <div className="mt-5">
+            <div className="mono text-[9px] tracking-[0.12em] uppercase text-paper-3 mb-2">
               DISTRIBUTION DES SCORES — COHORTE
             </div>
-            <div
-              style={{
-                display: "flex",
-                gap: 3,
-                alignItems: "flex-end",
-                height: 80,
-              }}
-            >
+            <div className="flex gap-[3px] items-end h-20">
               {[8, 14, 22, 31, 38, 46, 64, 78, 92, 88, 72, 54, 41].map(
                 (v, i, a) => {
                   const x = (i / (a.length - 1)) * 30;
@@ -467,27 +274,14 @@ export default function QCMStatsPage() {
                   return (
                     <div
                       key={i}
-                      style={{
-                        flex: 1,
-                        height: v + "%",
-                        background: isMe ? "var(--signal)" : "var(--paper-3)",
-                        position: "relative",
-                      }}
+                      className={
+                        "flex-1 relative " +
+                        (isMe ? "bg-signal" : "bg-paper-3")
+                      }
+                      style={{ height: v + "%" }}
                     >
                       {isMe && (
-                        <div
-                          className="mono"
-                          style={{
-                            position: "absolute",
-                            top: -16,
-                            left: "50%",
-                            transform: "translateX(-50%)",
-                            fontSize: 9,
-                            color: "var(--signal)",
-                            whiteSpace: "nowrap",
-                            letterSpacing: "0.08em",
-                          }}
-                        >
+                        <div className="mono absolute -top-4 left-1/2 -translate-x-1/2 text-[9px] text-signal whitespace-nowrap tracking-[0.08em]">
                           VOUS · 27
                         </div>
                       )}
@@ -496,33 +290,14 @@ export default function QCMStatsPage() {
                 },
               )}
             </div>
-            <div
-              className="mono"
-              style={{
-                display: "flex",
-                justifyContent: "space-between",
-                marginTop: 6,
-                fontSize: 9,
-                color: "var(--paper-3)",
-                letterSpacing: "0.06em",
-              }}
-            >
+            <div className="mono flex justify-between mt-1.5 text-[9px] text-paper-3 tracking-[0.06em]">
               <span>0</span>
               <span>15</span>
               <span>30</span>
             </div>
           </div>
 
-          <div
-            style={{
-              borderTop: "1px solid var(--paper-3)",
-              marginTop: 22,
-              paddingTop: 16,
-              display: "grid",
-              gridTemplateColumns: "1fr 1fr",
-              gap: 14,
-            }}
-          >
+          <div className="border-t border-paper-3 mt-5 pt-4 grid grid-cols-2 gap-3.5">
             {[
               ["Médiane cohorte", "21,8 / 30"],
               ["Votre score moyen", "25,4 / 30"],
@@ -530,180 +305,85 @@ export default function QCMStatsPage() {
               ["Vous y êtes", "+3,6 σ"],
             ].map(([k, v]) => (
               <div key={k}>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 9,
-                    letterSpacing: "0.1em",
-                    textTransform: "uppercase",
-                    color: "var(--paper-3)",
-                  }}
-                >
+                <div className="mono text-[9px] tracking-[0.1em] uppercase text-paper-3">
                   {k}
                 </div>
-                <div
-                  className="mono"
-                  style={{ fontSize: 16, fontWeight: 600, marginTop: 2 }}
-                >
-                  {v}
-                </div>
+                <div className="mono text-[16px] font-semibold mt-0.5">{v}</div>
               </div>
             ))}
           </div>
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          borderBottom: "1px solid var(--ink)",
-          background: "var(--paper)",
-        }}
-      >
-        <div
-          style={{
-            display: "flex",
-            justifyContent: "space-between",
-            alignItems: "baseline",
-          }}
-        >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink bg-paper">
+        <div className="flex flex-wrap justify-between items-baseline gap-3">
           <div>
             <div className="h-section">—— Maîtrise par thème</div>
-            <div className="h-title" style={{ fontSize: 24, marginTop: 4 }}>
+            <div className="h-title text-2xl md:text-[24px] mt-1">
               Vous, vs la cohorte certifiée RGE.
             </div>
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              display: "flex",
-              gap: 14,
-            }}
-          >
+          <div className="mono text-[10px] text-ink-mute tracking-[0.06em] uppercase flex gap-3.5">
             <span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 12,
-                  height: 6,
-                  background: "var(--ink)",
-                  verticalAlign: "middle",
-                }}
-              ></span>{" "}
+              <span className="inline-block w-3 h-1.5 bg-ink align-middle"></span>{" "}
               Vous
             </span>
             <span>
-              <span
-                style={{
-                  display: "inline-block",
-                  width: 12,
-                  height: 6,
-                  background: "var(--paper-line)",
-                  verticalAlign: "middle",
-                }}
-              ></span>{" "}
+              <span className="inline-block w-3 h-1.5 bg-paper-line align-middle"></span>{" "}
               Cohorte
             </span>
           </div>
         </div>
 
-        <div style={{ marginTop: 22, display: "grid", gap: 16 }}>
+        <div className="mt-5 grid gap-4">
           {cats.map((c) => (
             <div
               key={c.c}
-              style={{
-                display: "grid",
-                gridTemplateColumns: "220px 1fr 80px",
-                gap: 16,
-                alignItems: "center",
-                padding: "8px 0",
-                borderBottom: "1px dashed var(--paper-line)",
-              }}
+              className="grid grid-cols-1 md:grid-cols-[220px_1fr_80px] gap-4 items-center py-2 border-b border-dashed border-paper-line"
             >
               <div>
-                <div style={{ fontSize: 14, fontWeight: 600 }}>{c.c}</div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 10,
-                    color: "var(--ink-mute)",
-                    letterSpacing: "0.04em",
-                    marginTop: 2,
-                  }}
-                >
+                <div className="text-[14px] font-semibold">{c.c}</div>
+                <div className="mono text-[10px] text-ink-mute tracking-[0.04em] mt-0.5">
                   {c.n} questions
                 </div>
               </div>
-              <div style={{ position: "relative", height: 28 }}>
+              <div className="relative h-7">
+                <div className="absolute inset-0 bg-paper-2 border border-paper-line"></div>
                 <div
-                  style={{
-                    position: "absolute",
-                    inset: 0,
-                    background: "var(--paper-2)",
-                    border: "1px solid var(--paper-line)",
-                  }}
+                  className="absolute left-0 top-1 bottom-1 bg-paper-line"
+                  style={{ width: c.cohort + "%" }}
                 ></div>
                 <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    top: 4,
-                    bottom: 4,
-                    width: c.cohort + "%",
-                    background: "var(--paper-line)",
-                  }}
-                ></div>
-                <div
-                  style={{
-                    position: "absolute",
-                    left: 0,
-                    top: 8,
-                    bottom: 8,
-                    width: c.mine + "%",
-                    background:
-                      c.mine >= c.cohort ? "var(--ink)" : "var(--signal)",
-                  }}
+                  className={
+                    "absolute left-0 top-2 bottom-2 " +
+                    (c.mine >= c.cohort ? "bg-ink" : "bg-signal")
+                  }
+                  style={{ width: c.mine + "%" }}
                 ></div>
                 <span
-                  className="mono"
+                  className="mono absolute top-1 text-[11px] font-semibold text-ink"
                   style={{
-                    position: "absolute",
                     left: c.mine + "%",
-                    top: 4,
                     transform: "translateX(4px)",
-                    fontSize: 11,
-                    fontWeight: 600,
-                    color: "var(--ink)",
                   }}
                 >
                   {c.mine}%
                 </span>
                 <span
-                  className="mono"
+                  className="mono absolute bottom-0 text-[9px] text-ink-mute"
                   style={{
-                    position: "absolute",
                     left: c.cohort + "%",
-                    bottom: 0,
                     transform: "translateX(4px)",
-                    fontSize: 9,
-                    color: "var(--ink-mute)",
                   }}
                 >
                   {c.cohort}% cohorte
                 </span>
               </div>
               <div
-                className="mono"
-                style={{
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: c.mine >= c.cohort ? "var(--leaf)" : "var(--signal)",
-                  textAlign: "right",
-                }}
+                className={
+                  "mono text-[14px] font-semibold text-right " +
+                  (c.mine >= c.cohort ? "text-leaf" : "text-signal")
+                }
               >
                 {c.mine - c.cohort >= 0 ? "+" : ""}
                 {c.mine - c.cohort} pts
@@ -713,81 +393,40 @@ export default function QCMStatsPage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 32,
-          background: "var(--paper)",
-        }}
-      >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink grid grid-cols-1 md:grid-cols-2 gap-8 bg-paper">
         <div>
           <div className="h-section">—— Points faibles à retravailler</div>
-          <div
-            style={{
-              fontFamily: "var(--serif)",
-              fontStyle: "italic",
-              fontSize: 14,
-              color: "var(--ink-3)",
-              marginTop: 4,
-            }}
-          >
+          <div className="font-serif italic text-[14px] text-ink-3 mt-1">
             Thèmes où votre taux de bonnes réponses est en-dessous de la
             cohorte.
           </div>
-          <div style={{ marginTop: 14, border: "1px solid var(--ink)" }}>
+          <div className="mt-3.5 border border-ink">
             {themesWeak.map((t, i) => (
               <div
                 key={t.theme}
-                style={{
-                  padding: "14px 16px",
-                  display: "grid",
-                  gridTemplateColumns: "1fr 70px 80px",
-                  gap: 10,
-                  alignItems: "center",
-                  borderBottom:
-                    i < themesWeak.length - 1
-                      ? "1px solid var(--paper-line)"
-                      : 0,
-                }}
+                className={
+                  "px-4 py-3.5 grid grid-cols-[1fr_70px_80px] gap-2.5 items-center " +
+                  (i < themesWeak.length - 1
+                    ? "border-b border-paper-line"
+                    : "")
+                }
               >
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 500 }}>{t.theme}</div>
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 10,
-                      color: "var(--ink-mute)",
-                      letterSpacing: "0.04em",
-                      marginTop: 2,
-                    }}
-                  >
+                  <div className="text-[14px] font-medium">{t.theme}</div>
+                  <div className="mono text-[10px] text-ink-mute tracking-[0.04em] mt-0.5">
                     {t.q} questions au total
                   </div>
                 </div>
-                <div
-                  className="mono"
-                  style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)" }}
-                >
+                <div className="mono text-[16px] font-semibold text-ink">
                   {t.taux}
                 </div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: "var(--signal)",
-                    textAlign: "right",
-                  }}
-                >
+                <div className="mono text-[12px] font-semibold text-signal text-right">
                   {t.delta}
                 </div>
               </div>
             ))}
           </div>
-          <div style={{ marginTop: 14 }}>
+          <div className="mt-3.5">
             <Link href="/rubriques/pompes" className="btn btn--ghost btn--sm">
               Lire les articles liés <Icon.arrowR />
             </Link>
@@ -796,62 +435,30 @@ export default function QCMStatsPage() {
 
         <div>
           <div className="h-section">—— Vos points forts</div>
-          <div
-            style={{
-              fontFamily: "var(--serif)",
-              fontStyle: "italic",
-              fontSize: 14,
-              color: "var(--ink-3)",
-              marginTop: 4,
-            }}
-          >
+          <div className="font-serif italic text-[14px] text-ink-3 mt-1">
             Thèmes où vous dépassez la moyenne — votre signature d’expert.
           </div>
-          <div style={{ marginTop: 14, border: "1px solid var(--ink)" }}>
+          <div className="mt-3.5 border border-ink">
             {themesStrong.map((t, i) => (
               <div
                 key={t.theme}
-                style={{
-                  padding: "14px 16px",
-                  display: "grid",
-                  gridTemplateColumns: "1fr 70px 80px",
-                  gap: 10,
-                  alignItems: "center",
-                  borderBottom:
-                    i < themesStrong.length - 1
-                      ? "1px solid var(--paper-line)"
-                      : 0,
-                }}
+                className={
+                  "px-4 py-3.5 grid grid-cols-[1fr_70px_80px] gap-2.5 items-center " +
+                  (i < themesStrong.length - 1
+                    ? "border-b border-paper-line"
+                    : "")
+                }
               >
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 500 }}>{t.theme}</div>
-                  <div
-                    className="mono"
-                    style={{
-                      fontSize: 10,
-                      color: "var(--ink-mute)",
-                      letterSpacing: "0.04em",
-                      marginTop: 2,
-                    }}
-                  >
+                  <div className="text-[14px] font-medium">{t.theme}</div>
+                  <div className="mono text-[10px] text-ink-mute tracking-[0.04em] mt-0.5">
                     {t.q} questions au total
                   </div>
                 </div>
-                <div
-                  className="mono"
-                  style={{ fontSize: 16, fontWeight: 600, color: "var(--ink)" }}
-                >
+                <div className="mono text-[16px] font-semibold text-ink">
                   {t.taux}
                 </div>
-                <div
-                  className="mono"
-                  style={{
-                    fontSize: 12,
-                    fontWeight: 600,
-                    color: "var(--leaf)",
-                    textAlign: "right",
-                  }}
-                >
+                <div className="mono text-[12px] font-semibold text-leaf text-right">
                   {t.delta}
                 </div>
               </div>
@@ -860,28 +467,13 @@ export default function QCMStatsPage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "32px 28px",
-          borderBottom: "1px solid var(--ink)",
-          background: "var(--paper-2)",
-        }}
-      >
+      <section className="px-4 py-7 md:px-7 md:py-8 border-b border-ink bg-paper-2">
         <div className="h-section">—— Gestion du temps</div>
-        <div className="h-title" style={{ fontSize: 24, marginTop: 4 }}>
+        <div className="h-title text-2xl md:text-[24px] mt-1">
           Vous allez plus vite que la moyenne.
         </div>
 
-        <div
-          style={{
-            marginTop: 22,
-            display: "grid",
-            gridTemplateColumns: "1fr 1fr 1fr",
-            gap: 0,
-            border: "1px solid var(--ink)",
-            background: "var(--paper)",
-          }}
-        >
+        <div className="mt-5 grid grid-cols-1 md:grid-cols-3 border border-ink bg-paper">
           {[
             ["28 sec", "Temps moyen / question", "−10 sec vs cohorte (38 s)"],
             [
@@ -897,29 +489,14 @@ export default function QCMStatsPage() {
           ].map(([n, l, d], i) => (
             <div
               key={i}
-              style={{
-                padding: "20px 22px",
-                borderRight: i < 2 ? "1px solid var(--paper-line)" : 0,
-              }}
+              className={
+                "px-5 py-5 border-b border-paper-line md:border-b-0 " +
+                (i < 2 ? "md:border-r border-paper-line" : "")
+              }
             >
-              <div
-                className="h-display"
-                style={{ fontSize: 38, lineHeight: 1 }}
-              >
-                {n}
-              </div>
-              <div className="lbl" style={{ marginTop: 6 }}>
-                {l}
-              </div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  color: "var(--ink-mute)",
-                  letterSpacing: "0.04em",
-                  marginTop: 6,
-                }}
-              >
+              <div className="h-display text-[38px] leading-none">{n}</div>
+              <div className="lbl mt-1.5">{l}</div>
+              <div className="mono text-[10px] text-ink-mute tracking-[0.04em] mt-1.5">
                 {d}
               </div>
             </div>
@@ -927,62 +504,27 @@ export default function QCMStatsPage() {
         </div>
       </section>
 
-      <section
-        style={{
-          padding: "36px 28px",
-          background: "var(--ink)",
-          color: "var(--paper)",
-          display: "grid",
-          gridTemplateColumns: "1fr auto",
-          gap: 24,
-          alignItems: "center",
-        }}
-      >
+      <section className="px-4 py-9 md:px-7 bg-ink text-paper grid grid-cols-1 md:grid-cols-[1fr_auto] gap-6 items-center">
         <div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ NOTRE RECOMMANDATION
           </div>
-          <div
-            className="h-display"
-            style={{ fontSize: 32, marginTop: 8, lineHeight: 1.1 }}
-          >
+          <div className="h-display text-2xl md:text-[32px] mt-2 leading-[1.1]">
             Tentez la{" "}
-            <span style={{ color: "var(--signal)" }}>
-              certification PAC niveau 3
-            </span>
-            .
+            <span className="text-signal">certification PAC niveau 3</span>.
           </div>
-          <div
-            style={{
-              fontSize: 14,
-              color: "var(--paper-3)",
-              marginTop: 8,
-              maxWidth: 720,
-              lineHeight: 1.5,
-            }}
-          >
+          <div className="text-[14px] text-paper-3 mt-2 max-w-[720px] leading-[1.5]">
             Avec <strong>92 % de réussite</strong> sur les pompes à chaleur et
             un <strong>+29 pts</strong> vs la cohorte, vous êtes prêt pour le
             palier supérieur. Pass à 79 € — examen 60 questions, certification
             valable 3 ans.
           </div>
         </div>
-        <div style={{ display: "flex", flexDirection: "column", gap: 8 }}>
+        <div className="flex flex-col gap-2">
           <Link href="/qcm" className="btn btn--signal">
             Acheter le pass Niv. 3 <Icon.arrowR />
           </Link>
-          <button
-            className="btn btn--ghost"
-            style={{ borderColor: "var(--paper-3)", color: "var(--paper)" }}
-          >
+          <button className="btn btn--ghost border-paper-3 text-paper">
             Voir le programme
           </button>
         </div>

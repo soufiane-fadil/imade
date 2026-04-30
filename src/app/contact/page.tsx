@@ -30,261 +30,112 @@ export default function ContactPage() {
     ["Téléphone (lun-ven 9h-18h)", "+33 (0)1 84 60 14 20"],
   ];
   return (
-    <div className="mc-root" style={{ width: 1280 }}>
+    <div className="mc-root w-full max-w-[1280px] mx-auto">
       <Header />
-      <section style={{ padding: "20px 28px 0" }}>
+      <section className="px-4 md:px-7 pt-5">
         <Breadcrumbs trail={["Accueil", "Contact"]} />
       </section>
-      <section
-        style={{ padding: "24px 28px", borderBottom: "1px solid var(--ink)" }}
-      >
+      <section className="px-4 md:px-7 py-6 border-b border-ink">
         <Tag kind="signal">Bureau éditorial</Tag>
-        <h1 className="h-display" style={{ fontSize: 64, margin: "8px 0 0" }}>
+        <h1 className="h-display text-4xl md:text-5xl lg:text-[64px] mt-2">
           Écrivez-nous.
         </h1>
-        <p
-          style={{
-            fontSize: 16,
-            color: "var(--ink-3)",
-            marginTop: 10,
-            maxWidth: 620,
-            lineHeight: 1.5,
-          }}
-        >
+        <p className="text-base text-ink-3 mt-2.5 max-w-[620px] leading-[1.5]">
           Une question, un sujet d’enquête, une erreur à signaler ? L’équipe lit
           tout — nous répondons sous 48 h en jours ouvrés.
         </p>
       </section>
-      <section
-        style={{
-          padding: "32px 28px",
-          display: "grid",
-          gridTemplateColumns: "1.2fr 1fr",
-          gap: 48,
-          borderBottom: "1px solid var(--ink)",
-        }}
-      >
-        <div
-          style={{
-            border: "1px solid var(--ink)",
-            background: "var(--paper)",
-            maxWidth: 640,
-          }}
-        >
-          <div
-            style={{
-              padding: "14px 22px",
-              borderBottom: "1px solid var(--ink)",
-              background: "var(--paper-2)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
+      <section className="px-4 md:px-7 py-8 grid grid-cols-1 md:grid-cols-[1.2fr_1fr] gap-8 lg:gap-12 border-b border-ink">
+        <div className="border border-ink bg-paper max-w-full md:max-w-[640px]">
+          <div className="px-4 md:px-[22px] py-3.5 border-b border-ink bg-paper-2 flex flex-col md:flex-row md:justify-between md:items-center gap-2">
             <div>
-              <div
-                className="mono"
-                style={{
-                  fontSize: 10,
-                  letterSpacing: "0.12em",
-                  textTransform: "uppercase",
-                  color: "var(--signal)",
-                }}
-              >
+              <div className="mono text-[10px] tracking-[0.12em] uppercase text-signal">
                 ◉ FORMULAIRE DE CONTACT
               </div>
-              <div
-                style={{
-                  fontFamily: "var(--serif)",
-                  fontSize: 22,
-                  marginTop: 2,
-                  letterSpacing: "-0.01em",
-                }}
-              >
+              <div className="font-serif text-lg md:text-[22px] mt-0.5 tracking-tight">
                 Remplissez les champs ci-dessous.
               </div>
             </div>
-            <span
-              className="mono"
-              style={{
-                fontSize: 11,
-                color: "var(--ink-mute)",
-                letterSpacing: "0.04em",
-              }}
-            >
+            <span className="mono text-[11px] text-ink-mute tracking-[0.04em]">
               Étape 1 / 1
             </span>
           </div>
 
-          <form style={{ display: "grid", gap: 22, padding: "24px 22px" }}>
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "24px 1fr",
-                gap: 10,
-                padding: "10px 12px",
-                background: "var(--paper-2)",
-                border: "1px dashed var(--paper-line)",
-              }}
-            >
-              <span
-                style={{
-                  fontFamily: "var(--serif)",
-                  fontSize: 18,
-                  color: "var(--signal)",
-                  textAlign: "center",
-                  lineHeight: 1,
-                }}
-              >
+          <form className="grid gap-5 px-4 md:px-[22px] py-6">
+            <div className="grid grid-cols-[24px_1fr] gap-2.5 px-3 py-2.5 bg-paper-2 border border-dashed border-paper-line">
+              <span className="font-serif text-lg text-signal text-center leading-none">
                 ⓘ
               </span>
-              <div
-                style={{
-                  fontSize: 13,
-                  color: "var(--ink-3)",
-                  lineHeight: 1.45,
-                }}
-              >
+              <div className="text-[13px] text-ink-3 leading-[1.45]">
                 Les champs marqués d’une étoile{" "}
-                <span style={{ color: "var(--signal)" }}>*</span> sont
-                obligatoires. Nous vous répondrons à l’adresse e-mail indiquée,
-                sous 48 h en jours ouvrés.
+                <span className="text-signal">*</span> sont obligatoires. Nous
+                vous répondrons à l’adresse e-mail indiquée, sous 48 h en jours
+                ouvrés.
               </div>
             </div>
 
-            <div
-              style={{
-                display: "grid",
-                gridTemplateColumns: "1fr 1fr",
-                gap: 14,
-              }}
-            >
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-3.5">
               <div>
                 <label
                   htmlFor="ct-name"
-                  style={{
-                    display: "block",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: "var(--ink)",
-                    marginBottom: 6,
-                  }}
+                  className="block text-sm font-semibold text-ink mb-1.5"
                 >
-                  Votre nom complet{" "}
-                  <span style={{ color: "var(--signal)" }}>*</span>
+                  Votre nom complet <span className="text-signal">*</span>
                 </label>
                 <input
                   id="ct-name"
-                  className="field"
+                  className="field text-[15px] px-3.5 py-3 h-auto"
                   defaultValue="Mathieu Renaud"
-                  style={{ fontSize: 15, padding: "12px 14px", height: "auto" }}
                 />
-                <div
-                  style={{
-                    fontSize: 12,
-                    color: "var(--ink-mute)",
-                    marginTop: 4,
-                    fontStyle: "italic",
-                  }}
-                >
+                <div className="text-xs text-ink-mute mt-1 italic">
                   Prénom et nom, comme vous souhaitez être appelé.
                 </div>
               </div>
               <div>
                 <label
                   htmlFor="ct-email"
-                  style={{
-                    display: "block",
-                    fontSize: 14,
-                    fontWeight: 600,
-                    color: "var(--ink)",
-                    marginBottom: 6,
-                  }}
+                  className="block text-sm font-semibold text-ink mb-1.5"
                 >
-                  Votre adresse e-mail{" "}
-                  <span style={{ color: "var(--signal)" }}>*</span>
+                  Votre adresse e-mail <span className="text-signal">*</span>
                 </label>
                 <input
                   id="ct-email"
                   type="email"
-                  className="field"
+                  className="field text-[15px] px-3.5 py-3 h-auto"
                   defaultValue="m.renaud@exemple.fr"
-                  style={{ fontSize: 15, padding: "12px 14px", height: "auto" }}
                 />
-                <div
-                  style={{
-                    fontSize: 12,
-                    color: "var(--ink-mute)",
-                    marginTop: 4,
-                    fontStyle: "italic",
-                  }}
-                >
+                <div className="text-xs text-ink-mute mt-1 italic">
                   C’est ici que nous enverrons notre réponse.
                 </div>
               </div>
             </div>
 
             <div>
-              <label
-                style={{
-                  display: "block",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "var(--ink)",
-                  marginBottom: 6,
-                }}
-              >
-                Motif de votre message{" "}
-                <span style={{ color: "var(--signal)" }}>*</span>
+              <label className="block text-sm font-semibold text-ink mb-1.5">
+                Motif de votre message <span className="text-signal">*</span>
               </label>
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "repeat(2, 1fr)",
-                  gap: 8,
-                }}
-              >
+              <div className="grid grid-cols-1 md:grid-cols-2 gap-2">
                 {reasons.map((o, i) => (
                   <label
                     key={o.v}
-                    style={{
-                      display: "grid",
-                      gridTemplateColumns: "20px 1fr",
-                      gap: 10,
-                      padding: "12px 14px",
-                      border:
-                        "1px solid " +
-                        (i === 0 ? "var(--ink)" : "var(--paper-line)"),
-                      background: i === 0 ? "var(--paper-2)" : "var(--paper)",
-                      cursor: "pointer",
-                      alignItems: "flex-start",
-                    }}
+                    className={
+                      "grid grid-cols-[20px_1fr] gap-2.5 px-3.5 py-3 cursor-pointer items-start border " +
+                      (i === 0
+                        ? "border-ink bg-paper-2"
+                        : "border-paper-line bg-paper")
+                    }
                   >
                     <input
                       type="radio"
                       name="reason"
                       defaultChecked={i === 0}
-                      style={{ marginTop: 3 }}
+                      className="mt-[3px]"
                     />
                     <div>
-                      <div
-                        style={{
-                          fontSize: 14,
-                          fontWeight: 600,
-                          color: "var(--ink)",
-                        }}
-                      >
+                      <div className="text-sm font-semibold text-ink">
                         {o.label}
                       </div>
-                      <div
-                        style={{
-                          fontSize: 12,
-                          color: "var(--ink-3)",
-                          marginTop: 2,
-                        }}
-                      >
-                        {o.desc}
-                      </div>
+                      <div className="text-xs text-ink-3 mt-0.5">{o.desc}</div>
                     </div>
                   </label>
                 ))}
@@ -294,31 +145,16 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="ct-subject"
-                style={{
-                  display: "block",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "var(--ink)",
-                  marginBottom: 6,
-                }}
+                className="block text-sm font-semibold text-ink mb-1.5"
               >
-                Sujet du message{" "}
-                <span style={{ color: "var(--signal)" }}>*</span>
+                Sujet du message <span className="text-signal">*</span>
               </label>
               <input
                 id="ct-subject"
-                className="field"
+                className="field text-[15px] px-3.5 py-3 h-auto"
                 defaultValue="Question sur le décret PAC du 14 avril"
-                style={{ fontSize: 15, padding: "12px 14px", height: "auto" }}
               />
-              <div
-                style={{
-                  fontSize: 12,
-                  color: "var(--ink-mute)",
-                  marginTop: 4,
-                  fontStyle: "italic",
-                }}
-              >
+              <div className="text-xs text-ink-mute mt-1 italic">
                 En une phrase courte. Ex. : « Précision sur le COP des PAC en
                 2026 ».
               </div>
@@ -327,77 +163,35 @@ export default function ContactPage() {
             <div>
               <label
                 htmlFor="ct-msg"
-                style={{
-                  display: "block",
-                  fontSize: 14,
-                  fontWeight: 600,
-                  color: "var(--ink)",
-                  marginBottom: 6,
-                }}
+                className="block text-sm font-semibold text-ink mb-1.5"
               >
-                Votre message <span style={{ color: "var(--signal)" }}>*</span>
+                Votre message <span className="text-signal">*</span>
               </label>
               <textarea
                 id="ct-msg"
-                className="field"
+                className="field font-sans text-[15px] leading-[1.55] px-3.5 py-3 resize-y h-auto"
                 rows={9}
                 defaultValue={
                   "Bonjour,\n\nJ’ai lu votre article sur les pompes à chaleur air-eau du 24 avril, et je voulais obtenir une précision concernant…\n\nMerci par avance,\nMathieu"
                 }
-                style={{
-                  fontFamily: "var(--sans)",
-                  fontSize: 15,
-                  lineHeight: 1.55,
-                  padding: "12px 14px",
-                  resize: "vertical",
-                  height: "auto",
-                }}
               />
-              <div
-                style={{
-                  display: "flex",
-                  justifyContent: "space-between",
-                  marginTop: 4,
-                }}
-              >
-                <span
-                  style={{
-                    fontSize: 12,
-                    color: "var(--ink-mute)",
-                    fontStyle: "italic",
-                  }}
-                >
+              <div className="flex flex-col md:flex-row md:justify-between mt-1 gap-1">
+                <span className="text-xs text-ink-mute italic">
                   Soyez aussi précis que possible — citez l’article si besoin.
                 </span>
-                <span
-                  className="mono"
-                  style={{ fontSize: 11, color: "var(--ink-mute)" }}
-                >
+                <span className="mono text-[11px] text-ink-mute">
                   148 / 4 000
                 </span>
               </div>
             </div>
 
-            <label
-              style={{
-                display: "grid",
-                gridTemplateColumns: "20px 1fr",
-                gap: 10,
-                padding: "12px 14px",
-                background: "var(--paper-2)",
-                border: "1px solid var(--paper-line)",
-                cursor: "pointer",
-                alignItems: "flex-start",
-              }}
-            >
-              <input type="checkbox" defaultChecked style={{ marginTop: 3 }} />
-              <div
-                style={{
-                  fontSize: 13,
-                  color: "var(--ink-2)",
-                  lineHeight: 1.45,
-                }}
-              >
+            <label className="grid grid-cols-[20px_1fr] gap-2.5 px-3.5 py-3 bg-paper-2 border border-paper-line cursor-pointer items-start">
+              <input
+                type="checkbox"
+                defaultChecked
+                className="mt-[3px]"
+              />
+              <div className="text-[13px] text-ink-2 leading-[1.45]">
                 <strong>
                   J’accepte que mes données soient utilisées pour traiter ma
                   demande.
@@ -411,75 +205,40 @@ export default function ContactPage() {
               </div>
             </label>
 
-            <div
-              style={{
-                display: "flex",
-                gap: 12,
-                alignItems: "center",
-                borderTop: "1px solid var(--paper-line)",
-                paddingTop: 18,
-              }}
-            >
+            <div className="flex flex-wrap gap-3 items-center border-t border-paper-line pt-4">
               <button
-                className="btn btn--primary"
+                className="btn btn--primary text-base px-6 py-3.5 h-auto"
                 type="button"
-                style={{ fontSize: 16, padding: "14px 24px", height: "auto" }}
               >
                 ✉ Envoyer mon message
               </button>
               <button className="btn btn--ghost" type="button">
                 Annuler
               </button>
-              <span
-                style={{
-                  fontSize: 12,
-                  color: "var(--ink-mute)",
-                  marginLeft: "auto",
-                  fontStyle: "italic",
-                }}
-              >
+              <span className="text-xs text-ink-mute md:ml-auto italic">
                 Réponse sous 48 h en jours ouvrés.
               </span>
             </div>
           </form>
         </div>
         <aside>
-          <div className="tick-frame" style={{ padding: 18 }}>
+          <div className="tick-frame p-[18px]">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
             <div className="h-section">—— Coordonnées</div>
-            <div style={{ marginTop: 12, display: "grid", gap: 14 }}>
+            <div className="mt-3 grid gap-3.5">
               {coords.map(([k, v]) => (
                 <div
                   key={k}
-                  style={{
-                    borderBottom: "1px dashed var(--paper-line)",
-                    paddingBottom: 10,
-                  }}
+                  className="border-b border-dashed border-paper-line pb-2.5"
                 >
                   <div className="lbl">{k}</div>
-                  <div
-                    className="mono"
-                    style={{ fontSize: 13, color: "var(--ink)", marginTop: 2 }}
-                  >
-                    {v}
-                  </div>
+                  <div className="mono text-[13px] text-ink mt-0.5">{v}</div>
                 </div>
               ))}
             </div>
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.06em",
-              textTransform: "uppercase",
-              color: "var(--ink-mute)",
-              marginTop: 16,
-              padding: 14,
-              border: "1px dashed var(--paper-line)",
-            }}
-          >
+          <div className="mono text-[10px] tracking-[0.06em] uppercase text-ink-mute mt-4 p-3.5 border border-dashed border-paper-line">
             ⓘ Pour signaler une erreur factuelle dans un article : utilisez le
             lien « signaler » sous le commentaire concerné — c’est plus rapide.
           </div>

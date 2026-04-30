@@ -6,35 +6,12 @@ import { Tag, Icon } from "./atoms";
 export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
   const isSignup = mode === "signup";
   return (
-    <div
-      className="mc-root"
-      style={{
-        width: 1280,
-        minHeight: 900,
-        display: "grid",
-        gridTemplateRows: "auto 1fr auto",
-      }}
-    >
+    <div className="mc-root w-full max-w-[1280px] min-h-[900px] grid grid-rows-[auto_1fr_auto]">
       <Header />
-      <section
-        className="mc-auth-section"
-        style={{ display: "grid", gridTemplateColumns: "1fr 1fr" }}
-      >
-        <div
-          className="mc-auth-form"
-          style={{
-            padding: "60px 80px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            borderRight: "1px solid var(--ink)",
-          }}
-        >
+      <section className="grid grid-cols-1 md:grid-cols-2">
+        <div className="flex flex-col justify-center p-6 md:p-12 lg:p-16 md:border-r md:border-ink">
           <Tag kind="signal">{isSignup ? "Créer un compte" : "Connexion"}</Tag>
-          <h1
-            className="h-display"
-            style={{ fontSize: 56, margin: "14px 0 0" }}
-          >
+          <h1 className="h-display text-4xl md:text-5xl lg:text-[56px] mt-[14px]">
             {isSignup ? (
               <>
                 Rejoignez
@@ -49,44 +26,26 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
               </>
             )}
           </h1>
-          <p
-            style={{
-              fontSize: 15,
-              color: "var(--ink-3)",
-              marginTop: 12,
-              maxWidth: 420,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="text-[15px] text-ink-3 mt-3 max-w-[420px] leading-[1.5]">
             {isSignup
               ? "Créez votre compte pour commenter les articles, sauvegarder vos lectures et passer le QCM RGE."
               : "Accédez à vos lectures sauvegardées, vos commentaires et votre historique de tests QCM."}
           </p>
-          <form
-            style={{ marginTop: 28, display: "grid", gap: 14, maxWidth: 420 }}
-          >
+          <form className="mt-7 grid gap-[14px] max-w-[420px]">
             {isSignup && (
-              <div
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "1fr 1fr",
-                  gap: 10,
-                }}
-              >
+              <div className="grid grid-cols-1 sm:grid-cols-2 gap-[10px]">
                 <div>
                   <label className="lbl">Prénom</label>
                   <input
-                    className="field"
+                    className="field mt-[6px]"
                     defaultValue="Mathieu"
-                    style={{ marginTop: 6 }}
                   />
                 </div>
                 <div>
                   <label className="lbl">Nom</label>
                   <input
-                    className="field"
+                    className="field mt-[6px]"
                     defaultValue="Renaud"
-                    style={{ marginTop: 6 }}
                   />
                 </div>
               </div>
@@ -94,37 +53,25 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
             <div>
               <label className="lbl">Adresse e-mail</label>
               <input
-                className="field"
+                className="field mt-[6px]"
                 type="email"
                 defaultValue="m.renaud@exemple.fr"
-                style={{ marginTop: 6 }}
               />
             </div>
             <div>
               <label className="lbl">Mot de passe</label>
               <input
-                className="field"
+                className="field mt-[6px]"
                 type="password"
                 defaultValue="••••••••••"
-                style={{ marginTop: 6 }}
               />
             </div>
             {isSignup && (
-              <label
-                className="mono"
-                style={{
-                  fontSize: 11,
-                  display: "flex",
-                  gap: 8,
-                  alignItems: "flex-start",
-                  color: "var(--ink-3)",
-                  letterSpacing: "0.02em",
-                }}
-              >
+              <label className="mono text-[11px] flex gap-2 items-start text-ink-3 tracking-[0.02em]">
                 <input
                   type="checkbox"
                   defaultChecked
-                  style={{ marginTop: 2 }}
+                  className="mt-[2px]"
                 />
                 <span>
                   J’accepte la{" "}
@@ -141,47 +88,28 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
             )}
             <Link
               href="/profil"
-              className="btn btn--primary"
-              style={{ marginTop: 4 }}
+              className="btn btn--primary mt-1"
             >
               {isSignup ? "Créer mon compte" : "Se connecter"} <Icon.arrowR />
             </Link>
-            <div className="cap-rule" style={{ margin: "14px 0" }}>
+            <div className="cap-rule my-[14px]">
               <span>OU</span>
             </div>
             <button type="button" className="btn btn--ghost">
               Continuer avec Kinde · SSO →
             </button>
-            <div
-              className="mono"
-              style={{
-                fontSize: 11,
-                color: "var(--ink-mute)",
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                textAlign: "center",
-                marginTop: 6,
-              }}
-            >
+            <div className="mono text-[11px] text-ink-mute tracking-[0.04em] uppercase text-center mt-[6px]">
               {isSignup ? (
                 <>
                   Déjà inscrit ?{" "}
-                  <Link
-                    href="/connexion"
-                    className="lnk"
-                    style={{ color: "var(--ink)" }}
-                  >
+                  <Link href="/connexion" className="lnk text-ink">
                     Se connecter →
                   </Link>
                 </>
               ) : (
                 <>
                   Pas encore de compte ?{" "}
-                  <Link
-                    href="/inscription"
-                    className="lnk"
-                    style={{ color: "var(--ink)" }}
-                  >
+                  <Link href="/inscription" className="lnk text-ink">
                     S’inscrire →
                   </Link>
                 </>
@@ -189,42 +117,17 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
             </div>
           </form>
         </div>
-        <div
-          className="gridpaper mc-auth-aside"
-          style={{
-            padding: "60px 60px",
-            display: "flex",
-            flexDirection: "column",
-            justifyContent: "center",
-            background: "var(--paper-2)",
-          }}
-        >
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+        <div className="gridpaper bg-paper-2 flex flex-col justify-center p-6 md:p-12 lg:p-16">
+          <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
             ◉ MEMBRES — CE MOIS
           </div>
-          <div className="h-display" style={{ fontSize: 88, marginTop: 8 }}>
+          <div className="h-display text-5xl md:text-7xl lg:text-8xl mt-2">
             14 220
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.04em",
-              textTransform: "uppercase",
-            }}
-          >
+          <div className="mono text-[11px] text-ink-mute tracking-[0.04em] uppercase">
             lecteurs inscrits, dont 1 200 pros certifiés RGE
           </div>
-          <div style={{ marginTop: 36, display: "grid", gap: 14 }}>
+          <div className="mt-9 grid gap-[14px]">
             {[
               [
                 "Lecture sans pub, sans tracker",
@@ -235,28 +138,12 @@ export function AuthScreen({ mode }: { mode: "signin" | "signup" }) {
             ].map(([k, v]) => (
               <div
                 key={k}
-                style={{
-                  display: "grid",
-                  gridTemplateColumns: "32px 1fr",
-                  gap: 12,
-                  padding: "12px 0",
-                  borderBottom: "1px solid var(--paper-line)",
-                }}
+                className="grid grid-cols-[32px_1fr] gap-3 py-3 border-b border-paper-line"
               >
-                <Icon.check
-                  style={{ width: 20, height: 20, color: "var(--signal)" }}
-                />
+                <Icon.check className="w-5 h-5 text-signal" />
                 <div>
-                  <div style={{ fontSize: 14, fontWeight: 600 }}>{k}</div>
-                  <div
-                    style={{
-                      fontSize: 12,
-                      color: "var(--ink-3)",
-                      marginTop: 2,
-                    }}
-                  >
-                    {v}
-                  </div>
+                  <div className="text-sm font-semibold">{k}</div>
+                  <div className="text-xs text-ink-3 mt-[2px]">{v}</div>
                 </div>
               </div>
             ))}

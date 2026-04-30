@@ -14,42 +14,16 @@ export function ArticleCard({
     return (
       <Link
         href={href}
-        style={{
-          display: "grid",
-          gridTemplateColumns: "64px 1fr",
-          gap: 10,
-          textDecoration: "none",
-          color: "var(--ink)",
-          padding: "8px 0",
-          borderBottom: "1px solid var(--paper-line)",
-        }}
+        className="grid grid-cols-[64px_1fr] gap-2.5 no-underline text-ink py-2 border-b border-paper-line"
       >
-        <Placeholder caption="img" style={{ height: 48, width: 64 }}>
-          <span className="mono" style={{ fontSize: 9 }}>
-            ▢
-          </span>
+        <Placeholder caption="img" className="h-12 w-16">
+          <span className="mono text-[9px]">▢</span>
         </Placeholder>
         <div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 9,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--ink-mute)",
-            }}
-          >
+          <div className="mono text-[9px] tracking-[0.08em] uppercase text-ink-mute">
             {item.cat}
           </div>
-          <div
-            style={{
-              fontWeight: 600,
-              fontSize: 13,
-              lineHeight: 1.25,
-              letterSpacing: "-0.01em",
-              marginTop: 2,
-            }}
-          >
+          <div className="font-semibold text-[13px] leading-[1.25] tracking-[-0.01em] mt-0.5">
             {item.title}
           </div>
         </div>
@@ -60,71 +34,24 @@ export function ArticleCard({
     return (
       <Link
         href={href}
-        style={{
-          display: "block",
-          textDecoration: "none",
-          color: "var(--ink)",
-          borderTop: "1px solid var(--ink)",
-        }}
+        className="block no-underline text-ink border-t border-ink"
       >
         <Placeholder
           caption={item.cat + " · photo"}
-          style={{
-            aspectRatio: "4/3",
-            borderLeft: 0,
-            borderRight: 0,
-            borderTop: 0,
-            borderBottom: "1px solid var(--paper-line)",
-          }}
+          className="aspect-[4/3] border-x-0 border-t-0 border-b border-paper-line"
         />
-        <div style={{ padding: "10px 0" }}>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+        <div className="py-2.5">
+          <div className="mono text-[10px] tracking-[0.08em] uppercase text-signal flex justify-between">
             <span>{item.cat}</span>
-            <span style={{ color: "var(--ink-mute)" }}>№ {item.id}</span>
+            <span className="text-ink-mute">№ {item.id}</span>
           </div>
-          <div
-            style={{
-              fontSize: 17,
-              fontWeight: 700,
-              letterSpacing: "-0.02em",
-              lineHeight: 1.15,
-              marginTop: 4,
-            }}
-          >
+          <div className="text-[17px] font-bold tracking-[-0.02em] leading-[1.15] mt-1">
             {item.title}
           </div>
-          <div
-            style={{
-              fontSize: 12,
-              color: "var(--ink-3)",
-              marginTop: 6,
-              lineHeight: 1.4,
-            }}
-          >
+          <div className="text-xs text-ink-3 mt-1.5 leading-[1.4]">
             {item.dek}
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 9,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--ink-mute)",
-              marginTop: 8,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <div className="mono text-[9px] tracking-[0.08em] uppercase text-ink-mute mt-2 flex justify-between">
             <span>{item.author}</span>
             <span>
               {item.date} · {item.read} min
@@ -137,63 +64,20 @@ export function ArticleCard({
   return (
     <Link
       href={href}
-      style={{
-        display: "grid",
-        gridTemplateColumns: "140px 1fr auto",
-        gap: 16,
-        textDecoration: "none",
-        color: "var(--ink)",
-        padding: "14px 0",
-        borderBottom: "1px solid var(--paper-line)",
-      }}
+      className="flex flex-col gap-2 md:grid md:grid-cols-[140px_1fr_auto] md:gap-4 no-underline text-ink py-3.5 border-b border-paper-line"
     >
-      <Placeholder caption={item.cat} style={{ aspectRatio: "4/3" }} />
+      <Placeholder caption={item.cat} className="aspect-[4/3]" />
       <div>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--signal)",
-          }}
-        >
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-signal">
           {item.cat} · № {item.id}
         </div>
-        <div
-          style={{
-            fontSize: 18,
-            fontWeight: 700,
-            letterSpacing: "-0.02em",
-            lineHeight: 1.1,
-            marginTop: 3,
-          }}
-        >
+        <div className="text-[18px] font-bold tracking-[-0.02em] leading-[1.1] mt-[3px]">
           {item.title}
         </div>
-        <div
-          style={{
-            fontSize: 13,
-            color: "var(--ink-3)",
-            marginTop: 6,
-            lineHeight: 1.45,
-            maxWidth: 560,
-          }}
-        >
+        <div className="text-[13px] text-ink-3 mt-1.5 leading-[1.45] max-w-[560px]">
           {item.dek}
         </div>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            marginTop: 10,
-            display: "flex",
-            gap: 10,
-          }}
-        >
+        <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute mt-2.5 flex flex-wrap gap-2.5">
           <span>{item.author}</span>
           <span>·</span>
           <span>{item.date}</span>
@@ -202,18 +86,13 @@ export function ArticleCard({
           {item.docs ? (
             <>
               <span>·</span>
-              <span style={{ color: "var(--plot)" }}>+{item.docs} PDF</span>
+              <span className="text-plot">+{item.docs} PDF</span>
             </>
           ) : null}
         </div>
       </div>
-      <div style={{ alignSelf: "start" }}>
-        <div
-          className="mono"
-          style={{ fontSize: 10, color: "var(--ink-mute)" }}
-        >
-          ↗ Lire
-        </div>
+      <div className="self-start">
+        <div className="mono text-[10px] text-ink-mute">↗ Lire</div>
       </div>
     </Link>
   );
@@ -235,35 +114,23 @@ export function ArticleMeta({
   category?: string;
 }) {
   return (
-    <div
-      className="mono"
-      style={{
-        fontSize: 10,
-        letterSpacing: "0.06em",
-        textTransform: "uppercase",
-        color: "var(--ink-mute)",
-        display: "flex",
-        gap: 12,
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className="mono text-[10px] tracking-[0.06em] uppercase text-ink-mute flex flex-wrap items-center gap-3">
       {category && <span className="tag tag--filled">{category}</span>}
       <span>
-        Par <span style={{ color: "var(--ink)" }}>{author}</span>
+        Par <span className="text-ink">{author}</span>
         {role ? " · " + role : ""}
       </span>
-      <span style={{ color: "var(--paper-line)" }}>│</span>
+      <span className="text-paper-line">│</span>
       <span>Publié {published}</span>
       {updated && (
         <>
-          <span style={{ color: "var(--paper-line)" }}>│</span>
+          <span className="text-paper-line">│</span>
           <span>MAJ {updated}</span>
         </>
       )}
       {readMin && (
         <>
-          <span style={{ color: "var(--paper-line)" }}>│</span>
+          <span className="text-paper-line">│</span>
           <span>{readMin} min lecture</span>
         </>
       )}
@@ -273,31 +140,16 @@ export function ArticleMeta({
 
 export function Breadcrumbs({ trail }: { trail: string[] }) {
   return (
-    <div
-      className="mono"
-      style={{
-        fontSize: 10,
-        letterSpacing: "0.08em",
-        textTransform: "uppercase",
-        color: "var(--ink-mute)",
-        display: "flex",
-        gap: 8,
-        alignItems: "center",
-        flexWrap: "wrap",
-      }}
-    >
+    <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-wrap items-center gap-2">
       {trail.map((t, i) => (
-        <span
-          key={i}
-          style={{ display: "inline-flex", gap: 8, alignItems: "center" }}
-        >
-          {i > 0 && <span style={{ color: "var(--paper-line)" }}>/</span>}
+        <span key={i} className="inline-flex gap-2 items-center">
+          {i > 0 && <span className="text-paper-line">/</span>}
           <span
-            style={{
-              color: i === trail.length - 1 ? "var(--ink)" : "var(--ink-mute)",
-              borderBottom:
-                i === trail.length - 1 ? "1px solid var(--ink)" : "none",
-            }}
+            className={
+              i === trail.length - 1
+                ? "text-ink border-b border-ink"
+                : "text-ink-mute"
+            }
           >
             {t}
           </span>

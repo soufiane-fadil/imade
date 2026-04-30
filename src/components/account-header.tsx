@@ -29,122 +29,54 @@ export function AccountHeader({ active }: { active?: string }) {
     since: "janv. 2025",
   };
   return (
-    <header
-      style={{
-        background: "var(--paper-2)",
-        borderBottom: "1px solid var(--ink)",
-        position: "sticky",
-        top: 0,
-        zIndex: 5,
-      }}
-    >
-      <div
-        className="mono"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-          padding: "6px 28px",
-          fontSize: 10,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          background: "var(--ink)",
-          color: "var(--paper)",
-          borderBottom: "1px solid var(--ink)",
-        }}
-      >
-        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-          <span style={{ color: "var(--signal)" }}>◉ MON ESPACE</span>
-          <span style={{ color: "var(--paper-line)" }}>—</span>
+    <header className="bg-paper-2 border-b border-ink sticky top-0 z-[5]">
+      <div className="mono flex flex-col md:flex-row md:justify-between md:items-center gap-1 md:gap-0 px-4 md:px-7 py-[6px] text-[10px] tracking-[0.08em] uppercase bg-ink text-paper border-b border-ink">
+        <div className="flex gap-[14px] items-center flex-wrap">
+          <span className="text-signal">◉ MON ESPACE</span>
+          <span className="text-paper-line hidden md:inline">—</span>
           <span>SESSION OUVERTE · {user.name.toUpperCase()}</span>
         </div>
-        <div style={{ display: "flex", gap: 14, alignItems: "center" }}>
-          <span>MEMBRE DEPUIS {user.since.toUpperCase()}</span>
-          <span style={{ color: "var(--paper-line)" }}>·</span>
+        <div className="flex gap-[14px] items-center flex-wrap">
+          <span className="hidden md:inline">MEMBRE DEPUIS {user.since.toUpperCase()}</span>
+          <span className="text-paper-line hidden md:inline">·</span>
           <Link
             href="/"
-            className="lnk"
-            style={{ color: "var(--paper)", borderColor: "var(--paper-line)" }}
+            className="lnk text-paper border-paper-line hidden md:inline"
           >
             ↗ Retour au journal
           </Link>
-          <span style={{ color: "var(--paper-line)" }}>·</span>
+          <span className="text-paper-line hidden md:inline">·</span>
           <Link
             href="/"
-            className="lnk"
-            style={{ color: "var(--signal)", borderColor: "var(--signal)" }}
+            className="lnk text-signal border-signal"
           >
             Déconnexion
           </Link>
         </div>
       </div>
 
-      <div
-        style={{
-          display: "grid",
-          gridTemplateColumns: "64px 1fr auto",
-          alignItems: "center",
-          padding: "14px 28px",
-          gap: 16,
-          borderBottom: "1px solid var(--paper-line)",
-        }}
-      >
+      <div className="grid grid-cols-[56px_1fr] md:grid-cols-[64px_1fr_auto] items-center px-4 md:px-7 py-[14px] gap-3 md:gap-4 border-b border-paper-line">
         <Placeholder
           caption={user.initials}
           style={{ width: 56, height: 56, border: "1px solid var(--ink)" }}
         />
-        <div>
-          <Link
-            href="/"
-            style={{ textDecoration: "none", color: "var(--ink)" }}
-          >
-            <span
-              style={{
-                fontFamily: "var(--sans)",
-                fontWeight: 800,
-                fontSize: 18,
-                letterSpacing: "-0.03em",
-              }}
-            >
-              Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+        <div className="min-w-0">
+          <Link href="/" className="no-underline text-ink">
+            <span className="font-sans font-extrabold text-[18px] tracking-[-0.03em]">
+              Maison<span className="text-signal">·</span>Calorie
             </span>
-            <span
-              className="mono"
-              style={{
-                fontSize: 9,
-                letterSpacing: "0.18em",
-                color: "var(--ink-mute)",
-                textTransform: "uppercase",
-                marginLeft: 10,
-              }}
-            >
+            <span className="mono text-[9px] tracking-[0.18em] text-ink-mute uppercase ml-[10px] hidden md:inline">
               / Espace membre
             </span>
           </Link>
-          <div
-            style={{
-              fontFamily: "var(--serif)",
-              fontSize: 26,
-              letterSpacing: "-0.02em",
-              marginTop: 2,
-              lineHeight: 1.1,
-            }}
-          >
+          <div className="font-serif text-[20px] md:text-[26px] tracking-[-0.02em] mt-[2px] leading-[1.1]">
             Bonjour, <strong>{user.name}</strong>.
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.04em",
-              marginTop: 2,
-            }}
-          >
+          <div className="mono text-[10px] text-ink-mute tracking-[0.04em] mt-[2px] hidden md:block">
             {user.email} · {user.role}
           </div>
         </div>
-        <div style={{ display: "flex", gap: 8 }}>
+        <div className="flex gap-2 col-span-2 md:col-span-1 mt-2 md:mt-0">
           <Link href="/qcm/code" className="btn btn--sm btn--ghost">
             <Icon.arrowR /> Saisir un code
           </Link>
@@ -154,30 +86,8 @@ export function AccountHeader({ active }: { active?: string }) {
         </div>
       </div>
 
-      <nav
-        style={{
-          display: "flex",
-          alignItems: "stretch",
-          padding: "0 28px",
-          borderBottom: "1px solid var(--ink)",
-          overflowX: "auto",
-        }}
-      >
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            color: "var(--ink-mute)",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            paddingRight: 16,
-            borderRight: "1px solid var(--paper-line)",
-            height: 38,
-            display: "flex",
-            alignItems: "center",
-            flexShrink: 0,
-          }}
-        >
+      <nav className="flex items-stretch px-4 md:px-7 border-b border-ink overflow-x-auto">
+        <div className="mono text-[10px] text-ink-mute tracking-[0.1em] uppercase pr-4 border-r border-paper-line h-[38px] hidden md:flex items-center flex-shrink-0">
           MON ESPACE
         </div>
         {TABS.map((t) => {
@@ -186,34 +96,16 @@ export function AccountHeader({ active }: { active?: string }) {
             <Link
               key={t.id}
               href={t.href}
-              className="mono"
-              style={{
-                padding: "0 14px",
-                height: 38,
-                display: "flex",
-                alignItems: "center",
-                gap: 8,
-                fontSize: 11,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                color: isActive ? "var(--paper)" : "var(--ink)",
-                background: isActive ? "var(--ink)" : "transparent",
-                borderRight: "1px solid var(--paper-line)",
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-              }}
+              className={`mono px-[14px] h-[38px] flex items-center gap-2 text-[11px] tracking-[0.04em] uppercase border-r border-paper-line no-underline whitespace-nowrap ${
+                isActive ? "text-paper bg-ink" : "text-ink bg-transparent"
+              }`}
             >
               {t.label}
               {t.badge && (
                 <span
-                  className="mono"
-                  style={{
-                    fontSize: 9,
-                    padding: "1px 5px",
-                    background: isActive ? "var(--paper)" : "var(--ink)",
-                    color: isActive ? "var(--ink)" : "var(--paper)",
-                    letterSpacing: 0,
-                  }}
+                  className={`mono text-[9px] px-[5px] py-[1px] tracking-normal ${
+                    isActive ? "bg-paper text-ink" : "bg-ink text-paper"
+                  }`}
                 >
                   {t.badge}
                 </span>
@@ -221,25 +113,8 @@ export function AccountHeader({ active }: { active?: string }) {
             </Link>
           );
         })}
-        <div
-          style={{
-            marginLeft: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: 6,
-            paddingLeft: 16,
-            flexShrink: 0,
-          }}
-        >
-          <span
-            className="mono"
-            style={{
-              fontSize: 9,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-            }}
-          >
+        <div className="ml-auto hidden md:flex items-center gap-[6px] pl-4 flex-shrink-0">
+          <span className="mono text-[9px] tracking-[0.08em] uppercase text-signal">
             ● 1 PASS NON UTILISÉ
           </span>
         </div>

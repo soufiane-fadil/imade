@@ -3,54 +3,16 @@ import { CATEGORIES } from "@/lib/data";
 
 export function Footer() {
   return (
-    <footer
-      style={{
-        borderTop: "3px double var(--ink)",
-        marginTop: 48,
-        background: "var(--paper)",
-      }}
-    >
-      <div
-        style={{
-          padding: "32px 28px",
-          display: "grid",
-          gridTemplateColumns: "1.4fr 1fr 1fr 1fr 1.4fr",
-          gap: 28,
-          borderBottom: "1px solid var(--paper-line)",
-        }}
-      >
+    <footer className="border-t-[3px] border-double border-ink mt-12 bg-paper">
+      <div className="px-7 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr] gap-7 border-b border-paper-line">
         <div>
-          <div
-            style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 800,
-              fontSize: 22,
-              letterSpacing: "-0.04em",
-            }}
-          >
-            Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+          <div className="font-sans font-extrabold text-[22px] tracking-[-0.04em]">
+            Maison<span className="text-signal">·</span>Calorie
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.16em",
-              color: "var(--ink-mute)",
-              textTransform: "uppercase",
-              marginTop: 4,
-            }}
-          >
+          <div className="mono text-[10px] tracking-[0.16em] text-ink-mute uppercase mt-1">
             Édition n° 04 / 27 — Paris
           </div>
-          <p
-            style={{
-              fontSize: 12,
-              color: "var(--ink-3)",
-              marginTop: 16,
-              lineHeight: 1.5,
-              maxWidth: 280,
-            }}
-          >
+          <p className="text-xs text-ink-3 mt-4 leading-[1.5] max-w-[280px]">
             Le journal indépendant de la rénovation énergétique en France.
             Articles, dossiers et certification professionnelle pour bâtir
             mieux, chauffer moins.
@@ -58,21 +20,12 @@ export function Footer() {
         </div>
         <div>
           <div className="h-section">Rubriques</div>
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "12px 0 0",
-              fontSize: 12,
-              lineHeight: 2,
-            }}
-          >
+          <ul className="list-none p-0 mt-3 mb-0 text-xs leading-[2]">
             {CATEGORIES.slice(0, 6).map((c) => (
               <li key={c.slug}>
                 <Link
                   href={`/rubriques/${c.slug}`}
-                  className="lnk"
-                  style={{ borderBottom: 0 }}
+                  className="lnk border-b-0"
                 >
                   {c.label}
                 </Link>
@@ -82,36 +35,24 @@ export function Footer() {
         </div>
         <div>
           <div className="h-section">Le QCM</div>
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "12px 0 0",
-              fontSize: 12,
-              lineHeight: 2,
-            }}
-          >
+          <ul className="list-none p-0 mt-3 mb-0 text-xs leading-[2]">
             <li>
-              <Link href="/qcm" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/qcm" className="lnk border-b-0">
                 Présentation
               </Link>
             </li>
             <li>
-              <Link href="/qcm" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/qcm" className="lnk border-b-0">
                 Tarifs &amp; passes
               </Link>
             </li>
             <li>
-              <Link
-                href="/qcm/code"
-                className="lnk"
-                style={{ borderBottom: 0 }}
-              >
+              <Link href="/qcm/code" className="lnk border-b-0">
                 Saisir un code
               </Link>
             </li>
             <li>
-              <Link href="/qcm" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/qcm" className="lnk border-b-0">
                 Méthodologie
               </Link>
             </li>
@@ -119,37 +60,29 @@ export function Footer() {
         </div>
         <div>
           <div className="h-section">Maison</div>
-          <ul
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: "12px 0 0",
-              fontSize: 12,
-              lineHeight: 2,
-            }}
-          >
+          <ul className="list-none p-0 mt-3 mb-0 text-xs leading-[2]">
             <li>
-              <Link href="/" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/" className="lnk border-b-0">
                 À propos
               </Link>
             </li>
             <li>
-              <Link href="/contact" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/contact" className="lnk border-b-0">
                 Contact
               </Link>
             </li>
             <li>
-              <Link href="/" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/" className="lnk border-b-0">
                 Mentions légales
               </Link>
             </li>
             <li>
-              <Link href="/" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/" className="lnk border-b-0">
                 Politique RGPD
               </Link>
             </li>
             <li>
-              <Link href="/" className="lnk" style={{ borderBottom: 0 }}>
+              <Link href="/" className="lnk border-b-0">
                 Charte éditoriale
               </Link>
             </li>
@@ -157,14 +90,7 @@ export function Footer() {
         </div>
         <div>
           <div className="h-section">Suivre</div>
-          <div
-            style={{
-              display: "flex",
-              flexDirection: "column",
-              gap: 6,
-              marginTop: 12,
-            }}
-          >
+          <div className="flex flex-col gap-1.5 mt-3">
             {[
               ["LinkedIn", "/in/maison-calorie"],
               ["Twitter / X", "@maisoncalorie"],
@@ -175,43 +101,16 @@ export function Footer() {
               <a
                 key={k}
                 href="#"
-                className="mono"
-                style={{
-                  fontSize: 11,
-                  display: "flex",
-                  justifyContent: "space-between",
-                  textDecoration: "none",
-                  color: "var(--ink)",
-                  borderBottom: "1px dashed var(--paper-line)",
-                  padding: "4px 0",
-                }}
+                className="mono text-[11px] flex justify-between no-underline text-ink border-b border-dashed border-paper-line py-1"
               >
-                <span
-                  style={{
-                    letterSpacing: "0.04em",
-                    textTransform: "uppercase",
-                  }}
-                >
-                  {k}
-                </span>
-                <span style={{ color: "var(--ink-mute)" }}>{v}</span>
+                <span className="tracking-[0.04em] uppercase">{k}</span>
+                <span className="text-ink-mute">{v}</span>
               </a>
             ))}
           </div>
         </div>
       </div>
-      <div
-        className="mono"
-        style={{
-          padding: "12px 28px",
-          fontSize: 10,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "var(--ink-mute)",
-          display: "flex",
-          justifyContent: "space-between",
-        }}
-      >
+      <div className="mono px-7 py-3 text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-col gap-2 md:flex-row md:justify-between md:gap-0">
         <span>
           © 2026 SAS Maison Calorie · RCS Paris 912 448 211 · TVA FR 87 912 448
           211
@@ -225,60 +124,32 @@ export function Footer() {
 export function NewsletterBlock({ compact }: { compact?: boolean }) {
   return (
     <div
-      style={{
-        border: "1px solid var(--ink)",
-        padding: compact ? 18 : 28,
-        background: "var(--paper-2)",
-        position: "relative",
-      }}
+      className={`border border-ink bg-paper-2 relative ${
+        compact ? "p-[18px]" : "p-7"
+      }`}
     >
-      <div
-        className="mono"
-        style={{
-          fontSize: 10,
-          letterSpacing: "0.16em",
-          textTransform: "uppercase",
-          color: "var(--signal)",
-        }}
-      >
+      <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
         ◉ Bulletin hebdomadaire
       </div>
       <div
-        className="h-title"
-        style={{ fontSize: compact ? 22 : 30, marginTop: 6, maxWidth: 520 }}
+        className={`h-title mt-1.5 max-w-[520px] ${
+          compact ? "text-[22px]" : "text-3xl"
+        }`}
       >
         L’essentiel de la rénovation énergétique, chaque jeudi à 7 h.
       </div>
-      <p
-        style={{
-          fontSize: 13,
-          color: "var(--ink-3)",
-          marginTop: 8,
-          maxWidth: 540,
-          lineHeight: 1.5,
-        }}
-      >
+      <p className="text-[13px] text-ink-3 mt-2 max-w-[540px] leading-[1.5]">
         14 200 abonnés — actualité MaPrimeRénov’, fiches techniques, baromètre
         RGE, et les enquêtes qui n’ont pas eu leur place dans le journal.
       </p>
-      <div style={{ display: "flex", gap: 0, marginTop: 14, maxWidth: 540 }}>
+      <div className="flex flex-col md:flex-row gap-0 mt-3.5 max-w-[540px]">
         <input
-          className="field mono"
+          className="field mono md:border-r-0"
           placeholder="prénom.nom@exemple.fr"
-          style={{ borderRight: 0 }}
         />
         <button className="btn btn--signal">S’abonner →</button>
       </div>
-      <div
-        className="mono"
-        style={{
-          fontSize: 9,
-          letterSpacing: "0.08em",
-          textTransform: "uppercase",
-          color: "var(--ink-mute)",
-          marginTop: 10,
-        }}
-      >
+      <div className="mono text-[9px] tracking-[0.08em] uppercase text-ink-mute mt-2.5">
         Sans spam · Désinscription en 1 clic · Hébergé en France
       </div>
     </div>

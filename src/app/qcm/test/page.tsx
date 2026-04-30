@@ -58,92 +58,32 @@ export default function QCMTestPage() {
   const answeredCount = Object.keys(answers).length;
 
   return (
-    <div
-      className="mc-root"
-      style={{ width: 1280, minHeight: 900, background: "var(--paper-2)" }}
-    >
-      <header
-        style={{
-          background: "var(--paper)",
-          color: "var(--ink)",
-          padding: "12px 28px",
-          display: "grid",
-          gridTemplateColumns: "1fr auto 1fr",
-          alignItems: "center",
-          borderBottom: "1px solid var(--ink)",
-          position: "sticky",
-          top: 0,
-          zIndex: 5,
-          gap: 16,
-        }}
-      >
-        <div style={{ display: "flex", alignItems: "center", gap: 14 }}>
+    <div className="mc-root w-full max-w-[1280px] mx-auto min-h-[900px] bg-paper-2">
+      <header className="bg-paper text-ink px-4 py-3 md:px-7 flex md:grid md:grid-cols-[1fr_auto_1fr] items-center border-b border-ink sticky top-0 z-[5] gap-4">
+        <div className="flex items-center gap-3.5">
           <button
             type="button"
             aria-label="Ouvrir la liste des questions"
             onClick={() => setNavOpen(true)}
-            className="mc-qcm-nav-toggle btn btn--sm btn--ghost"
-            style={{ padding: "8px 10px", fontSize: 16, lineHeight: 1 }}
+            className="mc-qcm-nav-toggle btn btn--sm btn--ghost px-2.5 py-2 text-base leading-none"
           >
             ☰
           </button>
-          <span
-            style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 800,
-              fontSize: 18,
-              letterSpacing: "-0.03em",
-            }}
-          >
-            Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+          <span className="font-sans font-extrabold text-[18px] tracking-[-0.03em]">
+            Maison<span className="text-signal">·</span>Calorie
           </span>
-          <span
-            className="mono"
-            style={{
-              fontSize: 9,
-              letterSpacing: "0.18em",
-              textTransform: "uppercase",
-              color: "var(--ink-mute)",
-            }}
-          >
+          <span className="mono hidden md:inline text-[9px] tracking-[0.18em] uppercase text-ink-mute">
             / Espace membre / QCM en cours
           </span>
         </div>
-        <div
-          className="mono"
-          style={{
-            fontSize: 10,
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-            color: "var(--ink-mute)",
-            textAlign: "center",
-          }}
-        >
+        <div className="mono hidden md:block text-[10px] tracking-[0.08em] uppercase text-ink-mute text-center">
           {answeredCount} / 30 répondues
         </div>
-        <div
-          style={{
-            display: "flex",
-            alignItems: "center",
-            justifyContent: "flex-end",
-            gap: 14,
-          }}
-        >
-          <span
-            className="mono"
-            style={{
-              fontSize: 10,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--ink-mute)",
-            }}
-          >
+        <div className="flex items-center justify-end gap-3 md:gap-3.5 ml-auto md:ml-0">
+          <span className="mono hidden md:inline text-[10px] tracking-[0.08em] uppercase text-ink-mute">
             Chronomètre
           </span>
-          <span
-            className="mono"
-            style={{ fontSize: 18, fontWeight: 600, color: "var(--signal)" }}
-          >
+          <span className="mono text-[16px] md:text-[18px] font-semibold text-signal">
             ⏱ {m}:{s}
           </span>
           <Link href="/profil" className="btn btn--ghost btn--sm">
@@ -152,13 +92,7 @@ export default function QCMTestPage() {
         </div>
       </header>
 
-      <section
-        style={{
-          display: "grid",
-          gridTemplateColumns: "320px 1fr",
-          minHeight: "calc(100vh - 50px)",
-        }}
-      >
+      <section className="grid grid-cols-1 lg:grid-cols-[320px_1fr] min-h-[calc(100vh-50px)]">
         <div
           className="mc-qcm-aside-backdrop"
           data-open={navOpen ? "true" : "false"}
@@ -166,45 +100,21 @@ export default function QCMTestPage() {
           aria-hidden={!navOpen}
         />
         <aside
-          className="mc-qcm-aside"
+          className="mc-qcm-aside bg-paper lg:border-r border-ink py-5"
           data-open={navOpen ? "true" : "false"}
-          style={{
-            background: "var(--paper)",
-            borderRight: "1px solid var(--ink)",
-            padding: "20px 0",
-          }}
         >
-          <div
-            className="mc-qcm-aside-head"
-            style={{
-              display: "flex",
-              alignItems: "center",
-              justifyContent: "space-between",
-              padding: "0 16px 12px",
-            }}
-          >
-            <div className="h-section" style={{ padding: 0 }}>
-              —— Liste des questions
-            </div>
+          <div className="mc-qcm-aside-head flex items-center justify-between px-4 pb-3">
+            <div className="h-section p-0">—— Liste des questions</div>
             <button
               type="button"
               aria-label="Fermer"
               onClick={() => setNavOpen(false)}
-              className="mc-qcm-aside-close btn btn--sm btn--ghost"
-              style={{ padding: "6px 10px", fontSize: 14, lineHeight: 1 }}
+              className="mc-qcm-aside-close btn btn--sm btn--ghost px-2.5 py-1.5 text-[14px] leading-none"
             >
               ✕
             </button>
           </div>
-          <ol
-            style={{
-              listStyle: "none",
-              padding: 0,
-              margin: 0,
-              maxHeight: 480,
-              overflowY: "auto",
-            }}
-          >
+          <ol className="list-none p-0 m-0 max-h-[480px] overflow-y-auto">
             {Array.from({ length: 30 }).map((_, i) => {
               const answered = answers[i] != null;
               const isCurrent = i === current;
@@ -215,39 +125,29 @@ export default function QCMTestPage() {
                       setCurrent(i);
                       setNavOpen(false);
                     }}
-                    className="mono"
+                    className={
+                      "mono w-full text-left px-2.5 py-2 border-0 border-b border-paper-line text-[11px] tracking-[0.04em] cursor-pointer " +
+                      (isCurrent
+                        ? "bg-signal text-white"
+                        : "bg-transparent text-ink")
+                    }
                     style={{
                       display: "grid",
                       gridTemplateColumns: "14px 30px 1fr 14px",
                       gap: 8,
                       alignItems: "center",
-                      width: "100%",
-                      padding: "8px 10px",
-                      textAlign: "left",
-                      background: isCurrent ? "var(--signal)" : "transparent",
-                      color: isCurrent ? "#fff" : "var(--ink)",
-                      border: 0,
-                      borderBottom: "1px solid var(--paper-line)",
-                      fontSize: 11,
-                      letterSpacing: "0.04em",
-                      cursor: "pointer",
                     }}
                   >
                     <span
-                      style={{
-                        width: 8,
-                        height: 8,
-                        borderRadius: "50%",
-                        background: answered ? "var(--leaf)" : "var(--paper-3)",
-                        display: "inline-block",
-                      }}
+                      className={
+                        "w-2 h-2 rounded-full inline-block " +
+                        (answered ? "bg-leaf" : "bg-paper-3")
+                      }
                     />
-                    <span
-                      style={{ color: isCurrent ? "#fff" : "var(--ink-mute)" }}
-                    >
+                    <span className={isCurrent ? "text-white" : "text-ink-mute"}>
                       Q{String(i + 1).padStart(2, "0")}
                     </span>
-                    <span style={{ fontFamily: "var(--sans)", fontSize: 12 }}>
+                    <span className="font-sans text-[12px]">
                       {TOPICS[i % TOPICS.length]}
                     </span>
                     {isCurrent ? <Icon.arrowR /> : <span />}
@@ -256,54 +156,23 @@ export default function QCMTestPage() {
               );
             })}
           </ol>
-          <div
-            style={{
-              padding: "16px",
-              borderTop: "1px solid var(--paper-line)",
-              marginTop: 8,
-            }}
-          >
+          <div className="p-4 border-t border-paper-line mt-2">
             <div className="lbl">Avancement</div>
-            <div
-              className="mono"
-              style={{ fontSize: 22, fontWeight: 600, marginTop: 4 }}
-            >
+            <div className="mono text-[22px] font-semibold mt-1">
               {answeredCount}
-              <span style={{ color: "var(--ink-mute)" }}>/30</span>
+              <span className="text-ink-mute">/30</span>
             </div>
-            <div
-              style={{ height: 4, background: "var(--paper-3)", marginTop: 8 }}
-            >
+            <div className="h-1 bg-paper-3 mt-2">
               <div
-                style={{
-                  width: (answeredCount / 30) * 100 + "%",
-                  height: "100%",
-                  background: "var(--signal)",
-                }}
+                className="h-full bg-signal"
+                style={{ width: (answeredCount / 30) * 100 + "%" }}
               />
             </div>
           </div>
         </aside>
 
-        <main
-          style={{
-            padding: "40px 60px",
-            maxWidth: 880,
-            justifySelf: "center",
-            width: "100%",
-          }}
-        >
-          <div
-            className="mono"
-            style={{
-              fontSize: 11,
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              color: "var(--signal)",
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+        <main className="p-6 md:p-12 lg:px-[60px] lg:py-10 max-w-[880px] w-full justify-self-center">
+          <div className="mono text-[11px] tracking-[0.08em] uppercase text-signal flex flex-wrap gap-2 justify-between">
             <span>
               QUESTION {String(current + 1).padStart(2, "0")} / 30 · POMPES À
               CHALEUR
@@ -312,86 +181,47 @@ export default function QCMTestPage() {
               <Icon.bookmark /> Marquer pour relire
             </button>
           </div>
-          <h2
-            className="h-title"
-            style={{ fontSize: 32, marginTop: 12, lineHeight: 1.2 }}
-          >
+          <h2 className="h-title text-2xl md:text-3xl mt-3 leading-[1.2]">
             {Q.q}
           </h2>
 
-          <div style={{ marginTop: 28, display: "grid", gap: 10 }}>
+          <div className="mt-7 grid gap-2.5">
             {Q.opts.map((opt, i) => {
               const isPicked = answers[current] === i;
               return (
                 <label
                   key={i}
                   onClick={() => setAnswers({ ...answers, [current]: i })}
+                  className={
+                    "px-4 py-4 cursor-pointer border " +
+                    (isPicked
+                      ? "bg-ink text-paper border-ink"
+                      : "bg-paper text-ink border-paper-line")
+                  }
                   style={{
                     display: "grid",
                     gridTemplateColumns: "36px 1fr 24px",
                     gap: 14,
                     alignItems: "center",
-                    padding: "16px 18px",
-                    cursor: "pointer",
-                    background: isPicked ? "var(--ink)" : "var(--paper)",
-                    color: isPicked ? "var(--paper)" : "var(--ink)",
-                    border:
-                      "1px solid " +
-                      (isPicked ? "var(--ink)" : "var(--paper-line)"),
                   }}
                 >
-                  <span
-                    className="mono"
-                    style={{
-                      fontSize: 14,
-                      fontWeight: 600,
-                      letterSpacing: "0.04em",
-                      width: 28,
-                      height: 28,
-                      border: "1px solid currentColor",
-                      display: "flex",
-                      alignItems: "center",
-                      justifyContent: "center",
-                    }}
-                  >
+                  <span className="mono text-[14px] font-semibold tracking-[0.04em] w-7 h-7 border border-current flex items-center justify-center">
                     {String.fromCharCode(65 + i)}
                   </span>
-                  <span
-                    style={{
-                      fontSize: 16,
-                      fontWeight: 500,
-                      letterSpacing: "-0.01em",
-                    }}
-                  >
+                  <span className="text-[16px] font-medium tracking-[-0.01em]">
                     {opt}
                   </span>
                   {isPicked ? (
                     <Icon.check />
                   ) : (
-                    <span
-                      style={{
-                        width: 16,
-                        height: 16,
-                        border: "1px dashed currentColor",
-                        opacity: 0.3,
-                      }}
-                    />
+                    <span className="w-4 h-4 border border-dashed border-current opacity-30" />
                   )}
                 </label>
               );
             })}
           </div>
 
-          <div
-            style={{
-              marginTop: 36,
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-              borderTop: "1px solid var(--paper-line)",
-              paddingTop: 20,
-            }}
-          >
+          <div className="mt-9 flex flex-wrap gap-3 justify-between items-center border-t border-paper-line pt-5">
             <button
               className="btn btn--ghost"
               onClick={() => setCurrent(Math.max(0, current - 1))}
@@ -399,15 +229,7 @@ export default function QCMTestPage() {
             >
               <Icon.arrowL /> Précédente
             </button>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.08em",
-                textTransform: "uppercase",
-                color: "var(--ink-mute)",
-              }}
-            >
+            <div className="mono hidden md:block text-[10px] tracking-[0.08em] uppercase text-ink-mute">
               Astuce : <span className="kbd">←</span>{" "}
               <span className="kbd">→</span> pour naviguer ·{" "}
               <span className="kbd">A-D</span> pour répondre
@@ -426,25 +248,8 @@ export default function QCMTestPage() {
             )}
           </div>
 
-          <div
-            style={{
-              marginTop: 24,
-              padding: 14,
-              background: "var(--paper)",
-              border: "1px dashed var(--paper-line)",
-              display: "flex",
-              justifyContent: "space-between",
-              alignItems: "center",
-            }}
-          >
-            <div
-              className="mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.04em",
-                color: "var(--ink-3)",
-              }}
-            >
+          <div className="mt-6 p-3.5 bg-paper border border-dashed border-paper-line flex flex-wrap gap-3 justify-between items-center">
+            <div className="mono text-[11px] tracking-[0.04em] text-ink-3">
               Vous pouvez soumettre dès que vous le souhaitez. Toute question
               non répondue compte comme une erreur.
             </div>

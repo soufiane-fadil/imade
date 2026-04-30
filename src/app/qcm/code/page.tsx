@@ -26,89 +26,39 @@ export default function QCMGatePage() {
     ],
   ];
   return (
-    <div className="mc-root" style={{ width: 1280, minHeight: 1000 }}>
+    <div className="mc-root w-full max-w-[1280px] mx-auto min-h-[1000px]">
       <Header />
-      <section style={{ padding: "20px 28px 0" }}>
+      <section className="px-4 pt-5 md:px-7">
         <Breadcrumbs trail={["Accueil", "QCM RGE", "Saisir un code"]} />
       </section>
-      <section
-        className="gridpaper"
-        style={{
-          padding: "60px 28px",
-          borderBottom: "1px solid var(--ink)",
-          display: "grid",
-          gridTemplateColumns: "1fr 1fr",
-          gap: 60,
-          minHeight: 720,
-        }}
-      >
-        <div style={{ alignSelf: "center", maxWidth: 480 }}>
+      <section className="gridpaper px-4 py-10 md:px-7 md:py-14 border-b border-ink grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 md:min-h-[720px]">
+        <div className="self-center max-w-[480px]">
           <Tag kind="signal">VÉRIFICATION D’ACCÈS</Tag>
-          <h1
-            className="h-display"
-            style={{ fontSize: 64, margin: "14px 0 0" }}
-          >
+          <h1 className="h-display text-4xl md:text-5xl lg:text-[64px] mt-3.5">
             Saisissez
             <br />
             votre code.
           </h1>
-          <p
-            style={{
-              fontSize: 16,
-              color: "var(--ink-3)",
-              marginTop: 14,
-              lineHeight: 1.5,
-            }}
-          >
+          <p className="text-[16px] text-ink-3 mt-3.5 leading-[1.5]">
             Vous avez reçu par e-mail un code unique de 16 caractères au moment
             de l’achat de votre pass. Ce code donne accès à{" "}
             <strong>une seule</strong> session de QCM.
           </p>
-          <div
-            className="tick-frame"
-            style={{ padding: 18, marginTop: 20, background: "var(--paper)" }}
-          >
+          <div className="tick-frame p-4 md:p-[18px] mt-5 bg-paper">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
-            <div style={{ fontSize: 14, fontWeight: 600, color: "var(--ink)" }}>
+            <div className="text-[14px] font-semibold text-ink">
               Saisissez votre code d’accès
             </div>
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-3)",
-                marginTop: 4,
-                lineHeight: 1.45,
-              }}
-            >
+            <div className="text-[12px] text-ink-3 mt-1 leading-[1.45]">
               16 caractères répartis en 4 groupes de 4. Reçu par e-mail au
               moment de l’achat.
             </div>
-            <div
-              style={{
-                display: "flex",
-                alignItems: "center",
-                gap: 6,
-                marginTop: 14,
-              }}
-            >
-              <span
-                className="mono"
-                style={{
-                  fontSize: 22,
-                  fontWeight: 600,
-                  color: "var(--ink-mute)",
-                  letterSpacing: "0.08em",
-                }}
-              >
+            <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
+              <span className="mono text-[22px] font-semibold text-ink-mute tracking-[0.08em]">
                 QCM
               </span>
-              <span
-                className="mono"
-                style={{ fontSize: 22, color: "var(--ink-mute)" }}
-              >
-                —
-              </span>
+              <span className="mono text-[22px] text-ink-mute">—</span>
               {code.map((seg, i) => (
                 <Fragment key={i}>
                   <input
@@ -119,132 +69,59 @@ export default function QCMGatePage() {
                       setCode(c);
                     }}
                     aria-label={`Groupe ${i + 1} sur 4`}
-                    className="mono"
-                    style={{
-                      fontSize: 22,
-                      letterSpacing: "0.16em",
-                      textAlign: "center",
-                      padding: "12px 0",
-                      flex: 1,
-                      minWidth: 0,
-                      background: "var(--paper-2)",
-                      border: "1px solid var(--ink)",
-                      textTransform: "uppercase",
-                      color: "var(--ink)",
-                      outline: "none",
-                    }}
+                    className="mono text-[22px] tracking-[0.16em] text-center py-3 flex-1 min-w-0 bg-paper-2 border border-ink uppercase text-ink outline-none"
                   />
                   {i < code.length - 1 && (
-                    <span
-                      className="mono"
-                      style={{ fontSize: 22, color: "var(--ink-mute)" }}
-                    >
-                      —
-                    </span>
+                    <span className="mono text-[22px] text-ink-mute">—</span>
                   )}
                 </Fragment>
               ))}
             </div>
-            <div
-              style={{
-                fontSize: 12,
-                color: "var(--ink-mute)",
-                marginTop: 10,
-                fontStyle: "italic",
-              }}
-            >
+            <div className="text-[12px] text-ink-mute mt-2.5 italic">
               Exemple :{" "}
-              <span className="mono" style={{ fontStyle: "normal" }}>
-                QCM — 7H4K — 9P2X — A1B6
-              </span>
-              . Lettres et chiffres uniquement.
+              <span className="mono not-italic">QCM — 7H4K — 9P2X — A1B6</span>.
+              Lettres et chiffres uniquement.
             </div>
           </div>
           <Link
             href="/qcm/test"
-            className="btn btn--signal"
-            style={{ marginTop: 18, width: "100%", justifyContent: "center" }}
+            className="btn btn--signal mt-4 w-full justify-center"
           >
             Démarrer le QCM <Icon.arrowR />
           </Link>
-          <div
-            style={{
-              marginTop: 14,
-              display: "flex",
-              justifyContent: "space-between",
-            }}
-          >
+          <div className="mt-3.5 flex justify-between">
             <a
               href="#"
-              className="lnk mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-              }}
+              className="lnk mono text-[11px] tracking-[0.04em] uppercase"
             >
               Code introuvable ?
             </a>
             <Link
               href="/qcm"
-              className="lnk mono"
-              style={{
-                fontSize: 11,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-              }}
+              className="lnk mono text-[11px] tracking-[0.04em] uppercase"
             >
               Acheter un pass →
             </Link>
           </div>
         </div>
-        <div style={{ alignSelf: "center" }}>
-          <div
-            className="tick-frame"
-            style={{ padding: 24, background: "var(--paper)" }}
-          >
+        <div className="self-center">
+          <div className="tick-frame p-6 bg-paper">
             <span className="tick-bl"></span>
             <span className="tick-br"></span>
-            <div
-              className="mono"
-              style={{
-                fontSize: 10,
-                letterSpacing: "0.16em",
-                textTransform: "uppercase",
-                color: "var(--signal)",
-              }}
-            >
+            <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
               ◉ AVANT DE COMMENCER
             </div>
-            <h2 className="h-title" style={{ fontSize: 26, marginTop: 8 }}>
-              Lisez les règles du jeu.
-            </h2>
-            <ul style={{ listStyle: "none", padding: 0, margin: "20px 0 0" }}>
+            <h2 className="h-title text-[26px] mt-2">Lisez les règles du jeu.</h2>
+            <ul className="list-none p-0 mt-5">
               {rules.map(([k, v]) => (
                 <li
                   key={k}
-                  style={{
-                    display: "grid",
-                    gridTemplateColumns: "20px 1fr",
-                    gap: 12,
-                    padding: "12px 0",
-                    borderBottom: "1px solid var(--paper-line)",
-                  }}
+                  className="grid grid-cols-[20px_1fr] gap-3 py-3 border-b border-paper-line"
                 >
-                  <Icon.check
-                    style={{ width: 18, height: 18, color: "var(--leaf)" }}
-                  />
+                  <Icon.check className="w-[18px] h-[18px] text-leaf" />
                   <div>
-                    <div style={{ fontSize: 14, fontWeight: 600 }}>{k}</div>
-                    <div
-                      style={{
-                        fontSize: 12,
-                        color: "var(--ink-3)",
-                        marginTop: 2,
-                      }}
-                    >
-                      {v}
-                    </div>
+                    <div className="text-[14px] font-semibold">{k}</div>
+                    <div className="text-[12px] text-ink-3 mt-0.5">{v}</div>
                   </div>
                 </li>
               ))}

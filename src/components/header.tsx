@@ -8,101 +8,38 @@ export function Header({ active }: { active?: string }) {
   const [open, setOpen] = useState(false);
 
   return (
-    <header
-      style={{
-        background: "var(--paper)",
-        borderBottom: "1px solid var(--ink)",
-        position: "sticky",
-        top: 0,
-        zIndex: 5,
-      }}
-    >
-      <div
-        className="mono mc-header-meta"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          borderBottom: "1px solid var(--paper-line)",
-          padding: "6px 28px",
-          fontSize: 10,
-          color: "var(--ink-mute)",
-          letterSpacing: "0.06em",
-          textTransform: "uppercase",
-        }}
-      >
-        <div style={{ display: "flex", gap: 16 }}>
+    <header className="bg-paper border-b border-ink sticky top-0 z-[5]">
+      <div className="mono hidden md:flex justify-between border-b border-paper-line px-7 py-[6px] text-[10px] text-ink-mute tracking-[0.06em] uppercase">
+        <div className="flex gap-4">
           <span>FR · Édition Métropole</span>
           <span>·</span>
           <span>N° 0427 — 27 avril 2026</span>
         </div>
-        <div style={{ display: "flex", gap: 16 }}>
+        <div className="flex gap-4">
           <span>
             Indice MaPrimeRénov’{" "}
-            <strong style={{ color: "var(--ink)" }}>+2,4 %</strong>
+            <strong className="text-ink">+2,4 %</strong>
           </span>
           <span>·</span>
-          <Link href="/contact" className="lnk" style={{ borderBottom: 0 }}>
+          <Link href="/contact" className="lnk border-b-0">
             Contact
           </Link>
         </div>
       </div>
 
-      <div
-        className="mc-header-brand"
-        style={{
-          display: "grid",
-          gridTemplateColumns: "160px 1fr 240px",
-          alignItems: "center",
-          padding: "14px 28px",
-          borderBottom: "1px solid var(--paper-line)",
-        }}
-      >
-        <div
-          className="mono mc-header-dossier"
-          style={{
-            fontSize: 10,
-            color: "var(--ink-mute)",
-            letterSpacing: "0.08em",
-            textTransform: "uppercase",
-          }}
-        >
-          DOSSIER N° <span style={{ color: "var(--ink)" }}>04 / 27</span>
+      <div className="grid grid-cols-[1fr_auto] md:grid-cols-[160px_1fr_240px] items-center px-7 py-[14px] border-b border-paper-line">
+        <div className="mono hidden md:block text-[10px] text-ink-mute tracking-[0.08em] uppercase">
+          DOSSIER N° <span className="text-ink">04 / 27</span>
         </div>
-        <Link
-          href="/"
-          style={{
-            textAlign: "center",
-            textDecoration: "none",
-            color: "var(--ink)",
-          }}
-        >
-          <div
-            style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 800,
-              fontSize: "clamp(20px, 6vw, 28px)",
-              letterSpacing: "-0.04em",
-            }}
-          >
-            Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+        <Link href="/" className="text-center no-underline text-ink">
+          <div className="font-sans font-extrabold text-[clamp(20px,6vw,28px)] tracking-[-0.04em]">
+            Maison<span className="text-signal">·</span>Calorie
           </div>
-          <div
-            className="mono"
-            style={{
-              fontSize: 9,
-              letterSpacing: "0.24em",
-              color: "var(--ink-mute)",
-              textTransform: "uppercase",
-              marginTop: 2,
-            }}
-          >
+          <div className="mono text-[9px] tracking-[0.24em] text-ink-mute uppercase mt-[2px]">
             Le journal de la rénovation énergétique
           </div>
         </Link>
-        <div
-          className="mc-header-actions"
-          style={{ display: "flex", justifyContent: "flex-end", gap: 8 }}
-        >
+        <div className="hidden md:flex justify-end gap-2">
           <Link href="/connexion" className="btn btn--sm btn--ghost">
             <Icon.user /> Espace pro
           </Link>
@@ -115,42 +52,14 @@ export function Header({ active }: { active?: string }) {
           aria-label={open ? "Fermer le menu" : "Ouvrir le menu"}
           aria-expanded={open}
           onClick={() => setOpen((v) => !v)}
-          className="mc-header-burger btn btn--sm btn--ghost"
-          style={{
-            justifySelf: "end",
-            padding: "8px 10px",
-            fontSize: 16,
-            lineHeight: 1,
-          }}
+          className="md:hidden btn btn--sm btn--ghost justify-self-end px-[10px] py-2 text-base leading-none"
         >
           {open ? "✕" : "☰"}
         </button>
       </div>
 
-      <nav
-        className="mc-header-nav"
-        style={{
-          display: "flex",
-          alignItems: "center",
-          gap: 0,
-          padding: "0 28px",
-          borderBottom: "1px solid var(--ink)",
-        }}
-      >
-        <div
-          className="mono mc-header-nav-label"
-          style={{
-            fontSize: 10,
-            color: "var(--ink-mute)",
-            letterSpacing: "0.1em",
-            textTransform: "uppercase",
-            paddingRight: 16,
-            borderRight: "1px solid var(--paper-line)",
-            height: 36,
-            display: "flex",
-            alignItems: "center",
-          }}
-        >
+      <nav className="hidden md:flex items-center gap-0 px-7 border-b border-ink">
+        <div className="mono text-[10px] text-ink-mute tracking-[0.1em] uppercase pr-4 border-r border-paper-line h-9 flex items-center">
           RUBRIQUES
         </div>
         {CATEGORIES.map((c) => {
@@ -159,50 +68,19 @@ export function Header({ active }: { active?: string }) {
             <Link
               key={c.slug}
               href={`/rubriques/${c.slug}`}
-              className="mono"
-              style={{
-                padding: "0 14px",
-                height: 36,
-                display: "flex",
-                alignItems: "center",
-                fontSize: 11,
-                letterSpacing: "0.04em",
-                textTransform: "uppercase",
-                color: isActive ? "var(--paper)" : "var(--ink)",
-                background: isActive ? "var(--ink)" : "transparent",
-                borderRight: "1px solid var(--paper-line)",
-                textDecoration: "none",
-                whiteSpace: "nowrap",
-                flexShrink: 0,
-              }}
+              className={`mono px-[14px] h-9 flex items-center text-[11px] tracking-[0.04em] uppercase border-r border-paper-line no-underline whitespace-nowrap shrink-0 ${
+                isActive ? "text-paper bg-ink" : "text-ink bg-transparent"
+              }`}
             >
               {c.label}
             </Link>
           );
         })}
-        <div
-          className="mc-header-search"
-          style={{
-            marginLeft: "auto",
-            display: "flex",
-            alignItems: "center",
-            gap: 8,
-            paddingLeft: 16,
-          }}
-        >
+        <div className="ml-auto flex items-center gap-2 pl-4">
           <Icon.search />
           <input
-            className="mono"
+            className="mono border-0 bg-transparent text-[11px] text-ink w-[180px] outline-none p-0"
             placeholder="Rechercher un dossier…"
-            style={{
-              border: 0,
-              background: "transparent",
-              fontSize: 11,
-              color: "var(--ink)",
-              width: 180,
-              outline: "none",
-              padding: 0,
-            }}
           />
         </div>
       </nav>
@@ -220,38 +98,21 @@ export function Header({ active }: { active?: string }) {
         aria-label="Menu mobile"
       >
         <div className="mc-drawer-head">
-          <span
-            style={{
-              fontFamily: "var(--sans)",
-              fontWeight: 800,
-              fontSize: 20,
-              letterSpacing: "-0.04em",
-            }}
-          >
-            Maison<span style={{ color: "var(--signal)" }}>·</span>Calorie
+          <span className="font-sans font-extrabold text-xl tracking-[-0.04em]">
+            Maison<span className="text-signal">·</span>Calorie
           </span>
           <button
             type="button"
             aria-label="Fermer le menu"
             onClick={() => setOpen(false)}
-            className="btn btn--sm btn--ghost"
-            style={{ padding: "6px 10px", fontSize: 14, lineHeight: 1 }}
+            className="btn btn--sm btn--ghost px-[10px] py-[6px] text-sm leading-none"
           >
             ✕
           </button>
         </div>
 
         <div className="mc-drawer-body">
-          <div
-            className="mono mc-drawer-section"
-            style={{
-              fontSize: 10,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              margin: "4px 0 6px",
-            }}
-          >
+          <div className="mono text-[10px] text-ink-mute tracking-[0.1em] uppercase mt-1 mb-[6px]">
             Rubriques
           </div>
           {CATEGORIES.map((c) => (
@@ -267,51 +128,25 @@ export function Header({ active }: { active?: string }) {
             </Link>
           ))}
 
-          <div
-            className="mono mc-drawer-section"
-            style={{
-              fontSize: 10,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.1em",
-              textTransform: "uppercase",
-              margin: "18px 0 6px",
-            }}
-          >
+          <div className="mono text-[10px] text-ink-mute tracking-[0.1em] uppercase mt-[18px] mb-[6px]">
             Espace pro
           </div>
           <Link
             href="/connexion"
             onClick={() => setOpen(false)}
-            className="btn btn--ghost"
-            style={{
-              justifyContent: "flex-start",
-              width: "100%",
-              marginBottom: 8,
-            }}
+            className="btn btn--ghost justify-start w-full mb-2"
           >
             <Icon.user /> Connexion
           </Link>
           <Link
             href="/qcm"
             onClick={() => setOpen(false)}
-            className="btn btn--signal"
-            style={{ justifyContent: "flex-start", width: "100%" }}
+            className="btn btn--signal justify-start w-full"
           >
             S&apos;INSCRIRE →
           </Link>
 
-          <div
-            className="mono"
-            style={{
-              fontSize: 10,
-              color: "var(--ink-mute)",
-              letterSpacing: "0.08em",
-              textTransform: "uppercase",
-              marginTop: 24,
-              paddingTop: 14,
-              borderTop: "1px solid var(--paper-line)",
-            }}
-          >
+          <div className="mono text-[10px] text-ink-mute tracking-[0.08em] uppercase mt-6 pt-[14px] border-t border-paper-line">
             FR · Édition Métropole
             <br />
             N° 0427 — 27 avril 2026
@@ -319,12 +154,7 @@ export function Header({ active }: { active?: string }) {
           <Link
             href="/contact"
             onClick={() => setOpen(false)}
-            className="lnk mono"
-            style={{
-              fontSize: 11,
-              marginTop: 10,
-              display: "inline-block",
-            }}
+            className="lnk mono text-[11px] mt-[10px] inline-block"
           >
             Contact →
           </Link>
