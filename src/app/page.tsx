@@ -7,8 +7,8 @@ import {
   ArticleMeta,
   type ArticleCardItem,
 } from "@/components/article-card";
-import { CATEGORIES } from "@/lib/data";
 import { ArticlesRepo } from "@/lib/db/repositories/articles";
+import { CategoriesRepo } from "@/lib/db/repositories/categories";
 import { formatDate } from "@/lib/dates";
 
 export const revalidate = 3600;
@@ -38,15 +38,15 @@ const TESTIMONIALS = [
   },
 ];
 
-const CAT_ICONS = [
-  { c: CATEGORIES[0], n: 124, ic: <Icon.wall /> },
-  { c: CATEGORIES[1], n: 87, ic: <Icon.pump /> },
-  { c: CATEGORIES[2], n: 56, ic: <Icon.sun /> },
-  { c: CATEGORIES[3], n: 41, ic: <Icon.vent /> },
-  { c: CATEGORIES[4], n: 33, ic: <Icon.house /> },
-  { c: CATEGORIES[5], n: 72, ic: <Icon.doc /> },
-  { c: CATEGORIES[6], n: 64, ic: <Icon.bookmark /> },
-  { c: CATEGORIES[7], n: 218, ic: <Icon.clock /> },
+const CATEGORY_ICONS = [
+  <Icon.wall key="wall" />,
+  <Icon.pump key="pump" />,
+  <Icon.sun key="sun" />,
+  <Icon.vent key="vent" />,
+  <Icon.house key="house" />,
+  <Icon.doc key="doc" />,
+  <Icon.bookmark key="bookmark" />,
+  <Icon.clock key="clock" />,
 ];
 
 export default async function HomePage() {
@@ -58,6 +58,7 @@ export default async function HomePage() {
     6,
     topPublished.map((a) => a.id),
   );
+  const navCategories = await CategoriesRepo.listNavWithPublishedCount();
 
   return (
     <div className="mc-root">
@@ -285,31 +286,37 @@ export default async function HomePage() {
         </section>
       ) : null}
 
-      <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink">
-        <div className="h-section mb-4">—— Naviguer par rubrique</div>
-        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
-          {CAT_ICONS.map(({ c, n, ic }) => (
-            <Link
-              key={c.slug}
-              href={`/rubriques/${c.slug}`}
-              className="tick-frame p-[14px] no-underline text-ink flex flex-col gap-2 min-h-[100px]"
-            >
-              <span className="tick-bl"></span>
-              <span className="tick-br"></span>
-              <div className="flex justify-between items-start">
-                <div className="w-7 h-7">{ic}</div>
-                <span className="mono text-[10px] text-ink-mute">{n} art.</span>
-              </div>
-              <div className="text-sm font-bold tracking-[-0.01em] mt-auto">
-                {c.label}
-              </div>
-              <div className="mono text-[9px] tracking-[0.08em] uppercase text-signal">
-                Explorer ↗
-              </div>
-            </Link>
-          ))}
-        </div>
-      </section>
+      {navCategories.length > 0 ? (
+        <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink">
+          <div className="h-section mb-4">—— Naviguer par rubrique</div>
+          <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-3">
+            {navCategories.map((category, index) => (
+              <Link
+                key={category.id}
+                href={`/rubriques/${category.slug}`}
+                className="tick-frame p-[14px] no-underline text-ink flex flex-col gap-2 min-h-[100px]"
+              >
+                <span className="tick-bl"></span>
+                <span className="tick-br"></span>
+                <div className="flex justify-between items-start">
+                  <div className="w-7 h-7">
+                    {CATEGORY_ICONS[index % CATEGORY_ICONS.length]}
+                  </div>
+                  <span className="mono text-[10px] text-ink-mute">
+                    {category.publishedCount} art.
+                  </span>
+                </div>
+                <div className="text-sm font-bold tracking-[-0.01em] mt-auto">
+                  {category.name}
+                </div>
+                <div className="mono text-[9px] tracking-[0.08em] uppercase text-signal">
+                  Explorer ↗
+                </div>
+              </Link>
+            ))}
+          </div>
+        </section>
+      ) : null}
 
       <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink">
         <div className="flex flex-wrap justify-between items-baseline gap-4 mb-5">

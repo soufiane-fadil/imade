@@ -53,6 +53,8 @@ async function assertSlugAvailable(
 
 export type CategoryNav = { id: string; slug: string; name: string };
 
+export type CategoryNavWithCount = CategoryNav & { publishedCount: number };
+
 export const CategoriesRepo = {
   /** Lightweight projection for headers/footers/navs (no JOIN, no count). */
   async listNav(limit?: number): Promise<CategoryNav[]> {
@@ -63,6 +65,24 @@ export const CategoriesRepo = {
         name: categories.name,
       })
       .from(categories)
+      .orderBy(asc(categories.name));
+    return limit ? base.limit(limit) : base;
+  },
+
+  /** Categories with their count of *published* articles, for home/landing grids. */
+  async listNavWithPublishedCount(
+    limit?: number,
+  ): Promise<CategoryNavWithCount[]> {
+    const base = db
+      .select({
+        id: categories.id,
+        slug: categories.slug,
+        name: categories.name,
+        publishedCount: sql<number>`count(${articles.id}) filter (where ${articles.status} = 'published')::int`,
+      })
+      .from(categories)
+      .leftJoin(articles, eq(articles.categoryId, categories.id))
+      .groupBy(categories.id)
       .orderBy(asc(categories.name));
     return limit ? base.limit(limit) : base;
   },

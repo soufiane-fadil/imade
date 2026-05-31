@@ -15,7 +15,7 @@ function renderSiteName() {
 }
 
 export async function Footer() {
-  const rows = await CategoriesRepo.listNav(6);
+  const rows = await CategoriesRepo.listNav();
 
   return (
     <footer className="border-t-[3px] border-double border-ink mt-12 bg-paper">
@@ -104,7 +104,6 @@ export async function Footer() {
               ["LinkedIn", "/in/maison-calorie"],
               ["Twitter / X", "@maisoncalorie"],
               ["YouTube", "/c/maisoncalorie"],
-              ["RSS", "/feed.xml"],
               ["Mastodon", "@mc@piaille.fr"],
             ].map(([k, v]) => (
               <a
