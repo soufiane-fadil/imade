@@ -31,6 +31,13 @@ export const contactStatus = pgEnum("contact_status", [
   "archived",
 ]);
 
+export const contactReason = pgEnum("contact_reason", [
+  "article",
+  "error",
+  "qcm",
+  "other",
+]);
+
 export const categories = pgTable(
   "categories",
   {
@@ -204,6 +211,7 @@ export const contacts = pgTable(
     email: text("email").notNull(),
     subject: text("subject").notNull(),
     message: text("message").notNull(),
+    reason: contactReason("reason").notNull().default("other"),
     status: contactStatus("status").notNull().default("unread"),
     createdAt: timestamp("created_at", { withTimezone: true, mode: "date" })
       .notNull()
