@@ -153,23 +153,34 @@ export function ArticleMeta({
   );
 }
 
-export function Breadcrumbs({ trail }: { trail: string[] }) {
+export type BreadcrumbItem = string | { label: string; href: string };
+
+export function Breadcrumbs({ trail }: { trail: BreadcrumbItem[] }) {
   return (
     <div className="mono text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-wrap items-center gap-2">
-      {trail.map((t, i) => (
-        <span key={i} className="inline-flex gap-2 items-center">
-          {i > 0 && <span className="text-paper-line">/</span>}
-          <span
-            className={
-              i === trail.length - 1
-                ? "text-ink border-b border-ink"
-                : "text-ink-mute"
-            }
-          >
-            {t}
+      {trail.map((item, i) => {
+        const isLast = i === trail.length - 1;
+        const label = typeof item === "string" ? item : item.label;
+        const href = typeof item === "string" ? undefined : item.href;
+        const styles = isLast
+          ? "text-ink border-b border-ink"
+          : "text-ink-mute";
+        return (
+          <span key={i} className="inline-flex gap-2 items-center">
+            {i > 0 && <span className="text-paper-line">/</span>}
+            {href && !isLast ? (
+              <Link
+                href={href}
+                className={`${styles} no-underline hover:text-ink`}
+              >
+                {label}
+              </Link>
+            ) : (
+              <span className={styles}>{label}</span>
+            )}
           </span>
-        </span>
-      ))}
+        );
+      })}
     </div>
   );
 }

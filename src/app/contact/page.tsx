@@ -33,7 +33,7 @@ export default function ContactPage() {
     <div className="mc-root w-full max-w-[1280px] mx-auto">
       <Header />
       <section className="px-4 md:px-7 pt-5">
-        <Breadcrumbs trail={["Accueil", "Contact"]} />
+        <Breadcrumbs trail={[{ label: "Accueil", href: "/" }, "Contact"]} />
       </section>
       <section className="px-4 md:px-7 py-6 border-b border-ink">
         <Tag kind="signal">Bureau éditorial</Tag>
@@ -186,11 +186,7 @@ export default function ContactPage() {
             </div>
 
             <label className="grid grid-cols-[20px_1fr] gap-2.5 px-3.5 py-3 bg-paper-2 border border-paper-line cursor-pointer items-start">
-              <input
-                type="checkbox"
-                defaultChecked
-                className="mt-[3px]"
-              />
+              <input type="checkbox" defaultChecked className="mt-[3px]" />
               <div className="text-[13px] text-ink-2 leading-[1.45]">
                 <strong>
                   J’accepte que mes données soient utilisées pour traiter ma

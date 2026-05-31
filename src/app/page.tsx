@@ -9,6 +9,7 @@ import {
 } from "@/components/article-card";
 import { ArticlesRepo } from "@/lib/db/repositories/articles";
 import { CategoriesRepo } from "@/lib/db/repositories/categories";
+import { QcmPromoBlock } from "@/components/qcm-promo";
 import { formatDate } from "@/lib/dates";
 
 export const revalidate = 3600;
@@ -72,7 +73,12 @@ export default async function HomePage() {
                 ◉ À la une — {heroArticle.categoryName}
               </div>
               <h1 className="h-display text-4xl md:text-5xl lg:text-6xl xl:text-[64px] m-0 max-w-[720px]">
-                {heroArticle.title}
+                <Link
+                  href={buildHref(heroArticle.categorySlug, heroArticle.slug)}
+                  className="no-underline text-ink hover:text-signal transition-colors"
+                >
+                  {heroArticle.title}
+                </Link>
               </h1>
               {heroArticle.seoExcerpt ? (
                 <p className="text-lg text-ink-3 mt-[14px] max-w-[620px] leading-[1.4]">
@@ -219,20 +225,8 @@ export default async function HomePage() {
             </Link>
           ))}
 
-          <div className="mt-6 border border-ink bg-ink text-paper p-4">
-            <div className="mono text-[9px] tracking-[0.16em] uppercase text-signal">
-              ◉ Sponsorisé · Maison
-            </div>
-            <div className="text-lg font-bold tracking-[-0.02em] mt-[6px] leading-[1.15]">
-              Devenez auditeur RGE certifié en 30 questions.
-            </div>
-            <div className="text-xs text-paper-3 mt-[6px]">
-              Pass à 49 € — accès aux outils de diagnostic après réussite. 1 200
-              pros déjà certifiés.
-            </div>
-            <Link href="/qcm" className="btn btn--signal btn--sm mt-3">
-              Voir le QCM →
-            </Link>
+          <div className="mt-6">
+            <QcmPromoBlock />
           </div>
         </aside>
       </section>

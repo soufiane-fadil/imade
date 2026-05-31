@@ -198,6 +198,7 @@ export type PublishedArticleDetail = {
 export type PublishedListOptions = {
   excludeArticleId?: string;
   limit?: number;
+  offset?: number;
 };
 
 export const ArticlesRepo = {
@@ -232,7 +233,21 @@ export const ArticlesRepo = {
       .leftJoin(medias, eq(medias.id, articles.coverMediaId))
       .where(and(...conditions))
       .orderBy(desc(articles.publishedAt));
-    return opts.limit ? base.limit(opts.limit) : base;
+    const withLimit = opts.limit ? base.limit(opts.limit) : base;
+    return opts.offset ? withLimit.offset(opts.offset) : withLimit;
+  },
+
+  async countPublishedInCategory(categoryId: string): Promise<number> {
+    const [{ value }] = await db
+      .select({ value: count(articles.id) })
+      .from(articles)
+      .where(
+        and(
+          eq(articles.status, "published"),
+          eq(articles.categoryId, categoryId),
+        ),
+      );
+    return value;
   },
 
   async listPublishedOutsideCategory(

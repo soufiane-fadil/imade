@@ -38,7 +38,7 @@ export default function QCMLandingPage() {
     <div className="mc-root w-full max-w-[1280px] mx-auto">
       <Header />
       <section className="px-4 pt-5 md:px-7">
-        <Breadcrumbs trail={["Accueil", "QCM RGE"]} />
+        <Breadcrumbs trail={[{ label: "Accueil", href: "/" }, "QCM RGE"]} />
       </section>
 
       <section className="px-4 py-8 md:px-7 md:py-10 border-b border-ink grid grid-cols-1 lg:grid-cols-[1.4fr_1fr] gap-8 lg:gap-10">
@@ -56,9 +56,7 @@ export default function QCMLandingPage() {
           <p className="text-[17px] text-ink-3 mt-4 max-w-[620px] leading-[1.5]">
             Le QCM Maison Calorie certifie votre maîtrise des fondamentaux de la
             rénovation énergétique. Réussir le test, c’est obtenir l’accès aux{" "}
-            <strong className="text-ink">
-              outils de diagnostic en ligne
-            </strong>{" "}
+            <strong className="text-ink">outils de diagnostic en ligne</strong>{" "}
             et le droit d’apposer le label MC sur vos devis.
           </p>
           <div className="mt-5 flex flex-wrap gap-2.5">
@@ -132,8 +130,7 @@ export default function QCMLandingPage() {
             <div
               key={n}
               className={
-                "p-5 relative " +
-                (i < 3 ? "lg:border-r border-paper-line" : "")
+                "p-5 relative " + (i < 3 ? "lg:border-r border-paper-line" : "")
               }
             >
               <div className="mono text-[36px] font-semibold text-signal tracking-[-0.02em]">

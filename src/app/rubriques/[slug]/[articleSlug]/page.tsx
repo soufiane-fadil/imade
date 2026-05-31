@@ -196,7 +196,12 @@ export default async function ArticlePage({
       <Header active={categorySlug} />
       <section className="px-4 md:px-7 pt-4">
         <Breadcrumbs
-          trail={["Accueil", "Rubriques", categoryName, article.title]}
+          trail={[
+            { label: "Accueil", href: "/" },
+            "Rubriques",
+            { label: categoryName, href: `/rubriques/${categorySlug}` },
+            article.title,
+          ]}
         />
       </section>
 

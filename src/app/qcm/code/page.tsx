@@ -27,7 +27,13 @@ export default function QCMGatePage() {
     <div className="mc-root w-full max-w-[1280px] mx-auto min-h-[1000px]">
       <Header />
       <section className="px-4 pt-5 md:px-7">
-        <Breadcrumbs trail={["Accueil", "QCM RGE", "Saisir un code"]} />
+        <Breadcrumbs
+          trail={[
+            { label: "Accueil", href: "/" },
+            { label: "QCM RGE", href: "/qcm" },
+            "Saisir un code",
+          ]}
+        />
       </section>
       <section className="gridpaper px-4 py-10 md:px-7 md:py-14 border-b border-ink grid grid-cols-1 md:grid-cols-2 gap-10 md:gap-14 md:min-h-[720px]">
         <div className="self-center max-w-[480px]">
