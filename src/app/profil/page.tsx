@@ -189,7 +189,8 @@ export default function ProfilePage() {
         <div>
           <div className="h-section mb-3">—— Lectures sauvegardées</div>
           {SAMPLE_ARTICLES.slice(0, 4).map((it) => (
-            <ArticleCard key={it.id} item={it} kind="mini" />
+            // TODO: switch profil page to Drizzle, then build a real href from category slug + article slug.
+            <ArticleCard key={it.id} item={it} href="#" kind="mini" />
           ))}
         </div>
         <div>

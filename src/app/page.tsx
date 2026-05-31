@@ -2,8 +2,20 @@ import Link from "next/link";
 import { Header } from "@/components/header";
 import { Footer, NewsletterBlock } from "@/components/footer";
 import { Icon, Placeholder, Tag } from "@/components/atoms";
-import { ArticleCard, ArticleMeta } from "@/components/article-card";
-import { CATEGORIES, SAMPLE_ARTICLES } from "@/lib/data";
+import {
+  ArticleCard,
+  ArticleMeta,
+  type ArticleCardItem,
+} from "@/components/article-card";
+import { CATEGORIES } from "@/lib/data";
+import { ArticlesRepo } from "@/lib/db/repositories/articles";
+import { formatDate } from "@/lib/dates";
+
+export const revalidate = 3600;
+
+function buildHref(categorySlug: string, articleSlug: string): string {
+  return `/rubriques/${categorySlug}/${articleSlug}`;
+}
 
 const TESTIMONIALS = [
   {
@@ -37,55 +49,75 @@ const CAT_ICONS = [
   { c: CATEGORIES[7], n: 218, ic: <Icon.clock /> },
 ];
 
-export default function HomePage() {
-  const a = SAMPLE_ARTICLES;
+export default async function HomePage() {
+  const topPublished = await ArticlesRepo.listLatestPublished(8);
+  const heroArticle = topPublished[0];
+  const featuredArticle = topPublished[1];
+  const recentArticles = topPublished.slice(2, 8);
+  const discoveryArticles = await ArticlesRepo.listRandomPublished(
+    6,
+    topPublished.map((a) => a.id),
+  );
+
   return (
     <div className="mc-root">
       <Header />
 
-      <section className="px-4 py-6 md:px-7 md:pt-8 md:pb-6 border-b border-ink">
-        <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch">
-          <div>
-            <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal mb-3">
-              ◉ À la une — n° {a[0].id}
+      {heroArticle ? (
+        <section className="px-4 py-6 md:px-7 md:pt-8 md:pb-6 border-b border-ink">
+          <div className="grid grid-cols-1 lg:grid-cols-[1.5fr_1fr] gap-8 items-stretch">
+            <div>
+              <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal mb-3">
+                ◉ À la une — {heroArticle.categoryName}
+              </div>
+              <h1 className="h-display text-4xl md:text-5xl lg:text-6xl xl:text-[64px] m-0 max-w-[720px]">
+                {heroArticle.title}
+              </h1>
+              {heroArticle.seoExcerpt ? (
+                <p className="text-lg text-ink-3 mt-[14px] max-w-[620px] leading-[1.4]">
+                  {heroArticle.seoExcerpt}
+                </p>
+              ) : null}
+              <div className="mt-[18px]">
+                <ArticleMeta
+                  author={heroArticle.authorName}
+                  role="Journaliste senior"
+                  published={formatDate(heroArticle.publishedAt)}
+                  readMin={heroArticle.readingMinutes}
+                  category={heroArticle.categoryName}
+                />
+              </div>
+              <Link
+                href={buildHref(heroArticle.categorySlug, heroArticle.slug)}
+                className="btn btn--primary mt-[22px]"
+              >
+                Lire l’enquête <Icon.arrowR />
+              </Link>
             </div>
-            <h1 className="h-display text-4xl md:text-5xl lg:text-6xl xl:text-[64px] m-0 max-w-[720px]">
-              {a[0].title}
-            </h1>
-            <p className="text-lg text-ink-3 mt-[14px] max-w-[620px] leading-[1.4]">
-              {a[0].dek}
-            </p>
-            <div className="mt-[18px]">
-              <ArticleMeta
-                author={a[0].author}
-                role="Journaliste senior"
-                published={a[0].date}
-                updated="ce matin"
-                readMin={a[0].read}
-                category={a[0].cat}
-              />
+            <div className="tick-frame relative min-h-[360px]">
+              <span className="tick-bl"></span>
+              <span className="tick-br"></span>
+              {heroArticle.coverUrl ? (
+                <div
+                  className="h-full w-full bg-cover bg-center"
+                  role="img"
+                  aria-label={heroArticle.coverAlt ?? heroArticle.title}
+                  style={{ backgroundImage: `url(${heroArticle.coverUrl})` }}
+                />
+              ) : (
+                <Placeholder
+                  caption={`reportage · ${heroArticle.categoryName.toLowerCase()}`}
+                  className="h-full border-0"
+                />
+              )}
+              <div className="mono absolute bottom-2 left-2 right-2 text-[9px] tracking-[0.08em] uppercase text-ink-mute flex justify-between bg-paper px-[6px] py-1 border border-paper-line">
+                <span>Photo · Maison Calorie</span>
+                <span>{heroArticle.categoryName}</span>
+              </div>
             </div>
-            <Link
-              href={`/article/${a[0].id}`}
-              className="btn btn--primary mt-[22px]"
-            >
-              Lire l’enquête <Icon.arrowR />
-            </Link>
           </div>
-          <div className="tick-frame relative min-h-[360px]">
-            <span className="tick-bl"></span>
-            <span className="tick-br"></span>
-            <Placeholder
-              caption="reportage · pompe à chaleur en cours d’installation"
-              className="h-full border-0"
-            />
-            <div className="mono absolute bottom-2 left-2 right-2 text-[9px] tracking-[0.08em] uppercase text-ink-mute flex justify-between bg-paper px-[6px] py-1 border border-paper-line">
-              <span>Crédit · S. Berthier</span>
-              <span>3 312 × 2 208 px · ƒ/4 · 1/250 s</span>
-            </div>
-          </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="bg-ink text-paper px-4 py-8 md:px-7 md:py-11 border-b border-ink">
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 items-center">
@@ -144,28 +176,43 @@ export default function HomePage() {
               Voir tous les articles →
             </Link>
           </div>
-          {a.slice(1, 7).map((it) => (
-            <ArticleCard key={it.id} item={it} kind="card" />
-          ))}
+          {recentArticles.map((article) => {
+            const item: ArticleCardItem = {
+              cat: article.categoryName,
+              title: article.title,
+              dek: article.seoExcerpt,
+              author: article.authorName,
+              date: formatDate(article.publishedAt),
+              read: article.readingMinutes,
+            };
+            return (
+              <ArticleCard
+                key={article.id}
+                item={item}
+                href={buildHref(article.categorySlug, article.slug)}
+                kind="card"
+              />
+            );
+          })}
         </div>
 
         <aside className="border-paper-line lg:border-l lg:pl-6 lg:sticky lg:top-[100px] lg:self-start">
-          <div className="h-section mb-3">—— Les + lus cette semaine</div>
-          {a.slice(0, 5).map((it, i) => (
+          <div className="h-section mb-3">—— À ne pas manquer</div>
+          {discoveryArticles.map((article, index) => (
             <Link
-              key={it.id}
-              href={`/article/${it.id}`}
+              key={article.id}
+              href={buildHref(article.categorySlug, article.slug)}
               className="grid grid-cols-[20px_1fr] gap-[10px] py-[10px] border-b border-paper-line no-underline text-ink"
             >
               <span className="mono text-[22px] font-semibold text-signal leading-none">
-                {i + 1}
+                {index + 1}
               </span>
               <div>
                 <div className="mono text-[9px] tracking-[0.08em] uppercase text-ink-mute">
-                  {it.cat}
+                  {article.categoryName}
                 </div>
                 <div className="font-semibold text-[13px] leading-[1.25] tracking-[-0.01em] mt-[2px]">
-                  {it.title}
+                  {article.title}
                 </div>
               </div>
             </Link>
@@ -189,33 +236,54 @@ export default function HomePage() {
         </aside>
       </section>
 
-      <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink bg-paper-2">
-        <div className="h-section mb-4">—— Dossier promu de la quinzaine</div>
-        <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8 items-center">
-          <Placeholder
-            caption="schéma · stratigraphie murale"
-            className="aspect-[4/3]"
-          />
-          <div>
-            <Tag kind="signal">Dossier · 6 articles</Tag>
-            <h2 className="h-title text-2xl md:text-3xl lg:text-[44px] mt-3 max-w-[560px]">
-              Tout savoir sur l’isolation par l’extérieur — sans se faire
-              arnaquer.
-            </h2>
-            <p className="text-[15px] text-ink-3 mt-3 max-w-[540px] leading-[1.5]">
-              Six articles, vingt-deux fiches techniques, quatre tableurs de
-              comparaison, un guide de devis annoté ligne par ligne. Réservé aux
-              abonnés du bulletin.
-            </p>
-            <div className="mt-4 flex flex-wrap gap-2">
-              <button className="btn btn--primary">
-                Ouvrir le dossier <Icon.arrowR />
-              </button>
-              <button className="btn btn--ghost">Aperçu PDF (12 p.)</button>
+      {featuredArticle ? (
+        <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink bg-paper-2">
+          <div className="h-section mb-4">—— Dossier promu de la quinzaine</div>
+          <div className="grid grid-cols-1 lg:grid-cols-[1fr_1.1fr] gap-8 items-center">
+            {featuredArticle.coverUrl ? (
+              <div
+                className="aspect-[4/3] w-full bg-cover bg-center border border-paper-line"
+                role="img"
+                aria-label={featuredArticle.coverAlt ?? featuredArticle.title}
+                style={{ backgroundImage: `url(${featuredArticle.coverUrl})` }}
+              />
+            ) : (
+              <Placeholder
+                caption={featuredArticle.categoryName.toLowerCase()}
+                className="aspect-[4/3]"
+              />
+            )}
+            <div>
+              <Tag kind="signal">{featuredArticle.categoryName}</Tag>
+              <h2 className="h-title text-2xl md:text-3xl lg:text-[44px] mt-3 max-w-[560px]">
+                {featuredArticle.title}
+              </h2>
+              {featuredArticle.seoExcerpt ? (
+                <p className="text-[15px] text-ink-3 mt-3 max-w-[540px] leading-[1.5]">
+                  {featuredArticle.seoExcerpt}
+                </p>
+              ) : null}
+              <div className="mt-4 flex flex-wrap gap-2">
+                <Link
+                  href={buildHref(
+                    featuredArticle.categorySlug,
+                    featuredArticle.slug,
+                  )}
+                  className="btn btn--primary"
+                >
+                  Lire l’article <Icon.arrowR />
+                </Link>
+                <Link
+                  href={`/rubriques/${featuredArticle.categorySlug}`}
+                  className="btn btn--ghost"
+                >
+                  Voir la rubrique
+                </Link>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      ) : null}
 
       <section className="px-4 py-6 md:px-7 md:py-9 border-b border-ink">
         <div className="h-section mb-4">—— Naviguer par rubrique</div>
@@ -230,9 +298,7 @@ export default function HomePage() {
               <span className="tick-br"></span>
               <div className="flex justify-between items-start">
                 <div className="w-7 h-7">{ic}</div>
-                <span className="mono text-[10px] text-ink-mute">
-                  {n} art.
-                </span>
+                <span className="mono text-[10px] text-ink-mute">{n} art.</span>
               </div>
               <div className="text-sm font-bold tracking-[-0.01em] mt-auto">
                 {c.label}
@@ -263,9 +329,7 @@ export default function HomePage() {
             <figure key={t.who} className="tick-frame p-5 m-0">
               <span className="tick-bl"></span>
               <span className="tick-br"></span>
-              <div className="mono text-[22px] text-signal leading-none">
-                “
-              </div>
+              <div className="mono text-[22px] text-signal leading-none">“</div>
               <blockquote className="m-0 text-[15px] leading-[1.45] text-ink-2 tracking-[-0.01em]">
                 {t.quote}
               </blockquote>

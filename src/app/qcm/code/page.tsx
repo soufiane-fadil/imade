@@ -1,13 +1,11 @@
-"use client";
-import { useState, Fragment } from "react";
 import Link from "next/link";
 import { Header } from "@/components/header";
 import { Footer } from "@/components/footer";
 import { Breadcrumbs } from "@/components/article-card";
 import { Tag, Icon } from "@/components/atoms";
+import { CodeInput } from "./code-input";
 
 export default function QCMGatePage() {
-  const [code, setCode] = useState(["QCM7", "H4K9", "P2XA", "1B6D"]);
   const rules: [string, string][] = [
     ["30 questions", "Une seule bonne réponse par question parmi 4."],
     ["Navigation libre", "Vous pouvez revenir sur une question à tout moment."],
@@ -54,29 +52,7 @@ export default function QCMGatePage() {
               16 caractères répartis en 4 groupes de 4. Reçu par e-mail au
               moment de l’achat.
             </div>
-            <div className="flex flex-wrap items-center gap-1.5 mt-3.5">
-              <span className="mono text-[22px] font-semibold text-ink-mute tracking-[0.08em]">
-                QCM
-              </span>
-              <span className="mono text-[22px] text-ink-mute">—</span>
-              {code.map((seg, i) => (
-                <Fragment key={i}>
-                  <input
-                    value={seg}
-                    onChange={(e) => {
-                      const c = [...code];
-                      c[i] = e.target.value.toUpperCase().slice(0, 4);
-                      setCode(c);
-                    }}
-                    aria-label={`Groupe ${i + 1} sur 4`}
-                    className="mono text-[22px] tracking-[0.16em] text-center py-3 flex-1 min-w-0 bg-paper-2 border border-ink uppercase text-ink outline-none"
-                  />
-                  {i < code.length - 1 && (
-                    <span className="mono text-[22px] text-ink-mute">—</span>
-                  )}
-                </Fragment>
-              ))}
-            </div>
+            <CodeInput />
             <div className="text-[12px] text-ink-mute mt-2.5 italic">
               Exemple :{" "}
               <span className="mono not-italic">QCM — 7H4K — 9P2X — A1B6</span>.
@@ -111,7 +87,9 @@ export default function QCMGatePage() {
             <div className="mono text-[10px] tracking-[0.16em] uppercase text-signal">
               ◉ AVANT DE COMMENCER
             </div>
-            <h2 className="h-title text-[26px] mt-2">Lisez les règles du jeu.</h2>
+            <h2 className="h-title text-[26px] mt-2">
+              Lisez les règles du jeu.
+            </h2>
             <ul className="list-none p-0 mt-5">
               {rules.map(([k, v]) => (
                 <li

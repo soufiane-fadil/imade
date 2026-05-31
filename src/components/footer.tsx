@@ -1,16 +1,28 @@
 import Link from "next/link";
-import { CATEGORIES } from "@/lib/data";
+import { CategoriesRepo } from "@/lib/db/repositories/categories";
+import { SITE_NAME } from "@/lib/site";
 
-export function Footer() {
+function renderSiteName() {
+  const parts = SITE_NAME.split("·");
+  if (parts.length <= 1) return SITE_NAME;
+  return (
+    <>
+      {parts[0]}
+      <span className="text-signal">·</span>
+      {parts.slice(1).join("·")}
+    </>
+  );
+}
+
+export async function Footer() {
+  const rows = await CategoriesRepo.listNav(6);
+
   return (
     <footer className="border-t-[3px] border-double border-ink mt-12 bg-paper">
       <div className="px-7 py-8 grid grid-cols-1 md:grid-cols-2 lg:grid-cols-[1.4fr_1fr_1fr_1fr_1.4fr] gap-7 border-b border-paper-line">
         <div>
           <div className="font-sans font-extrabold text-[22px] tracking-[-0.04em]">
-            Maison<span className="text-signal">·</span>Calorie
-          </div>
-          <div className="mono text-[10px] tracking-[0.16em] text-ink-mute uppercase mt-1">
-            Édition n° 04 / 27 — Paris
+            {renderSiteName()}
           </div>
           <p className="text-xs text-ink-3 mt-4 leading-[1.5] max-w-[280px]">
             Le journal indépendant de la rénovation énergétique en France.
@@ -21,13 +33,10 @@ export function Footer() {
         <div>
           <div className="h-section">Rubriques</div>
           <ul className="list-none p-0 mt-3 mb-0 text-xs leading-[2]">
-            {CATEGORIES.slice(0, 6).map((c) => (
+            {rows.map((c) => (
               <li key={c.slug}>
-                <Link
-                  href={`/rubriques/${c.slug}`}
-                  className="lnk border-b-0"
-                >
-                  {c.label}
+                <Link href={`/rubriques/${c.slug}`} className="lnk border-b-0">
+                  {c.name}
                 </Link>
               </li>
             ))}
@@ -59,7 +68,7 @@ export function Footer() {
           </ul>
         </div>
         <div>
-          <div className="h-section">Maison</div>
+          <div className="h-section">{SITE_NAME.split("·")[0].trim()}</div>
           <ul className="list-none p-0 mt-3 mb-0 text-xs leading-[2]">
             <li>
               <Link href="/" className="lnk border-b-0">
@@ -111,11 +120,7 @@ export function Footer() {
         </div>
       </div>
       <div className="mono px-7 py-3 text-[10px] tracking-[0.08em] uppercase text-ink-mute flex flex-col gap-2 md:flex-row md:justify-between md:gap-0">
-        <span>
-          © 2026 SAS Maison Calorie · RCS Paris 912 448 211 · TVA FR 87 912 448
-          211
-        </span>
-        <span>v 4.27.0 — Build #1042</span>
+        <span>© 2026 — {SITE_NAME}</span>
       </div>
     </footer>
   );

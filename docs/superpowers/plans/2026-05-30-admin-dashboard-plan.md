@@ -45,6 +45,7 @@ Task 7  Media module            ─┘  SEQUENTIAL (Task 6 must finish before Ta
 ```
 
 When dispatching subagents via the SendMessage-First pattern (cf. project `CLAUDE.md`):
+
 - **Pipeline phase (Tasks 1–4)**: pipeline `researcher → architect → coder → tester → reviewer`, single thread.
 - **Fan-out phase (Tasks 5.A–5.D)**: spawn 4 coder agents in parallel, each named (`coder-categories`, `coder-authors`, `coder-users`, `coder-contacts`), each with its own tester. A `reviewer` waits for all 4 completions.
 - **Articles + Media (Tasks 6, 7)**: pipeline again.
@@ -156,6 +157,7 @@ Existing public files are **not touched**. Public pages keep reading from `src/l
 **Goal:** Install dependencies, configure shadcn theme, create the typed data shell (types + utils + seed + storage) with passing unit tests for storage and utils.
 
 **Files:**
+
 - Modify: `package.json`, `eslint.config.mjs`, `src/app/globals.css`
 - Create: `components.json`, `vitest.config.ts`, `src/lib/admin/types.ts`, `src/lib/admin/utils.ts`, `src/lib/admin/seed.ts`, `src/lib/admin/storage.ts`, `tests/lib/admin/utils.test.ts`, `tests/lib/admin/storage.test.ts`
 
@@ -166,6 +168,7 @@ Existing public files are **not touched**. Public pages keep reading from `src/l
 - [ ] **Step 1: Install runtime deps**
 
 Run:
+
 ```bash
 npm install @tanstack/react-query @tanstack/react-table react-hook-form zod @hookform/resolvers @tiptap/react @tiptap/starter-kit @tiptap/extension-link @tiptap/extension-image @tiptap/extension-table @tiptap/extension-table-row @tiptap/extension-table-cell @tiptap/extension-table-header cmdk sonner next-themes date-fns lucide-react ulid class-variance-authority clsx tailwind-merge tw-animate-css
 ```
@@ -175,6 +178,7 @@ Expected: install completes. `package.json` `dependencies` now includes all abov
 - [ ] **Step 2: Install dev deps for tests**
 
 Run:
+
 ```bash
 npm install -D vitest @vitest/coverage-v8 @testing-library/react @testing-library/jest-dom @testing-library/user-event jsdom @types/node
 ```
@@ -232,6 +236,7 @@ beforeEach(() => {
 - [ ] **Step 3: Add npm scripts**
 
 Modify `package.json` `scripts`:
+
 ```json
 {
   "scripts": {
@@ -264,11 +269,13 @@ git commit -m "chore: add vitest with jsdom env for admin TDD"
 - [ ] **Step 1: Run shadcn init**
 
 Run:
+
 ```bash
 npx shadcn@latest init -y -b neutral
 ```
 
 Answer prompts if any:
+
 - Style: default
 - Base color: neutral
 - CSS variables: yes
@@ -282,25 +289,25 @@ Open `src/app/globals.css`. Find the shadcn `:root { ... }` block. Replace the c
 
 ```css
 :root {
-  --background: 0 0% 100%;          /* paper */
-  --foreground: 36 18% 7%;          /* ink */
+  --background: 0 0% 100%; /* paper */
+  --foreground: 36 18% 7%; /* ink */
   --card: 0 0% 100%;
   --card-foreground: 36 18% 7%;
   --popover: 0 0% 100%;
   --popover-foreground: 36 18% 7%;
-  --primary: 36 18% 7%;             /* ink */
+  --primary: 36 18% 7%; /* ink */
   --primary-foreground: 0 0% 100%;
-  --secondary: 40 11% 95%;          /* paper-2 */
+  --secondary: 40 11% 95%; /* paper-2 */
   --secondary-foreground: 36 18% 7%;
   --muted: 40 11% 95%;
-  --muted-foreground: 39 8% 44%;    /* ink-mute */
-  --accent: 14 80% 50%;             /* signal */
+  --muted-foreground: 39 8% 44%; /* ink-mute */
+  --accent: 14 80% 50%; /* signal */
   --accent-foreground: 0 0% 100%;
   --destructive: 0 84% 45%;
   --destructive-foreground: 0 0% 100%;
-  --border: 41 11% 80%;             /* paper-line */
+  --border: 41 11% 80%; /* paper-line */
   --input: 41 11% 80%;
-  --ring: 14 80% 50%;               /* signal */
+  --ring: 14 80% 50%; /* signal */
   --radius: 0.375rem;
 }
 
@@ -330,6 +337,7 @@ Open `src/app/globals.css`. Find the shadcn `:root { ... }` block. Replace the c
 - [ ] **Step 3: Add base shadcn primitives**
 
 Run:
+
 ```bash
 npx shadcn@latest add button input textarea select label form table dialog sheet dropdown-menu tabs card badge avatar checkbox skeleton command popover separator toast switch tooltip alert
 ```
@@ -350,7 +358,10 @@ Then create `src/components/theme-provider.tsx`:
 import * as React from "react";
 import { ThemeProvider as NextThemesProvider } from "next-themes";
 
-export function ThemeProvider({ children, ...props }: React.ComponentProps<typeof NextThemesProvider>) {
+export function ThemeProvider({
+  children,
+  ...props
+}: React.ComponentProps<typeof NextThemesProvider>) {
   return <NextThemesProvider {...props}>{children}</NextThemesProvider>;
 }
 ```
@@ -483,7 +494,10 @@ export type Snapshot = {
 };
 
 export class RepositoryError extends Error {
-  constructor(public code: string, public details: Record<string, unknown> = {}) {
+  constructor(
+    public code: string,
+    public details: Record<string, unknown> = {},
+  ) {
     super(code);
     this.name = "RepositoryError";
   }
@@ -510,7 +524,11 @@ git commit -m "feat(admin): add domain types and Snapshot shape"
 
 ```ts
 import { describe, expect, it } from "vitest";
-import { slugify, readingMinutesFromHtml, isUniqueSlug } from "@/lib/admin/utils";
+import {
+  slugify,
+  readingMinutesFromHtml,
+  isUniqueSlug,
+} from "@/lib/admin/utils";
 
 describe("slugify", () => {
   it("lowercases and removes diacritics", () => {
@@ -551,7 +569,9 @@ describe("readingMinutesFromHtml", () => {
 
 describe("isUniqueSlug", () => {
   it("returns true if slug is absent from existing list", () => {
-    expect(isUniqueSlug("new", [{ slug: "old" }, { slug: "other" }])).toBe(true);
+    expect(isUniqueSlug("new", [{ slug: "old" }, { slug: "other" }])).toBe(
+      true,
+    );
   });
 
   it("returns false if slug exists", () => {
@@ -597,7 +617,10 @@ export function slugify(input: string): string {
 }
 
 export function readingMinutesFromHtml(html: string): number {
-  const text = html.replace(/<[^>]+>/g, " ").replace(/\s+/g, " ").trim();
+  const text = html
+    .replace(/<[^>]+>/g, " ")
+    .replace(/\s+/g, " ")
+    .trim();
   const wordCount = text ? text.split(" ").length : 0;
   return Math.max(1, Math.round(wordCount / 220));
 }
@@ -664,7 +687,18 @@ describe("storage", () => {
   });
 
   it("re-seeds if stored version is older", () => {
-    localStorage.setItem(STORAGE_KEY, JSON.stringify({ version: 0, categories: [], articles: [], authors: [], users: [], medias: [], contacts: [] }));
+    localStorage.setItem(
+      STORAGE_KEY,
+      JSON.stringify({
+        version: 0,
+        categories: [],
+        articles: [],
+        authors: [],
+        users: [],
+        medias: [],
+        contacts: [],
+      }),
+    );
     const snap = load();
     expect(snap.version).toBe(1);
     expect(snap.categories.length).toBeGreaterThan(0);
@@ -686,7 +720,15 @@ export function buildSeed(): Snapshot {
   return {
     version: 1,
     categories: [
-      { id: "seed-cat-1", name: "Isolation", slug: "isolation", descriptionHtml: "<p>Stub.</p>", articleCount: 0, createdAt: "2026-05-01T00:00:00Z", updatedAt: "2026-05-01T00:00:00Z" },
+      {
+        id: "seed-cat-1",
+        name: "Isolation",
+        slug: "isolation",
+        descriptionHtml: "<p>Stub.</p>",
+        articleCount: 0,
+        createdAt: "2026-05-01T00:00:00Z",
+        updatedAt: "2026-05-01T00:00:00Z",
+      },
     ],
     articles: [],
     authors: [],
@@ -820,6 +862,7 @@ git commit -m "feat(admin): build full seed (8 cat, 6 auth, 20 art, 30 media, 5 
 **Goal:** A typed CRUD layer that reads/writes the snapshot for each entity, simulating async, with referential guards. Unit-tested.
 
 **Files:**
+
 - Create: `src/lib/admin/repositories/{base,categories,articles,authors,users,medias,contacts}.ts`
 - Create: tests under `tests/lib/admin/repositories/`
 
@@ -846,7 +889,9 @@ export async function writeSnapshot(snapshot: Snapshot): Promise<void> {
   save(snapshot);
 }
 
-export async function mutate<R>(updater: (snap: Snapshot) => { next: Snapshot; result: R }): Promise<R> {
+export async function mutate<R>(
+  updater: (snap: Snapshot) => { next: Snapshot; result: R },
+): Promise<R> {
   const snap = load();
   const { next, result } = updater(snap);
   await sleep(WRITE_DELAY_MS);
@@ -886,7 +931,11 @@ describe("CategoriesRepo", () => {
 
   it("filters by q (name or slug)", async () => {
     const result = await CategoriesRepo.list({ q: "isol" });
-    expect(result.every((c) => c.name.toLowerCase().includes("isol") || c.slug.includes("isol"))).toBe(true);
+    expect(
+      result.every(
+        (c) => c.name.toLowerCase().includes("isol") || c.slug.includes("isol"),
+      ),
+    ).toBe(true);
   });
 
   it("creates a new category", async () => {
@@ -903,12 +952,18 @@ describe("CategoriesRepo", () => {
 
   it("rejects duplicate slug on create", async () => {
     await expect(
-      CategoriesRepo.create({ name: "X", slug: "isolation", descriptionHtml: "" }),
+      CategoriesRepo.create({
+        name: "X",
+        slug: "isolation",
+        descriptionHtml: "",
+      }),
     ).rejects.toThrow(RepositoryError);
   });
 
   it("updates a category", async () => {
-    const updated = await CategoriesRepo.update("seed-cat-isolation", { name: "Isolation 2" });
+    const updated = await CategoriesRepo.update("seed-cat-isolation", {
+      name: "Isolation 2",
+    });
     expect(updated.name).toBe("Isolation 2");
   });
 
@@ -916,13 +971,29 @@ describe("CategoriesRepo", () => {
     // Use a seeded category that has articles
     const cat = (await CategoriesRepo.list()).find((c) => c.articleCount > 0);
     expect(cat).toBeTruthy();
-    await expect(CategoriesRepo.remove(cat!.id)).rejects.toThrow(RepositoryError);
+    await expect(CategoriesRepo.remove(cat!.id)).rejects.toThrow(
+      RepositoryError,
+    );
   });
 
   it("removes a category without articles", async () => {
     // Seed an orphan category
     const snap = load();
-    save({ ...snap, categories: [...snap.categories, { id: "orphan", name: "Orphan", slug: "orphan", descriptionHtml: "", articleCount: 0, createdAt: "2026-01-01T00:00:00Z", updatedAt: "2026-01-01T00:00:00Z" }] });
+    save({
+      ...snap,
+      categories: [
+        ...snap.categories,
+        {
+          id: "orphan",
+          name: "Orphan",
+          slug: "orphan",
+          descriptionHtml: "",
+          articleCount: 0,
+          createdAt: "2026-01-01T00:00:00Z",
+          updatedAt: "2026-01-01T00:00:00Z",
+        },
+      ],
+    });
     await CategoriesRepo.remove("orphan");
     const after = await CategoriesRepo.list();
     expect(after.some((c) => c.id === "orphan")).toBe(false);
@@ -950,7 +1021,10 @@ export type CategoryFilter = {
   sort?: "name" | "newest" | "oldest";
 };
 
-function withArticleCount(snap: { categories: Category[]; articles: { categoryId: ID }[] }): Category[] {
+function withArticleCount(snap: {
+  categories: Category[];
+  articles: { categoryId: ID }[];
+}): Category[] {
   return snap.categories.map((c) => ({
     ...c,
     articleCount: snap.articles.filter((a) => a.categoryId === c.id).length,
@@ -963,7 +1037,9 @@ export const CategoriesRepo = {
     let items = withArticleCount(snap);
     if (filter.q) {
       const q = filter.q.toLowerCase();
-      items = items.filter((c) => c.name.toLowerCase().includes(q) || c.slug.includes(q));
+      items = items.filter(
+        (c) => c.name.toLowerCase().includes(q) || c.slug.includes(q),
+      );
     }
     switch (filter.sort) {
       case "name":
@@ -991,7 +1067,9 @@ export const CategoriesRepo = {
     return found ?? null;
   },
 
-  async create(input: Omit<Category, "id" | "articleCount" | "createdAt" | "updatedAt">): Promise<Category> {
+  async create(
+    input: Omit<Category, "id" | "articleCount" | "createdAt" | "updatedAt">,
+  ): Promise<Category> {
     return mutate((snap) => {
       if (!isUniqueSlug(input.slug, snap.categories)) {
         throw new RepositoryError("SLUG_TAKEN", { slug: input.slug });
@@ -1004,29 +1082,56 @@ export const CategoriesRepo = {
         createdAt: now,
         updatedAt: now,
       };
-      return { next: { ...snap, categories: [...snap.categories, created] }, result: created };
+      return {
+        next: { ...snap, categories: [...snap.categories, created] },
+        result: created,
+      };
     });
   },
 
-  async update(id: ID, patch: Partial<Omit<Category, "id" | "articleCount" | "createdAt">>): Promise<Category> {
+  async update(
+    id: ID,
+    patch: Partial<Omit<Category, "id" | "articleCount" | "createdAt">>,
+  ): Promise<Category> {
     return mutate((snap) => {
       const idx = snap.categories.findIndex((c) => c.id === id);
       if (idx < 0) throw new RepositoryError("NOT_FOUND", { id });
       if (patch.slug && !isUniqueSlug(patch.slug, snap.categories, id)) {
         throw new RepositoryError("SLUG_TAKEN", { slug: patch.slug });
       }
-      const updated: Category = { ...snap.categories[idx], ...patch, updatedAt: nowIso() };
-      const next = { ...snap, categories: [...snap.categories.slice(0, idx), updated, ...snap.categories.slice(idx + 1)] };
-      const articleCount = next.articles.filter((a) => a.categoryId === id).length;
+      const updated: Category = {
+        ...snap.categories[idx],
+        ...patch,
+        updatedAt: nowIso(),
+      };
+      const next = {
+        ...snap,
+        categories: [
+          ...snap.categories.slice(0, idx),
+          updated,
+          ...snap.categories.slice(idx + 1),
+        ],
+      };
+      const articleCount = next.articles.filter(
+        (a) => a.categoryId === id,
+      ).length;
       return { next, result: { ...updated, articleCount } };
     });
   },
 
   async remove(id: ID): Promise<void> {
     return mutate((snap) => {
-      const referenced = snap.articles.filter((a) => a.categoryId === id).length;
-      if (referenced > 0) throw new RepositoryError("CATEGORY_HAS_ARTICLES", { count: referenced });
-      const next = { ...snap, categories: snap.categories.filter((c) => c.id !== id) };
+      const referenced = snap.articles.filter(
+        (a) => a.categoryId === id,
+      ).length;
+      if (referenced > 0)
+        throw new RepositoryError("CATEGORY_HAS_ARTICLES", {
+          count: referenced,
+        });
+      const next = {
+        ...snap,
+        categories: snap.categories.filter((c) => c.id !== id),
+      };
       return { next, result: undefined };
     });
   },
@@ -1050,6 +1155,7 @@ git commit -m "feat(admin): categories repository with guards and sort/filter"
 ### Task 2.3 — Authors repository
 
 Structural twin of `CategoriesRepo`, with these differences:
+
 - Filter type: `AuthorFilter = { q?: string; sort?: "name" | "newest" | "oldest" }`. Search matches `name` and `slug`.
 - `withArticleCount` joins on `articles.authorId`.
 - `create` rejects duplicate slug → `SLUG_TAKEN`.
@@ -1059,6 +1165,7 @@ Structural twin of `CategoriesRepo`, with these differences:
 - [ ] **Step 1: Write tests `tests/lib/admin/repositories/authors.test.ts`**
 
 Mirror the 7 test cases from `categories.test.ts` but with author-specific data:
+
 - `list()` returns seeded authors with `articleCount` derived.
 - `list({ q: "lea" })` matches.
 - `create({ name, slug, descriptionHtml: "", photoUrl: null })` returns new with id.
@@ -1070,6 +1177,7 @@ Mirror the 7 test cases from `categories.test.ts` but with author-specific data:
 - [ ] **Step 2: Implement `src/lib/admin/repositories/authors.ts`**
 
 Same file structure as `categories.ts` (Task 2.2 step 3), with these substitutions:
+
 - Replace `Category` with `Author`, `categories` with `authors`, `categoryId` with `authorId` throughout.
 - `create` Omit type: `Omit<Author, "id" | "articleCount" | "createdAt" | "updatedAt">` (note `photoUrl` is required in input but can be `null`).
 - `id` prefix: `auth_${ulid()}`.
@@ -1085,6 +1193,7 @@ Same file structure as `categories.ts` (Task 2.2 step 3), with these substitutio
 - [ ] **Step 1: Tests** `tests/lib/admin/repositories/users.test.ts`
 
 Test cases:
+
 - `list()` returns ≥5 users from seed
 - `list({ role: "admin" })` filters by role
 - `list({ status: "suspended" })` filters by status
@@ -1096,6 +1205,7 @@ Test cases:
 - [ ] **Step 2: Implement `src/lib/admin/repositories/users.ts`**
 
 Shape similar to categories but with these distinct fields:
+
 ```ts
 export type UserFilter = {
   q?: string;
@@ -1117,6 +1227,7 @@ Email uniqueness check (case-insensitive). No derived counts.
 - [ ] **Step 1: Tests** `tests/lib/admin/repositories/medias.test.ts`
 
 Test cases:
+
 - `list()` returns 30 media (per seed)
 - `list({ kind: "image" })` filters by kind
 - `list({ q: "pompe" })` matches filename/caption/alt
@@ -1147,6 +1258,7 @@ The `create` derives `sizeBytes` to a mock value (e.g., 100_000 for images, 500_
 - [ ] **Step 1: Tests** `tests/lib/admin/repositories/contacts.test.ts`
 
 Test cases:
+
 - `list()` returns 12 contacts from seed
 - `list({ status: "unread" })` filters
 - `list({ q: "vmc" })` matches subject/message/name/email
@@ -1188,6 +1300,7 @@ The richest entity — most fields and the broadest filter. Provide it last so a
 - [ ] **Step 1: Tests** `tests/lib/admin/repositories/articles.test.ts`
 
 Test cases:
+
 - `list()` returns 20 from seed
 - `list({ status: "draft" })` returns 4
 - `list({ categoryId })` filters
@@ -1234,7 +1347,10 @@ import { slugify } from "../utils";
 
 export const CategorySchema = z.object({
   name: z.string().min(2, "Nom requis (min 2)").max(80),
-  slug: z.string().min(2).regex(/^[a-z0-9-]+$/, "Slug invalide"),
+  slug: z
+    .string()
+    .min(2)
+    .regex(/^[a-z0-9-]+$/, "Slug invalide"),
   descriptionHtml: z.string().max(5000),
 });
 
@@ -1268,7 +1384,10 @@ export const FaqItemSchema = z.object({
 
 export const ArticleSchema = z.object({
   title: z.string().min(5, "Titre trop court").max(180),
-  slug: z.string().min(3).regex(/^[a-z0-9-]+$/, "Slug invalide"),
+  slug: z
+    .string()
+    .min(3)
+    .regex(/^[a-z0-9-]+$/, "Slug invalide"),
   seoExcerpt: z.string().min(20, "Au moins 20 caractères").max(200),
   metaDescription: z.string().max(160),
   metaKeywords: z.array(z.string().min(1)).max(15),
@@ -1295,6 +1414,7 @@ export type ArticleFormValues = z.infer<typeof ArticleSchema>;
 **Goal:** A working `/admin` route with sidebar, topbar, command palette, dashboard KPIs. Subsequent module tasks plug into this shell.
 
 **Files:**
+
 - Create: `src/app/(admin)/admin/layout.tsx`, `src/app/(admin)/admin/page.tsx`
 - Create: `src/components/admin/shell/{admin-shell,sidebar,topbar,command-palette,breadcrumb,page-header}.tsx`
 - Create: `src/components/admin/kpi/{stat-card,recent-list}.tsx`
@@ -1336,7 +1456,11 @@ import { ThemeProvider } from "@/components/theme-provider";
 import { AdminShell } from "@/components/admin/shell/admin-shell";
 import { getQueryClient } from "@/lib/admin/query-client";
 
-export default function AdminLayout({ children }: { children: React.ReactNode }) {
+export default function AdminLayout({
+  children,
+}: {
+  children: React.ReactNode;
+}) {
   return (
     <ThemeProvider attribute="class" defaultTheme="light" enableSystem={false}>
       <QueryClientProvider client={getQueryClient()}>
@@ -1370,8 +1494,11 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
     <div className="min-h-screen bg-background text-foreground">
       <Topbar onMenuClick={() => setMobileOpen(true)} />
       <div className="flex">
-        <Sidebar mobileOpen={mobileOpen} onMobileClose={() => setMobileOpen(false)} />
-        <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8 max-w-[1400px] mx-auto w-full">
+        <Sidebar
+          mobileOpen={mobileOpen}
+          onMobileClose={() => setMobileOpen(false)}
+        />
+        <main className="flex-1 px-4 py-6 lg:px-8 lg:py-8 mx-auto w-full">
           {children}
         </main>
       </div>
@@ -1383,6 +1510,7 @@ export function AdminShell({ children }: { children: React.ReactNode }) {
 - [ ] **Step 2: Create `src/components/admin/shell/sidebar.tsx`**
 
 Behavior:
+
 - Desktop: fixed `w-60`, `border-r`, sticky under topbar, scrollable.
 - Mobile (`<lg`): renders inside a shadcn `Sheet`, opened via topbar hamburger.
 - Items (each `next/link`): Tableau de bord (`/admin`), Catégories (`/admin/categories`), Articles (`/admin/articles`), Auteurs (`/admin/auteurs`), Utilisateurs (`/admin/utilisateurs`), Médias (`/admin/medias`), Contacts (`/admin/contacts`).
@@ -1398,7 +1526,16 @@ Use Tailwind utilities inline. Skeleton:
 
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import { LayoutDashboard, Tags, Newspaper, PenLine, Users, Image as ImageIcon, MessageSquare, RotateCcw } from "lucide-react";
+import {
+  LayoutDashboard,
+  Tags,
+  Newspaper,
+  PenLine,
+  Users,
+  Image as ImageIcon,
+  MessageSquare,
+  RotateCcw,
+} from "lucide-react";
 import { Sheet, SheetContent } from "@/components/ui/sheet";
 import { Button } from "@/components/ui/button";
 import { Badge } from "@/components/ui/badge";
@@ -1408,19 +1545,37 @@ import { cn } from "@/lib/utils";
 const ITEMS = [
   { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
   { href: "/admin/categories", label: "Catégories", icon: Tags },
-  { href: "/admin/articles", label: "Articles", icon: Newspaper, badgeKey: "drafts" as const },
+  {
+    href: "/admin/articles",
+    label: "Articles",
+    icon: Newspaper,
+    badgeKey: "drafts" as const,
+  },
   { href: "/admin/auteurs", label: "Auteurs", icon: PenLine },
   { href: "/admin/utilisateurs", label: "Utilisateurs", icon: Users },
   { href: "/admin/medias", label: "Médias", icon: ImageIcon },
-  { href: "/admin/contacts", label: "Contacts", icon: MessageSquare, badgeKey: "unread" as const },
+  {
+    href: "/admin/contacts",
+    label: "Contacts",
+    icon: MessageSquare,
+    badgeKey: "unread" as const,
+  },
 ];
 
-function NavList({ pathname, badges }: { pathname: string; badges: { drafts?: number; unread?: number } }) {
+function NavList({
+  pathname,
+  badges,
+}: {
+  pathname: string;
+  badges: { drafts?: number; unread?: number };
+}) {
   return (
     <nav className="flex flex-col gap-1 p-3">
       {ITEMS.map((item) => {
         const Icon = item.icon;
-        const active = pathname === item.href || (item.href !== "/admin" && pathname.startsWith(item.href));
+        const active =
+          pathname === item.href ||
+          (item.href !== "/admin" && pathname.startsWith(item.href));
         const badgeValue = item.badgeKey ? badges[item.badgeKey] : undefined;
         return (
           <Link
@@ -1428,12 +1583,18 @@ function NavList({ pathname, badges }: { pathname: string; badges: { drafts?: nu
             href={item.href}
             className={cn(
               "flex items-center gap-2 rounded-md px-3 py-2 text-sm",
-              active ? "bg-secondary text-foreground font-medium" : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
+              active
+                ? "bg-secondary text-foreground font-medium"
+                : "text-muted-foreground hover:bg-secondary/60 hover:text-foreground",
             )}
           >
             <Icon className="size-4" />
             <span className="flex-1">{item.label}</span>
-            {badgeValue ? <Badge variant="secondary" className="h-5 px-1.5 text-xs">{badgeValue}</Badge> : null}
+            {badgeValue ? (
+              <Badge variant="secondary" className="h-5 px-1.5 text-xs">
+                {badgeValue}
+              </Badge>
+            ) : null}
           </Link>
         );
       })}
@@ -1441,7 +1602,13 @@ function NavList({ pathname, badges }: { pathname: string; badges: { drafts?: nu
   );
 }
 
-export function Sidebar({ mobileOpen, onMobileClose }: { mobileOpen: boolean; onMobileClose: () => void }) {
+export function Sidebar({
+  mobileOpen,
+  onMobileClose,
+}: {
+  mobileOpen: boolean;
+  onMobileClose: () => void;
+}) {
   const pathname = usePathname();
   // TODO Task 3.5: useArticles/useContacts to compute badges. For now empty.
   const badges = {};
@@ -1455,7 +1622,10 @@ export function Sidebar({ mobileOpen, onMobileClose }: { mobileOpen: boolean; on
             variant="ghost"
             size="sm"
             className="w-full justify-start text-xs text-muted-foreground"
-            onClick={() => { reset(); window.location.reload(); }}
+            onClick={() => {
+              reset();
+              window.location.reload();
+            }}
           >
             <RotateCcw className="size-3 mr-2" /> Reset local data
           </Button>
@@ -1498,17 +1668,30 @@ export function Topbar({ onMenuClick }: { onMenuClick: () => void }) {
 
   return (
     <header className="sticky top-0 z-30 h-14 border-b bg-background flex items-center px-4 lg:px-6 gap-3">
-      <Button variant="ghost" size="icon" className="lg:hidden" onClick={onMenuClick}>
+      <Button
+        variant="ghost"
+        size="icon"
+        className="lg:hidden"
+        onClick={onMenuClick}
+      >
         <Menu className="size-5" />
       </Button>
       <Link href="/admin" className="font-semibold tracking-tight">
-        Maison·Calorie <span className="text-muted-foreground font-normal">/ Admin</span>
+        Maison·Calorie{" "}
+        <span className="text-muted-foreground font-normal">/ Admin</span>
       </Link>
       <div className="flex-1" />
-      <Button variant="outline" size="sm" className="gap-2 text-muted-foreground" onClick={() => setPaletteOpen(true)}>
+      <Button
+        variant="outline"
+        size="sm"
+        className="gap-2 text-muted-foreground"
+        onClick={() => setPaletteOpen(true)}
+      >
         <Search className="size-4" />
         <span className="hidden sm:inline">Recherche…</span>
-        <kbd className="ml-2 hidden sm:inline pointer-events-none rounded border bg-muted px-1.5 font-mono text-[10px]">⌘K</kbd>
+        <kbd className="ml-2 hidden sm:inline pointer-events-none rounded border bg-muted px-1.5 font-mono text-[10px]">
+          ⌘K
+        </kbd>
       </Button>
       <CommandPalette open={paletteOpen} onOpenChange={setPaletteOpen} />
     </header>
@@ -1535,6 +1718,7 @@ git commit -m "feat(admin): shell with responsive sidebar and topbar"
 - [ ] **Step 1: Create `src/components/admin/shell/command-palette.tsx`**
 
 Minimal palette wiring cmdk + shadcn's `Command*` primitives. Categories of suggestions:
+
 1. **Navigation** : the 7 sidebar items.
 2. **Actions** : "Nouvel article" → push `/admin/articles/new`; "Nouvelle catégorie" → push `/admin/categories/new`; "Nouvel auteur" → push `/admin/auteurs/new`.
 3. **Search across entities** (later wired in modules; for now placeholder hint).
@@ -1543,8 +1727,26 @@ Minimal palette wiring cmdk + shadcn's `Command*` primitives. Categories of sugg
 "use client";
 
 import { useRouter } from "next/navigation";
-import { Command, CommandDialog, CommandEmpty, CommandGroup, CommandInput, CommandItem, CommandList, CommandSeparator } from "@/components/ui/command";
-import { LayoutDashboard, Tags, Newspaper, PenLine, Users, Image as ImageIcon, MessageSquare, Plus } from "lucide-react";
+import {
+  Command,
+  CommandDialog,
+  CommandEmpty,
+  CommandGroup,
+  CommandInput,
+  CommandItem,
+  CommandList,
+  CommandSeparator,
+} from "@/components/ui/command";
+import {
+  LayoutDashboard,
+  Tags,
+  Newspaper,
+  PenLine,
+  Users,
+  Image as ImageIcon,
+  MessageSquare,
+  Plus,
+} from "lucide-react";
 
 const NAV = [
   { href: "/admin", label: "Tableau de bord", icon: LayoutDashboard },
@@ -1562,9 +1764,18 @@ const ACTIONS = [
   { href: "/admin/auteurs/new", label: "Nouvel auteur" },
 ];
 
-export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenChange: (v: boolean) => void }) {
+export function CommandPalette({
+  open,
+  onOpenChange,
+}: {
+  open: boolean;
+  onOpenChange: (v: boolean) => void;
+}) {
   const router = useRouter();
-  const go = (href: string) => { onOpenChange(false); router.push(href); };
+  const go = (href: string) => {
+    onOpenChange(false);
+    router.push(href);
+  };
 
   return (
     <CommandDialog open={open} onOpenChange={onOpenChange}>
@@ -1575,7 +1786,11 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
           {NAV.map((item) => {
             const Icon = item.icon;
             return (
-              <CommandItem key={item.href} value={item.label} onSelect={() => go(item.href)}>
+              <CommandItem
+                key={item.href}
+                value={item.label}
+                onSelect={() => go(item.href)}
+              >
                 <Icon className="size-4 mr-2" />
                 {item.label}
               </CommandItem>
@@ -1585,7 +1800,11 @@ export function CommandPalette({ open, onOpenChange }: { open: boolean; onOpenCh
         <CommandSeparator />
         <CommandGroup heading="Actions">
           {ACTIONS.map((a) => (
-            <CommandItem key={a.href} value={a.label} onSelect={() => go(a.href)}>
+            <CommandItem
+              key={a.href}
+              value={a.label}
+              onSelect={() => go(a.href)}
+            >
               <Plus className="size-4 mr-2" />
               {a.label}
             </CommandItem>
@@ -1634,9 +1853,13 @@ export function PageHeader({
       <div className="flex items-end justify-between gap-4 mt-2">
         <div>
           <h1 className="text-2xl font-semibold tracking-tight">{title}</h1>
-          {subtitle ? <p className="text-sm text-muted-foreground mt-1">{subtitle}</p> : null}
+          {subtitle ? (
+            <p className="text-sm text-muted-foreground mt-1">{subtitle}</p>
+          ) : null}
         </div>
-        {actions ? <div className="flex items-center gap-2">{actions}</div> : null}
+        {actions ? (
+          <div className="flex items-center gap-2">{actions}</div>
+        ) : null}
       </div>
     </div>
   );
@@ -1666,12 +1889,18 @@ export function useAdminMutation<TData, TVars>(opts: Opts<TData, TVars>) {
   return useMutation<TData, Error, TVars>({
     ...opts,
     onSuccess: (data, vars, ctx) => {
-      const msg = typeof opts.successMessage === "function" ? opts.successMessage(data, vars) : opts.successMessage;
+      const msg =
+        typeof opts.successMessage === "function"
+          ? opts.successMessage(data, vars)
+          : opts.successMessage;
       if (msg) toast.success(msg);
       opts.onSuccess?.(data, vars, ctx);
     },
     onError: (err, vars, ctx) => {
-      const msg = typeof opts.errorMessage === "function" ? opts.errorMessage(err, vars) : opts.errorMessage ?? err.message;
+      const msg =
+        typeof opts.errorMessage === "function"
+          ? opts.errorMessage(err, vars)
+          : (opts.errorMessage ?? err.message);
       toast.error(msg);
       opts.onError?.(err, vars, ctx);
     },
@@ -1689,24 +1918,35 @@ Skeleton (categories):
 "use client";
 
 import { useQuery, useQueryClient } from "@tanstack/react-query";
-import { CategoriesRepo, type CategoryFilter } from "@/lib/admin/repositories/categories";
+import {
+  CategoriesRepo,
+  type CategoryFilter,
+} from "@/lib/admin/repositories/categories";
 import { useAdminMutation } from "@/lib/admin/use-admin-mutation";
 import type { Category, ID } from "@/lib/admin/types";
 
 const KEY = ["admin", "categories"] as const;
 
 export function useCategories(filter?: CategoryFilter) {
-  return useQuery({ queryKey: [...KEY, "list", filter ?? {}], queryFn: () => CategoriesRepo.list(filter) });
+  return useQuery({
+    queryKey: [...KEY, "list", filter ?? {}],
+    queryFn: () => CategoriesRepo.list(filter),
+  });
 }
 
 export function useCategory(id: ID | undefined) {
-  return useQuery({ queryKey: [...KEY, "detail", id], queryFn: () => CategoriesRepo.get(id!), enabled: !!id });
+  return useQuery({
+    queryKey: [...KEY, "detail", id],
+    queryFn: () => CategoriesRepo.get(id!),
+    enabled: !!id,
+  });
 }
 
 export function useCreateCategory() {
   const qc = useQueryClient();
   return useAdminMutation({
-    mutationFn: (input: Parameters<typeof CategoriesRepo.create>[0]) => CategoriesRepo.create(input),
+    mutationFn: (input: Parameters<typeof CategoriesRepo.create>[0]) =>
+      CategoriesRepo.create(input),
     successMessage: (c) => `Catégorie « ${c.name} » créée`,
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
@@ -1715,7 +1955,8 @@ export function useCreateCategory() {
 export function useUpdateCategory() {
   const qc = useQueryClient();
   return useAdminMutation({
-    mutationFn: ({ id, patch }: { id: ID; patch: Partial<Category> }) => CategoriesRepo.update(id, patch),
+    mutationFn: ({ id, patch }: { id: ID; patch: Partial<Category> }) =>
+      CategoriesRepo.update(id, patch),
     successMessage: (c) => `Catégorie « ${c.name} » mise à jour`,
     onSuccess: () => qc.invalidateQueries({ queryKey: KEY }),
   });
@@ -1776,13 +2017,25 @@ export function StatCard({
   accent?: "default" | "signal";
 }) {
   const body = (
-    <Card className={cn("hover:bg-secondary/40 transition-colors", href && "cursor-pointer")}>
+    <Card
+      className={cn(
+        "hover:bg-secondary/40 transition-colors",
+        href && "cursor-pointer",
+      )}
+    >
       <CardContent className="p-5 flex items-center justify-between">
         <div>
-          <div className="text-xs uppercase tracking-wide text-muted-foreground">{label}</div>
+          <div className="text-xs uppercase tracking-wide text-muted-foreground">
+            {label}
+          </div>
           <div className="text-3xl font-semibold mt-1">{value}</div>
         </div>
-        <Icon className={cn("size-8", accent === "signal" ? "text-accent" : "text-muted-foreground")} />
+        <Icon
+          className={cn(
+            "size-8",
+            accent === "signal" ? "text-accent" : "text-muted-foreground",
+          )}
+        />
       </CardContent>
     </Card>
   );
@@ -1815,22 +2068,51 @@ export default function AdminDashboardPage() {
   const recent = useArticles({ sort: "newest", pageSize: 5 });
   const recentContacts = useContacts({ status: "unread", sort: "newest" });
 
-  const sevenDaysAgo = new Date(Date.now() - 7 * 24 * 60 * 60 * 1000).toISOString();
-  const newUsers = (allUsers.data ?? []).filter((u) => u.createdAt >= sevenDaysAgo).length;
+  const sevenDaysAgo = new Date(
+    Date.now() - 7 * 24 * 60 * 60 * 1000,
+  ).toISOString();
+  const newUsers = (allUsers.data ?? []).filter(
+    (u) => u.createdAt >= sevenDaysAgo,
+  ).length;
 
   return (
     <>
-      <PageHeader title="Tableau de bord" subtitle="Aperçu de l'éditorial et de la boîte de réception" />
+      <PageHeader
+        title="Tableau de bord"
+        subtitle="Aperçu de l'éditorial et de la boîte de réception"
+      />
       <Alert className="mb-6">
         <AlertDescription className="text-xs">
-          Données locales (localStorage). L'auth Kinde et l'API seront branchées plus tard.
+          Données locales (localStorage). L'auth Kinde et l'API seront branchées
+          plus tard.
         </AlertDescription>
       </Alert>
       <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4 mb-8">
-        <StatCard label="Articles publiés" value={published.data?.total ?? 0} href="/admin/articles?status=published" icon={Newspaper} />
-        <StatCard label="Brouillons" value={drafts.data?.total ?? 0} href="/admin/articles?status=draft" icon={FileEdit} />
-        <StatCard label="Messages non lus" value={unread.data?.length ?? 0} href="/admin/contacts?status=unread" icon={Mail} accent="signal" />
-        <StatCard label="Nouveaux utilisateurs (7j)" value={newUsers} href="/admin/utilisateurs" icon={Users} />
+        <StatCard
+          label="Articles publiés"
+          value={published.data?.total ?? 0}
+          href="/admin/articles?status=published"
+          icon={Newspaper}
+        />
+        <StatCard
+          label="Brouillons"
+          value={drafts.data?.total ?? 0}
+          href="/admin/articles?status=draft"
+          icon={FileEdit}
+        />
+        <StatCard
+          label="Messages non lus"
+          value={unread.data?.length ?? 0}
+          href="/admin/contacts?status=unread"
+          icon={Mail}
+          accent="signal"
+        />
+        <StatCard
+          label="Nouveaux utilisateurs (7j)"
+          value={newUsers}
+          href="/admin/utilisateurs"
+          icon={Users}
+        />
       </div>
       <div className="grid grid-cols-1 lg:grid-cols-2 gap-4">
         <RecentList
@@ -1875,6 +2157,7 @@ git commit -m "feat(admin): dashboard KPIs, query hooks, sidebar badges"
 **Goal:** Generic DataTable + filter toolbar + pagination + bulk actions + feedback primitives. Reused by all 6 modules.
 
 **Files:**
+
 - Create: `src/components/admin/data/*.tsx`, `src/components/admin/feedback/*.tsx`, `src/lib/admin/use-table-filters.ts`
 
 ---
@@ -1891,7 +2174,9 @@ A type-safe wrapper around `useSearchParams` + `useRouter`. Generic over a filte
 import { useRouter, useSearchParams, usePathname } from "next/navigation";
 import { useCallback, useMemo } from "react";
 
-export function useTableFilters<T extends Record<string, string | number | undefined>>(defaults: T) {
+export function useTableFilters<
+  T extends Record<string, string | number | undefined>,
+>(defaults: T) {
   const router = useRouter();
   const pathname = usePathname();
   const search = useSearchParams();
@@ -1902,20 +2187,24 @@ export function useTableFilters<T extends Record<string, string | number | undef
       const raw = search.get(key);
       const def = defaults[key];
       if (raw === null) out[key] = def;
-      else if (typeof def === "number") out[key] = Number.isFinite(Number(raw)) ? Number(raw) : def;
+      else if (typeof def === "number")
+        out[key] = Number.isFinite(Number(raw)) ? Number(raw) : def;
       else out[key] = raw;
     }
     return out as T;
   }, [defaults, search]);
 
-  const setFilters = useCallback((patch: Partial<T>) => {
-    const params = new URLSearchParams(search.toString());
-    for (const [k, v] of Object.entries(patch)) {
-      if (v === undefined || v === "" || v === defaults[k]) params.delete(k);
-      else params.set(k, String(v));
-    }
-    router.replace(`${pathname}?${params.toString()}`);
-  }, [defaults, pathname, router, search]);
+  const setFilters = useCallback(
+    (patch: Partial<T>) => {
+      const params = new URLSearchParams(search.toString());
+      for (const [k, v] of Object.entries(patch)) {
+        if (v === undefined || v === "" || v === defaults[k]) params.delete(k);
+        else params.set(k, String(v));
+      }
+      router.replace(`${pathname}?${params.toString()}`);
+    },
+    [defaults, pathname, router, search],
+  );
 
   const reset = useCallback(() => {
     router.replace(pathname);
@@ -2002,7 +2291,11 @@ const LABELS: Record<string, string> = {
 };
 
 export function StatusBadge({ status }: { status: string }) {
-  return <Badge className={cn("border", VARIANTS[status])}>{LABELS[status] ?? status}</Badge>;
+  return (
+    <Badge className={cn("border", VARIANTS[status])}>
+      {LABELS[status] ?? status}
+    </Badge>
+  );
 }
 ```
 
@@ -2020,9 +2313,9 @@ type Props = {
   onOpenChange: (open: boolean) => void;
   title: string;
   description: React.ReactNode;
-  confirmLabel?: string;          // default "Supprimer"
+  confirmLabel?: string; // default "Supprimer"
   confirmVariant?: "destructive" | "default";
-  typeToConfirm?: string;         // if provided, user must type this to enable confirm
+  typeToConfirm?: string; // if provided, user must type this to enable confirm
   onConfirm: () => void | Promise<void>;
 };
 ```
@@ -2038,6 +2331,7 @@ Uses shadcn `Dialog`, `Input`, `Button`. Disable confirm until typed value match
 These four tasks are independent and can be dispatched to four `coder` subagents in parallel. Each follows the same pattern: list page + form pages + integration with shared components.
 
 **Common pattern per module:**
+
 1. List page: PageHeader + DataTableToolbar + DataTable + (Pagination if needed) + (BulkActionsBar if applicable).
 2. Form pages (`new`, `[slug|id]`): form with react-hook-form + zod resolver, calls `useCreate*` / `useUpdate*`, redirects on success.
 3. Delete confirmation via ConfirmDialog; show repository error guards.
@@ -2065,6 +2359,7 @@ Page header action: `<Button asChild><Link href="/admin/categories/new">+ Nouvel
 Both reuse a shared `<CategoryForm initial={…} onSubmit={…} />` component placed at `src/components/admin/forms/category-form.tsx`.
 
 Form fields:
+
 - Name (Input, autofocus). On blur or change, if slug is untouched, auto-populate via `slugify(name)`.
 - Slug (SlugInput — see Task 6.1.1 for the shared component; for now inline Input with manual edit).
 - Description HTML (RichTextEditor — minimal Tiptap, see Task 6.3 for the shared component; for now use a `Textarea` placeholder that takes HTML).
@@ -2096,6 +2391,7 @@ Delete: same `AUTHOR_HAS_ARTICLES` pattern.
 - [ ] **Step 2: Form pages**
 
 Fields:
+
 - Photo URL (Input + thumbnail preview if URL valid)
 - Name (Input, auto-suggests slug)
 - Slug (Input)
@@ -2138,6 +2434,7 @@ Email duplicate handling: catch `RepositoryError.code === "EMAIL_TAKEN"` on subm
 Tabs (shadcn `Tabs`): Non lus · Traités · Archivés. Each tab loads the corresponding `useContacts({ status })` query.
 
 Below the tabs, table:
+
 - Columns: ☐ · point colored by status · Nom+email (stacked) · Sujet (bold if unread) · Aperçu message (truncated to ~80 chars) · Date (relative).
 - Row click navigates to `/admin/contacts/[id]`.
 - Toolbar: search · Reset.
@@ -2147,6 +2444,7 @@ Bulk actions bar: Marquer traités · Archiver · Supprimer (on selection).
 - [ ] **Step 2: Detail page `[id]/page.tsx`**
 
 Layout: 2 columns (grid on lg, stack on mobile).
+
 - Left: subject as h1, message rendered as `<pre className="whitespace-pre-wrap font-sans">{message}</pre>`, metadata block (name, email, date, status badge).
 - Right: vertical action buttons: Marquer traité (or Marquer non lu if already handled) · Archiver · Supprimer · Copier l'email (clipboard) · Ouvrir mailto:.
 
@@ -2210,6 +2508,7 @@ Used for Category (label only) and Author (label + avatar via `renderTrigger`).
 - [ ] **Step 1: `media-picker.tsx`**
 
 Two modes via `mode` prop: `"single"` (cover) or `"multi"` (attached). Trigger is either a thumbnail+name or a "Sélectionner" button. Opens a shadcn `Dialog` containing:
+
 - Search input (filters by filename/alt).
 - Tabs: Images / PDF / Tous.
 - Grid of media cards (4 cols). Click to select. In multi mode, checkbox per card and selection accumulator. Confirm button writes selection to the field.
@@ -2243,6 +2542,7 @@ Styling: wrap output in `prose prose-sm max-w-none focus:outline-none min-h-[400
 Columns: ☐ · Title + seoExcerpt (2 lines, excerpt smaller muted) · Category (Badge linking to `?categoryId=`) · Author (avatar+name) · Status (StatusBadge) · Publié le (relative or "—") · Actions.
 
 Toolbar:
+
 - Search input → `q`
 - Status select (Tous / Brouillon / Publié / Archivé)
 - Category select (loaded from `useCategories`)
@@ -2267,6 +2567,7 @@ Pagination via `useArticles({ ..., page, pageSize: 20 })` (returns `{ items, tot
 Two-column layout per spec section 8 ("Formulaire Article (le plus riche)").
 
 Main column (`<form>` with `react-hook-form`):
+
 1. `FormSection` "Contenu"
    - Title (Input, large)
    - SlugInput (source=title)
@@ -2276,6 +2577,7 @@ Main column (`<form>` with `react-hook-form`):
    - FaqEditor
 
 Sidebar (sticky `lg:sticky lg:top-20`):
+
 1. `FormSection` "Publication"
    - StatusSelect
    - publishedAt (read-only, formatted)
@@ -2305,6 +2607,7 @@ Preview button: opens shadcn `Sheet` (side="right", w-full max-w-3xl) rendering 
 - [ ] **Step 3: Visual verification**
 
 Critical end-to-end check:
+
 1. Create an article from scratch: title → slug auto → cover via MediaPicker → category + author pickers → content via Tiptap with image insert → 2 FAQs → Publish.
 2. Verify it appears in `/admin/articles`, in `/admin` dashboard (recent + count), with correct status badge.
 3. Edit and change status to archived. Verify filter `status=archived` shows it.
@@ -2330,6 +2633,7 @@ Critical end-to-end check:
 - [ ] **Step 2: `media-detail-sheet.tsx`**
 
 Shadcn `Sheet` (side="right", w-full max-w-md). Content:
+
 - Large preview (image full-width, PDF iframe `<iframe src={url} className="w-full h-96" />`)
 - Editable fields: alt, caption (Textareas, save on blur via `useUpdateMedia`)
 - Read-only metadata: filename, kind, size, dimensions or pageCount, createdAt
@@ -2352,6 +2656,7 @@ Grid of `MediaCard` (4 cols lg, 3 md, 2 sm, 1 xs). Clicking a card opens the det
 - [ ] **Step 1: `add-media-dialog.tsx`**
 
 Tabs:
+
 1. **Upload** (disabled): large dashed drag zone with "Upload R2 — bientôt disponible" message and a `disabled` button.
 2. **URL externe** (functional): form with kind select (image/pdf), url (Input), filename (Input — auto-derived from URL pathname, editable), alt (Input, images only), caption (Input). On submit: call `useCreateMedia`. For images, attempt to read dimensions by creating an `Image` and reading `naturalWidth/Height` (best-effort; null on failure). For PDFs, set `pageCount: null`. `sizeBytes` set to 0 (unknown).
 

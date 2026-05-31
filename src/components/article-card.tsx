@@ -1,15 +1,27 @@
 import Link from "next/link";
-import type { Article } from "@/lib/data";
 import { Placeholder } from "./atoms";
+
+export type ArticleCardItem = {
+  cat: string;
+  title: string;
+  dek: string;
+  author: string;
+  date: string;
+  read: number;
+  docs?: number;
+  /** Optional decorative number shown next to the category (e.g. № 0421). */
+  numero?: string;
+};
 
 export function ArticleCard({
   item,
+  href,
   kind = "list",
 }: {
-  item: Article;
+  item: ArticleCardItem;
+  href: string;
   kind?: "list" | "card" | "mini";
 }) {
-  const href = `/article/${item.id}`;
   if (kind === "mini") {
     return (
       <Link
@@ -43,7 +55,9 @@ export function ArticleCard({
         <div className="py-2.5">
           <div className="mono text-[10px] tracking-[0.08em] uppercase text-signal flex justify-between">
             <span>{item.cat}</span>
-            <span className="text-ink-mute">№ {item.id}</span>
+            {item.numero ? (
+              <span className="text-ink-mute">№ {item.numero}</span>
+            ) : null}
           </div>
           <div className="text-[17px] font-bold tracking-[-0.02em] leading-[1.15] mt-1">
             {item.title}
@@ -69,7 +83,8 @@ export function ArticleCard({
       <Placeholder caption={item.cat} className="aspect-[4/3]" />
       <div>
         <div className="mono text-[10px] tracking-[0.08em] uppercase text-signal">
-          {item.cat} · № {item.id}
+          {item.cat}
+          {item.numero ? ` · № ${item.numero}` : ""}
         </div>
         <div className="text-[18px] font-bold tracking-[-0.02em] leading-[1.1] mt-[3px]">
           {item.title}

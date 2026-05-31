@@ -15,19 +15,20 @@ L'authentification (Kinde.com, scope `admin`) sera ajoutée dans une phase ulté
 
 ## 2. Modules livrés
 
-| Module | Liste | Filtres | Détail | Create | Edit | Delete |
-|---|---|---|---|---|---|---|
-| Catégories | ✅ | recherche, tri | ✅ | ✅ | ✅ | ✅ (garde-fou si articles liés) |
-| Articles | ✅ | statut, catégorie, auteur, recherche, dates | ✅ | ✅ | ✅ | ✅ |
-| Auteurs | ✅ | recherche | ✅ | ✅ | ✅ | ✅ (garde-fou si articles liés) |
-| Utilisateurs | ✅ | rôle, statut, recherche | ✅ | ✅ | ✅ | ✅ (suspendre + supprimer) |
-| Médias | ✅ | type (image/pdf), recherche | ✅ (panneau latéral) | 🚫 visuel uniquement | métadonnées éditables | ✅ |
-| Contacts | ✅ | statut (non lu/traité/archivé), recherche | ✅ | 🚫 | marquage statut | ✅ |
-| Dashboard | KPI : articles publiés, brouillons, messages non lus, nouveaux utilisateurs 7j ; listes derniers articles et derniers contacts |
+| Module       | Liste                                                                                                                          | Filtres                                     | Détail               | Create               | Edit                  | Delete                          |
+| ------------ | ------------------------------------------------------------------------------------------------------------------------------ | ------------------------------------------- | -------------------- | -------------------- | --------------------- | ------------------------------- |
+| Catégories   | ✅                                                                                                                             | recherche, tri                              | ✅                   | ✅                   | ✅                    | ✅ (garde-fou si articles liés) |
+| Articles     | ✅                                                                                                                             | statut, catégorie, auteur, recherche, dates | ✅                   | ✅                   | ✅                    | ✅                              |
+| Auteurs      | ✅                                                                                                                             | recherche                                   | ✅                   | ✅                   | ✅                    | ✅ (garde-fou si articles liés) |
+| Utilisateurs | ✅                                                                                                                             | rôle, statut, recherche                     | ✅                   | ✅                   | ✅                    | ✅ (suspendre + supprimer)      |
+| Médias       | ✅                                                                                                                             | type (image/pdf), recherche                 | ✅ (panneau latéral) | 🚫 visuel uniquement | métadonnées éditables | ✅                              |
+| Contacts     | ✅                                                                                                                             | statut (non lu/traité/archivé), recherche   | ✅                   | 🚫                   | marquage statut       | ✅                              |
+| Dashboard    | KPI : articles publiés, brouillons, messages non lus, nouveaux utilisateurs 7j ; listes derniers articles et derniers contacts |
 
 ## 3. Stack technique
 
 ### Dépendances ajoutées
+
 - **shadcn/ui** (CLI) — Button, Input, Select, Table, Dialog, Sheet, DropdownMenu, Toast, Tabs, Card, Badge, Avatar, Form, Skeleton, Checkbox, Command.
 - **@tanstack/react-query** v5 — cache des reads, mutations optimistes.
 - **@tanstack/react-table** v8 — table headless (tri/pagination/sélection).
@@ -40,7 +41,9 @@ L'authentification (Kinde.com, scope `admin`) sera ajoutée dans une phase ulté
 - **lucide-react** — icônes.
 
 ### Configuration shadcn
+
 Thème mappé sur les tokens Tailwind v4 existants :
+
 - `--background` → `--color-paper`
 - `--foreground` → `--color-ink`
 - `--primary` → `--color-ink`
@@ -52,9 +55,9 @@ Thème mappé sur les tokens Tailwind v4 existants :
 Tous dans `src/lib/admin/types.ts`. Types conçus pour mapper directement sur ce qu'une API REST/Prisma retournera plus tard.
 
 ```ts
-type ID = string;        // ulid/uuid généré côté client
+type ID = string; // ulid/uuid généré côté client
 type ISODate = string;
-type Slug = string;      // [a-z0-9-]
+type Slug = string; // [a-z0-9-]
 
 // ---------- Category ----------
 type Category = {
@@ -62,7 +65,7 @@ type Category = {
   name: string;
   slug: Slug;
   descriptionHtml: string;
-  articleCount: number;          // dérivé
+  articleCount: number; // dérivé
   createdAt: ISODate;
   updatedAt: ISODate;
 };
@@ -74,7 +77,7 @@ type Author = {
   slug: Slug;
   descriptionHtml: string;
   photoUrl: string | null;
-  articleCount: number;          // dérivé
+  articleCount: number; // dérivé
   createdAt: ISODate;
   updatedAt: ISODate;
 };
@@ -105,12 +108,12 @@ type FaqItem = {
 
 type Article = {
   id: ID;
-  title: string;                 // H1
+  title: string; // H1
   slug: Slug;
-  seoExcerpt: string;            // ~160 chars
+  seoExcerpt: string; // ~160 chars
   metaDescription: string;
   metaKeywords: string[];
-  contentHtml: string;           // Tiptap output
+  contentHtml: string; // Tiptap output
   coverMediaId: ID | null;
   attachedMediaIds: ID[];
   readingMinutes: number;
@@ -155,6 +158,7 @@ type ContactSubmission = {
 ```
 
 ### Règles métier
+
 - **Pas de cascade silencieuse** : supprimer `Category` ou `Author` référencés par un `Article` est bloqué. UI affiche le compte et propose réassignation.
 - **`articleCount`** est dérivé à la volée par le repository (non stocké).
 - **`readingMinutes`** : éditable, bouton « Calculer » applique `Math.max(1, Math.round(wordCount / 220))` sur `contentHtml`.
@@ -164,6 +168,7 @@ type ContactSubmission = {
 ## 5. Architecture des données
 
 ### Arborescence
+
 ```
 src/lib/admin/
 ├── types.ts                          # tous les types
@@ -191,8 +196,9 @@ src/lib/admin/
 ```
 
 ### Storage versionné
+
 ```ts
-const STORAGE_KEY = "mc.admin.v1";    // bump version → invalide le seed local
+const STORAGE_KEY = "mc.admin.v1"; // bump version → invalide le seed local
 
 type Snapshot = {
   version: 1;
@@ -204,12 +210,13 @@ type Snapshot = {
   contacts: ContactSubmission[];
 };
 
-function load(): Snapshot;             // si absent ou version <, applique seed
+function load(): Snapshot; // si absent ou version <, applique seed
 function save(snapshot: Snapshot): void;
-function reset(): void;                // dev only — bouton dans footer admin
+function reset(): void; // dev only — bouton dans footer admin
 ```
 
 ### Repository interface
+
 ```ts
 interface Repository<T, Filter = unknown> {
   list(filter?: Filter): Promise<T[]>;
@@ -223,6 +230,7 @@ interface Repository<T, Filter = unknown> {
 Toutes les méthodes sont `Promise` même en synchrone (`await sleep(150)` simule la latence). Le jour où on branche `fetch()`, la signature ne change pas.
 
 ### Filtre Articles
+
 ```ts
 type ArticleFilter = {
   q?: string;
@@ -233,11 +241,12 @@ type ArticleFilter = {
   dateTo?: ISODate;
   sort?: "newest" | "oldest" | "title" | "reading";
   page?: number;
-  pageSize?: number;                   // défaut 20
+  pageSize?: number; // défaut 20
 };
 ```
 
 ### Couche React Query
+
 - `QueryClientProvider` dans `app/(admin)/admin/layout.tsx`.
 - Clés stables : `["articles", "list", filter]`, `["articles", "detail", id]`.
 - `staleTime: 30s`.
@@ -245,9 +254,11 @@ type ArticleFilter = {
 - Wrapper `useAdminMutation` qui montre toasts succès/erreur via `sonner` automatiquement.
 
 ### Dénormalisation côté hook
+
 `repo.list()` retourne des entités avec FK uniquement. Pour les listes UI, `useArticlesWithRelations()` join côté client à partir du cache (categories/authors déjà chargés) et renvoie `Article & { category; author }`. Pas de stockage dénormalisé.
 
 ### Garde-fous suppression
+
 ```ts
 // repositories/categories.ts
 async remove(id: ID) {
@@ -256,14 +267,17 @@ async remove(id: ID) {
   // …
 }
 ```
+
 UI catch et affiche un dialog explicite : compte d'articles utilisant la catégorie + bouton « Voir ces articles » qui navigue vers `/admin/articles?categoryId=<id>`. Pas de bulk-reassign magique — l'utilisateur édite/réassigne manuellement puis retente la suppression. Même pattern pour Auteurs et Médias.
 
 ### Bouton reset (dev)
+
 Dans le footer du layout admin : `Reset local data` appelle `storage.reset()` et recharge.
 
 ## 6. Routes et layout
 
 ### Routes (App Router)
+
 ```
 src/app/
 ├── (admin)/                           # route group
@@ -298,12 +312,12 @@ src/app/
 │ TOPBAR (h-14, border-b)                                          │
 │ ≡  Maison·Calorie / Admin    [⌘K Recherche…]      🌗  👤 Léa ▾  │
 ├──────────┬───────────────────────────────────────────────────────┤
-│ SIDEBAR  │ MAIN (px-6 py-6, max-w-[1400px])                      │
+│ SIDEBAR  │ MAIN (px-6 py-6, full with)                           │
 │ (w-60,   │ ┌────────────────────────────────────────────┐        │
 │ border-r)│ │ Breadcrumb · Title · Action principale     │        │
 │          │ ├────────────────────────────────────────────┤        │
 │ ▦ Dashboard│ │                                          │        │
-│ 🏷 Catég. │ │            Contenu de page                 │        │
+│ 🏷 Catég. │ │            Contenu de page                │        │
 │ 📰 Articles│ │                                          │        │
 │ ✍ Auteurs│ │                                            │        │
 │ 👥 Util. │ │                                            │        │
@@ -353,26 +367,28 @@ src/components/admin/
 
 ## 8. Conventions UX
 
-| Décision | Détail |
-|---|---|
-| Sidebar | Fixe desktop, `Sheet` drawer sur mobile |
-| Recherche globale ⌘K | `cmdk` — cross-entités + raccourcis d'action |
-| Page header | `<PageHeader title subtitle actions />` cohérent |
-| Tables | Tri colonne, sélection multiple, pagination 20/page, colonnes visibles persistées en localStorage |
-| Filtres | Toolbar : recherche + selects + reset. État synchronisé avec l'URL (`?status=draft&cat=pompes`) |
-| Bulk actions | Barre flottante en bas, apparaît à ≥1 ligne sélectionnée |
-| Suppression | `<ConfirmDialog>` typé (« Tapez le titre pour confirmer ») pour destructives sérieuses |
-| Toasts | `sonner` bas-droite. Undo possible sur suppression (5s) via `repo.removeWithUndo()` |
-| Empty states | Illustration + message + CTA |
-| Loading | `<Skeleton>` shadcn, jamais spinner solo |
-| Erreurs | Bandeau rouge en haut + détails repliés, pas de redirection |
-| Densité | Boutons/inputs `size="sm"` dans tables, `default` dans formulaires |
-| Raccourcis | `⌘K` recherche · `c` nouveau (depuis liste) · `/` focus recherche · `Esc` ferme dialogs |
+| Décision             | Détail                                                                                            |
+| -------------------- | ------------------------------------------------------------------------------------------------- |
+| Sidebar              | Fixe desktop, `Sheet` drawer sur mobile                                                           |
+| Recherche globale ⌘K | `cmdk` — cross-entités + raccourcis d'action                                                      |
+| Page header          | `<PageHeader title subtitle actions />` cohérent                                                  |
+| Tables               | Tri colonne, sélection multiple, pagination 20/page, colonnes visibles persistées en localStorage |
+| Filtres              | Toolbar : recherche + selects + reset. État synchronisé avec l'URL (`?status=draft&cat=pompes`)   |
+| Bulk actions         | Barre flottante en bas, apparaît à ≥1 ligne sélectionnée                                          |
+| Suppression          | `<ConfirmDialog>` typé (« Tapez le titre pour confirmer ») pour destructives sérieuses            |
+| Toasts               | `sonner` bas-droite. Undo possible sur suppression (5s) via `repo.removeWithUndo()`               |
+| Empty states         | Illustration + message + CTA                                                                      |
+| Loading              | `<Skeleton>` shadcn, jamais spinner solo                                                          |
+| Erreurs              | Bandeau rouge en haut + détails repliés, pas de redirection                                       |
+| Densité              | Boutons/inputs `size="sm"` dans tables, `default` dans formulaires                                |
+| Raccourcis           | `⌘K` recherche · `c` nouveau (depuis liste) · `/` focus recherche · `Esc` ferme dialogs           |
 
 ### Formulaire Article (le plus riche)
+
 Layout 2 colonnes desktop (66% / 33%), 1 colonne mobile.
 
 **Colonne principale**
+
 1. Titre (H1 visuel)
 2. Slug (auto, éditable)
 3. Extrait SEO (textarea + compteur 160)
@@ -380,6 +396,7 @@ Layout 2 colonnes desktop (66% / 33%), 1 colonne mobile.
 5. FAQ (FaqEditor, accordéon Q/R)
 
 **Colonne latérale** (sticky)
+
 1. Publication : statut, date publication, `Enregistrer brouillon` + `Publier`
 2. Catégorie (RelationPicker)
 3. Auteur (RelationPicker avec avatar)
@@ -390,37 +407,44 @@ Layout 2 colonnes desktop (66% / 33%), 1 colonne mobile.
 **Barre d'actions bas de page** (sticky bottom mobile) : `Annuler · Aperçu · Enregistrer · Publier`.
 
 ### Aperçu article
+
 Bouton `Aperçu` ouvre une `Sheet` plein écran avec le rendu HTML du contenu stylé via la classe `.prose` existante du site. Pas de route dédiée.
 
 ## 9. Écrans par entité
 
 ### Dashboard `/admin`
+
 - 4 `StatCard` cliquables → liste filtrée correspondante
 - Grille 2 colonnes : derniers articles édités · derniers contacts non lus
 - Bandeau d'info : « Vous travaillez sur des données locales. L'auth Kinde et l'API seront branchées plus tard. »
 
 ### Catégories `/admin/categories`
+
 - Liste : Nom · Slug · Articles (count) · Mise à jour. Recherche + tri.
 - Formulaire : Nom · Slug · Description (Tiptap court, 200px).
 - Suppression bloquée si `articleCount > 0` (dialog explicite).
 
 ### Articles `/admin/articles`
+
 - Liste 6 colonnes : ☐ · Titre+extrait · Catégorie · Auteur · Statut · Publié.
 - Filtres : recherche, statut, catégorie, auteur, dates. État dans l'URL.
 - Bulk actions : Publier · Archiver · Réassigner catégorie · Supprimer.
 - Formulaire : voir section 8.
 
 ### Auteurs `/admin/auteurs`
+
 - Grille de cartes (3 col desktop) : photo, nom, count articles, slug.
 - Formulaire : Photo URL (preview) · Nom · Slug · Description (Tiptap court).
 - Suppression bloquée si articles liés.
 
 ### Utilisateurs `/admin/utilisateurs`
+
 - Table : ☐ · Avatar+Nom · Email · Rôle · Statut · Dernière connexion · Créé.
 - Filtres : rôle, statut, recherche.
 - Suspendre/Réactiver inline. Bandeau d'info Kinde.
 
 ### Médias `/admin/medias`
+
 - Grille de cartes 4 col : aperçu image (16:9) ou icône PDF + dimensions/taille/filename.
 - Toolbar : recherche · Type (Tous/Images/PDF) · Tri.
 - Bouton `+ Ajouter` ouvre une `Dialog` avec drag-zone visuelle non fonctionnelle + bandeau « Upload R2 bientôt » + un onglet fonctionnel `Importer une URL externe` : formulaire URL + type (image/pdf) + alt + caption → crée une entrée `Media` pointant vers l'URL collée, sans copier le fichier (mock).
@@ -428,6 +452,7 @@ Bouton `Aperçu` ouvre une `Sheet` plein écran avec le rendu HTML du contenu st
 - Suppression bloquée si utilisé comme cover ou attaché à un article (compte d'usage affiché).
 
 ### Contacts `/admin/contacts`
+
 - Inbox : ☐ · Statut (point) · Nom+email · Sujet · Aperçu message · Date. Non lus en gras.
 - Tabs : Non lus · Traités · Archivés.
 - Détail `/admin/contacts/[id]` : layout 2 colonnes. Gauche : message + métadonnées. Droite : actions verticales (Marquer traité · Archiver · Supprimer · Copier email · Ouvrir mailto:).
@@ -447,14 +472,14 @@ Chaque étape est livrable et testable visuellement.
 
 ## 11. Seed
 
-| Entité | Quantité | Source |
-|---|---|---|
-| Categories | 8 | les 8 actuelles de `CATEGORIES`, description HTML enrichie |
-| Authors | 6 | les 5 noms actuels + 1 inventé. Photos via `i.pravatar.cc` |
-| Medias | ~30 | 25 images (Unsplash, `IMG_BANK` étendu) + 5 PDFs mock |
-| Articles | 20 | les 8 actuels enrichis (contenu HTML, FAQ, médias) + 12 générés. Mix : 14 published, 4 draft, 2 archived |
-| Users | 5 | 1 admin (`soufianosse@gmail.com`), 2 editor, 2 reader |
-| Contacts | 12 | 5 non lus, 4 traités, 3 archivés, dates étalées sur 30 jours |
+| Entité     | Quantité | Source                                                                                                   |
+| ---------- | -------- | -------------------------------------------------------------------------------------------------------- |
+| Categories | 8        | les 8 actuelles de `CATEGORIES`, description HTML enrichie                                               |
+| Authors    | 6        | les 5 noms actuels + 1 inventé. Photos via `i.pravatar.cc`                                               |
+| Medias     | ~30      | 25 images (Unsplash, `IMG_BANK` étendu) + 5 PDFs mock                                                    |
+| Articles   | 20       | les 8 actuels enrichis (contenu HTML, FAQ, médias) + 12 générés. Mix : 14 published, 4 draft, 2 archived |
+| Users      | 5        | 1 admin (`soufianosse@gmail.com`), 2 editor, 2 reader                                                    |
+| Contacts   | 12       | 5 non lus, 4 traités, 3 archivés, dates étalées sur 30 jours                                             |
 
 ## 12. Hors scope (rappels explicites)
 
@@ -466,9 +491,9 @@ Chaque étape est livrable et testable visuellement.
 
 ## 13. Risques et mitigations
 
-| Risque | Mitigation |
-|---|---|
-| Bundle Tiptap + shadcn lourd (~250 KB gzip) | Route group `(admin)` séparé, code-splitting par route, Tiptap en `dynamic import` côté formulaire |
-| Limite localStorage 5 MB | Pas de base64 dans le seed (URLs externes). ~20 articles HTML = ~200 KB, OK jusqu'à 200+ |
-| Hydration | Tout l'admin est `"use client"` ; RSC sert le shell uniquement |
-| Lisibilité shadcn dark mode avec palette `paper/ink` | Validation visuelle obligatoire à l'étape 1 (Fondations) avant de continuer |
+| Risque                                               | Mitigation                                                                                         |
+| ---------------------------------------------------- | -------------------------------------------------------------------------------------------------- |
+| Bundle Tiptap + shadcn lourd (~250 KB gzip)          | Route group `(admin)` séparé, code-splitting par route, Tiptap en `dynamic import` côté formulaire |
+| Limite localStorage 5 MB                             | Pas de base64 dans le seed (URLs externes). ~20 articles HTML = ~200 KB, OK jusqu'à 200+           |
+| Hydration                                            | Tout l'admin est `"use client"` ; RSC sert le shell uniquement                                     |
+| Lisibilité shadcn dark mode avec palette `paper/ink` | Validation visuelle obligatoire à l'étape 1 (Fondations) avant de continuer                        |
